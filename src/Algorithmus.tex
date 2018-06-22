@@ -1,0 +1,64 @@
+\section{Die Extraktion produktspezifischer Daten}
+
+- Erläuterung der zugrundeliegenden Idee:
+	- Ausnutzen, dass Shops CMS nutzen und Angebote eines einzelnen Shops ähnliche Struktur haben
+	- Idealo Datensatz nutzen, um Struktur zu erlernen
+	- HTML -> sehr strukturiert -> man lernt Struktur für jeden Shop
+\subsection{Die Funktionsweise des Extraktionsalgorithmus}
+
+	- Untergliederung in 3 Komponenten -> Parser, SRG und URLCleaner anhand Herleitung
+	- Klärung/ Definition von Begriffen: Rule, Selector, NodeTypes
+	- Erklärung des Datenflusses zwischen den Komponenten in groben Schritten (Dataflow)
+	- besuchen von IdealoOffer-Links erforderlich -> warum braucht man URL-Cleaner?
+	
+\subsection{Das Erstellen von shop-spezifischen Regeln}
+
+	- High Level erklären, was die ShopRulesGenerator KLASSE macht
+	- welche Schritte werden durchlaufen? -> evntl. bietrt sich hier auch PSEUDO-Code an
+	- es werden alle occurrences gesucht und je nach NodeType wird spezieller Generator verwendet
+	-> es gibt je ein Generator pro NodeType	
+	
+\subsection{Das Bereinigen von Links mit Trackerinformationen}
+	- RedirectClean und TrackerClean erklären
+	- nun können Seiten besucht und Regeln generiert werden	
+	
+\subsubsection{Das Erstellen von Regeln für TextNodes}
+
+	- Einfachste Selektor: CSS Selektor
+
+\subsubsection{Das Erstellen von Regeln für AttributeNodes}
+
+	- Weiterentwicklung des TextNodeSelektors
+	- Zusätzlicher Selektor (non-numeric)
+
+\subsubsection{Das Erstellen von Regeln für DataNodes}
+
+	- Idee
+	- woraus besteht der Selektor?
+	- Pseudo-Code?
+
+\subsection{Das Bewertungssystem für Selectors}
+
+	- Wie funktioniert es?
+	- Warum ist "Müll" zu finden schlimmer als nichts zu finden? -> Weil man "nichts" von richtig unterscheiden kann
+
+\subsection{Allgemeine Verbesserungen für alle Selector-Arten}
+
+	- EAN -> Generische Regel beim Parser
+	- Left cut/ right cut
+	
+\subsection{Die Implementierung des Extraktionsalgorithmus}
+
+	- Welche Sprache, Frameworks, Dependencies wurden verwendet?
+	- Gab es Probleme? -> Flexibilität HTML, Javascript/ JSON
+	
+\subsection{Weitere Herausforderungen}
+	
+	- Was sind noch offene Verbesserungen? -> siehe README auf Github
+
+\subsection{Kategorisierung der HTML-Komponenten}
+
+	- Theoretischer Einschub, um die drei Komponentenarten zu erklären:
+	- TextNode
+	- AttributeNode
+	- DataNode
