@@ -1,0 +1,92 @@
+%%
+%% Author: Deeps
+%% 22.06.2018
+%%
+
+% Preamble
+\documentclass[
+a4paper,		% Verwenden von A4 als Seitenformat
+12pt,			% Festlegung der Standardtextgröße auf 12pt
+pagesize,
+headsepline,
+titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
+]{scrartcl}
+
+% Packages
+\usepackage[ngerman]{babel}		% deutsche Trennmuster
+\usepackage[utf8]{inputenc}		% direkte Eingabe von Umlauten & Co. (Vorsicht: Encoding im Editor muss auch UTF-8 sein!)
+
+\usepackage[T1]{fontenc}			% T1-Schriften
+
+\usepackage{mathptmx}			% Times/Mathe \rmdefault
+\usepackage[scaled=.90]{helvet}	% Skalierte Helvetica \sfdefault
+\usepackage{courier}			% Courier \ttdefault
+
+\usepackage{
+amsmath,	% Mehr mathematische Symbole
+amsthm,		% Mehr mathematische Symbole
+amsfonts,	% Mehr mathematische Symbole
+graphicx, 	% Einbindung von Grafiken
+caption 		% Bildunterschriften
+}
+
+% Wenn man direkt mit dem pdflatex eine PDF-Datei erzeugt, sollten diese beiden Pakete eingebunden werden
+\usepackage{hyperref} % Hyperlinks anklickbar
+\usepackage{ae, aecompl} % bessere Bildschirmschriftarten
+
+% Code anzeigen
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{natbib}
+
+\usepackage{url}        %bibtex
+\usepackage{graphicx}
+
+% Styling
+\pagestyle{headings}
+
+\headsep4mm % Abstand der Kopfzeile vom Text:
+
+\typearea[current]{current}     % Satzspiegel neu berechnen
+
+% andere Bildunterschrift mit Hilfe von caption
+\renewcommand{\figurename}{Abb.}
+\renewcommand{\captionlabelfont}{\bf}
+
+% Title
+
+\titlehead{
+\hfill \includegraphics[height=3cm]{resources/up_logo.eps}
+\hfill \includegraphics[height=3cm]{resources/hpi_logo.eps}
+}
+\subject{Bachelorarbeit}
+\title{
+Maschinelles Lernen im Onlinehandel: \\
+Extraktion produktspezifischer Daten
+\vspace{1.25cm}
+}
+\author{
+Leonardo Hübscher\\
+\bigskip
+\\B.Sc.\\
+IT-Systems Engineering\\
+\bigskip
+Fachgebiet für Informationssysteme
+\vspace{0.75cm}
+\\Betreuer:\\
+Prof. Felix Naumann\\
+Leon Bornemann\\
+}
+\date{20. Juli 2018}
+
+% Document
+\begin{document}
+
+    \maketitle
+
+    \bibliography{main}
+    \bibliographystyle{plaindin}      % BibTeX Styles nach Norm DIN 1505
+
+\end{document}
