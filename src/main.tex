@@ -51,10 +51,6 @@ caption 		% Bildunterschriften
 
 \typearea[current]{current}     % Satzspiegel neu berechnen
 
-% andere Bildunterschrift mit Hilfe von caption
-\renewcommand{\figurename}{Abb.}
-\renewcommand{\captionlabelfont}{\bf}
-
 % Title
 
 \titlehead{
@@ -85,6 +81,10 @@ Leon Bornemann\\
 \begin{document}
 
     \maketitle
+
+    \begin{abstract}
+        \input{Zusammenfassung}
+    \end{abstract}
 
     \bibliography{main}
     \bibliographystyle{plaindin}      % BibTeX Styles nach Norm DIN 1505
