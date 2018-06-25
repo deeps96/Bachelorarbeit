@@ -108,8 +108,8 @@ Für jedes Angebot ruft der SRG die verlinkte Angebotsseite auf und speichert da
 Um die Internetshops nicht mit zu vielen Anfragen in zu kurzer Zeit zu belasten, wird zwischen jeder Angebotsseite
 eine fest definierte Zeit gewartet.
 Wir wissen nun, dass es sich bei dem HTML-Dokument um das bestimmte Angebot handelt und können dies ausnutzen.
-Dazu sucht der SRG den Wert aller einzelnen Produktattribute und erstellt für jeden Fundort eine Regel, welche auf
-das entsprechende Element zeigt.
+Dazu sucht der SRG den Wert aller einzelnen Produktattribute in dem HTML-Dokument und erstellt für jeden Fundort eine
+Regel, welche auf das entsprechende Element zeigt.
 Nachdem er dies für alle heruntergeladenen Angebote gemacht hat, kann er aus den gesammelten Regeln eine
 finale Regelmenge bestimmen.
 Diese Regelmenge wird in einer Datenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
@@ -143,9 +143,145 @@ Mit der zweiten Variante kann der URL-Cleaner nicht umgehen, kann dies aber - da
 enthalten ist, erkennen und eine entsprechende Meldung zurückgeben.
 
 Um die parameter-basierten Trackerinformationen zu entfernen, löscht der URL-Cleaner alle
-Schlüssel-Wert-Parameterkombinationen, deren Schlüssel in einer Liste vorkommen.
-Diese Liste enthält alle Schlüsselnamen, die uns bei einer manuellen Recherche über mehrere hundert Shops mehrmals
+Schlüssel-Wert-Parameterkombinationen, deren Schlüssel in einer bestimmten Liste vorkommen.
+Diese Liste enthält alle Schlüsselnamen, die uns bei einer manuellen Recherche über mehrere hundert Shops häufiger
 vorgekommen sind.
 
 Beispiel für Redirect
 Beispiel für Tracker-Parametern
+
+\subsection{Das Erstellen von Selektoren}
+\label{subsec:erstellen-von-selektoren}
+
+Nachdem nun die allgemeine Vorgehensweise des Parsers und des Shop Rules Generators beschrieben wurden, geht es nun
+konkret um das Erstellen von Selektoren.
+Ein Selektor ist dabei wie eine Art Pfad und zeigt auf ein Element innerhalb der hierarchischen HTML-Struktur.
+Wir kategorisieren die HTML-Elemente anhand dessen, wo das gesuchte Produktattribut steht.
+Jedes HTML-Element wird durch ein Tag beschrieben.
+Es gibt nun drei mögliche Orte, an denen das Produktattribut stehen kann: innerhalb eines Tags, in der Tag-Beschreibung
+oder im Javascript.
+Im nachfolgenden wird anhand eines Beispiels erklärt, wie die Regeln für jeden Typ erstellt werden.
+Die EAN ist ein wichtiges Attribut, da es das Matching vereinfacht.
+Wir wollen daher für unsere Beispiele jeweils einen Selektor für die EAN 9332721000108 erstellen.
+
+\subsubsection{Das Erstellen von Text-Selektoren}
+\label{subsubsec:erstellen-von-text-selektoren}
+
+Wenn der gesuchte Wert in der Browser-Visualisierung der HTML-Seite enthalten ist, so lässt sich dafür ein
+Text-Selektor bauen.
+Dieser Selektor besteht zunächst lediglich aus einem eindeutigen CSS-Selektor, welcher minimal lang ist.
+Eindeutig in diesem Kontext bedeutet, dass er nur auf das konkrete Element zeigt.
+Diese Unterscheidung ist wichtig, da CSS-Selektoren auch so gebaut werden können, dass sie auf mehrere passende
+Elemente zeigen.
+Das Aufbauen des CSS-Selektors ist der "Copy selector"-Funktionalität der Entwicklerkonsole des Chrome-Browsers
+nachempfunden.
+Im Grundprinzip traversiert man ausgehend von dem Startelement über die Vater-Beziehung in der
+DOM-Hierarchie Richtung Wurzel und speichert sich zu jedem Level die Information, das wievielte Kind das aktuelle
+Element ist.
+Für das obige Beispiel würde der Text-Selektor wie folgt aussehen: XXX TODO XXX BEISPIEL MIT ID NEHMEN!
+
+\subsubsection{Das Erstellen von Description-Selektoren}
+\label{subsubsec:erstellen-von-description-selektoren}
+
+Während unserer Recherchen ist uns häufig eine leicht abgewandelte Form aufgefallen, bei der das gewünschte Attribut
+in der Tag-Beschreibung anstatt im Inhalt des Tags stand.
+Die Tag-Beschreibung ist nicht Bestandteil der Browser-Visualiserung.
+
+Auch der Description-Selektor besteht wieder aus einem CSS-Selektor, welcher analog zu dem Text-Selektor aufgebaut ist.
+Des Weiteren ist jedoch auch der Attributname Bestandteil des Selektors und hilft bei der Auswahl des korrekten
+Schlüssel-Wert-Paares bei der Extraktion.
+
+Mit Hilfe dieses Selektors lassen sich auch die Schema.org-Spezifikationen abbilden, insofern der Shop diese befolgt.
+Um den Description-Selektor noch etwas flexibler zu machen und weniger starr an die Hierarchie des DOMs anzulehnen,
+erstellen wir zusätzlich noch einen zweiten Description Selektor für jedes Vorkommnis.
+Dieser zweite Selektor besitzt einen anderen CSS-Selektor, welcher sich nicht an der Hierarchie orientiert, sondern
+an allen anderen Schlüssel-Wert-Paaren aus der Beschreibung des Tags.
+
+Die beiden resultierenden Description-Selektoren sehen daher wie folgt aus:
+XXX TODO XXX
+XXX TODO XXX
+
+\subsubsection{Das Erstellen von Script-Selektoren}
+\label{subsubsec:erstellen-von-script-selektoren}
+
+Die Text-Selektoren und die Description-Selektoren beziehen sich beide auf das DOM.
+Der Script-Selektor unterscheidet sich dahingehend und bezieht sich auf die auf der Seite enthaltenen
+Javascript-Einbindungen.
+Viele Content-Management-Systeme verwenden Javascript für die Abspeicherung der Produktinformationen.
+Auch JSON-LD, ein ähnlicher Standard wie Schema.org, verwendet spezielle Javascript-Tags für das Markieren von
+Produktinformationen.
+Dies macht es für uns sehr relevant, auch für diese Fälle ein Schema für den Selektoraufbau zu entwickeln.
+Der Script-Selektor ist etwas komplizierter als die bereits vorgestellten Lösungen.
+
+Bereits bei dem Text-Selektor als auch beim Description-Selektor haben wir festgestellt, dass die Hierarchie
+innerhalb des HTML-Dokumentes sehr hilfreich ist.
+Wir haben daher den Ansatz übernommen und erzeugen innerhalb des Javascript ebenfalls eine Hierarchie.
+Der Script-Selektor besteht daher aus drei Teilen:
+\begin{enumerate}
+    \item dem CSS-Selektor, welcher innerhalb des DOMs zum entsprechenden Script-Element navigiert
+    \item dem Block-Path, welcher innerhalb des Javascriptes zum korrespondierenden Block navigiert
+    \item dem JsonPath, welcher ein XPath ähnlicher Pfad zu dem gewünschten Wert ist
+\end{enumerate}
+
+Der CSS-Selektor wird wieder analog zu dem Text-Selektor aufgebaut.
+
+Der Beginn eines Blockes wird durch das Startsymbol \{ und das Ende durch das Endsymbol \} markiert, wobei eine
+öffnende Klammer eine schließende Klammer verlangt und nur Blöcke betrachtet werden, bei denen die Anzahl der
+öffnenden Klammern der der Schließenden entspricht.
+Ein Block stellt zusammengefasst einen Codeschnipsel dar, der als JSON-Objekt interpretiert werden könnte.
+
+Der Pfad wird letztendlich durch eine Tiefensuche durch die Blöcke des Javascript erstellt, was es ermöglicht auch
+verschachtelte Konstrukte abzubilden.
+
+Der JsonPath dient im letzten Schritt dazu, in dem interpretierten JSON-Objekt zu navigieren, um den gesuchten Wert
+zurückzugeben.
+JSON-Objekte bestehen aus weiteren Objekten, Arrays oder Attributen.
+Für die Generierung des JSONPaths wird daher ebenfalls eine Tiefensuche innerhalb des Blocks angewandt.
+
+Schlussendlich entsteht für das obige Beispiel folgender Script-Selektor:
+XXX TODO XXX
+
+\subsection{Eine generische Verbesserung aller Selektoren/ Die Trimming-Funktion}
+\label{subsec:generische-verbesserung}
+
+Für die Erstellung der obigen Selektoren sind wir bisher davon ausgegangen, dass der gesuchte Wert das einzige ist,
+was in dem entsprechenden Feld enthalten ist.
+Dies ist tatsächlich nur selten der Fall, so dass wir eine generische Verbesserung für alle Selektoren eingebaut haben.
+Diese Verbesserung besteht in einer Art Trimming-Funktion, welche eine bestimmte Anzahl von Zeichen links und rechts
+entfernt.
+Somit werden auch Fälle wie in Abbildung X abgedeckt.
+Der daraus resultierende Selektor sieht dadurch wie folgt aus:
+XXX TODO XXX
+
+\subsection{Die Bewertungsfunktion}
+\label{subsec:bewertungsfunktion}
+
+Mit der Vielfalt an Selektorenarten und der gesteigerten Flexibilität durch die Trimming-Funktion werden sehr viele
+Selektoren erstellt.
+Durch die gesteigerte Flexibilität fügt man jedoch auch ein "Rauschen" zu den Selektoren hinzu.
+Das bedeutet, dass nun auch Selektoren erzeugt werden, welche nur selten vorkommen.
+Sie werden für ein Angebot passend erzeugt, sind jedoch für die restlichen nicht korrekt und produzieren falsche
+Ergebnisse.
+Um diesen Umstand entgegenzuwirken, wurde eine Bewertungsfunktion eingeführt, welche nach dem Generieren aller
+Selektoren ausgeführt wird.
+Dazu wird erneut über alle von idealo geladenen Angebotsinformationen iteriert und für jeden Selektor bestimmt, wie
+oft dieser ein richtiges Ergebnis extrahiert hat.
+Richtig bedeutet in diesem Kontext, dass der extrahierte Wert genau dem Wert aus den Angebotsinformationen entspricht.
+Dabei wird für jeden Match der Score erhöht und für jeden Mismatch der Score verringert.
+Eine Ausnahme bildet jedoch der leere String "".
+In diesem Fall belassen wir den Score so wie er ist.
+Wir haben uns dazu entschieden, da wir bei dem leeren String erkennen können, dass die Regel nichts produziert hat.
+Wenn die Regel jedoch etwas Falsches zurückliefert, können wir uns später nicht mehr sicher sein, ob dies schlichtweg
+falsch, oder etwas Neues ist.
+Abschließend wird dieser Score normalisiert, das heißt er wird auf eine Skala von 0 bis 1 abgebildet, indem durch die
+Anzahl der Vorkommnisse der einzelnen Attribute in den Angeboten dividiert wird.
+Der Score 1 ist hierbei besser und bedeutet, dass in allen Fällen der richtige Wert extrahiert wurde.
+
+Nun verfügt jeder Score über eine genaue Metrik, wie gut der Selektor ist.
+Um das Rauschen zu minimieren, werden nun alle Selektoren, deren normalisierter Score sich unter einem bestimmten
+Schwellwert befindet verworfen.
+Alle übrigen Selektoren werden in geordnet pro Produktattribut in der shop-spezifischen Regel gespeichert.
+
+Die Parser-Komponente verwendet den Score ebenfalls für das Evaluieren des besten Extraktionskandidaten.
+Dazu wird nach allen gefunden Werten gruppiert und die normalisierten Scores aufaddiert.
+Der Wert mit dem höchsten resultierenden Score wird zurückgegeben.
