@@ -1,24 +1,119 @@
-\usepackage{comment}
+\section{Einleitung}
+\label{sec:einleitung}
 
-\section{XXX}
+Der Fernhandel ist bereits seit der Steinzeit ein wichtiger Bestandteil der Gesellschaft.
+Durch die rasante Entwicklung des Internets und der steigenden Anzahl der Onlinehändler vergrößert sich das
+Produktangebot.
+Der moderne Kunde kann aus einer Vielzahl von Artikeln wählen und muss sich nicht wie in der Steinzeit auf einen
+Händler oder auf die lokale Verfügbarkeit beschränken.
+
+\subsection{Der Onlinehandel von heute}
+\label{subsec:onlinehandel-heute}
 
 \begin{comment}
-    https://de.wikipedia.org/wiki/Bernsteinstra%C3%9Fe
     https://de.statista.com/statistik/studie/id/23510/dokument/e-commerce-in-europa-statista-dossier/
+    https://de.statista.com/statistik/studie/id/6558/dokument/produktvergleich-im-internet-statista-dossier/
 \end{comment}
 
-Der Fernhandel hatte bereits seit YYYY einen starken Einfluss auf die Gesellschaft und spielt damals wie heute
-eine bedeutende Rolle.
-Die Bernsteinstraße war eine der bedeutendsten Routen für den Bernsteinhandel im Altertum.
-Entlang des Handelsweges war es Interessierten möglich, Güter aus der Auswahl des vorbeiziehenden Händlers zu
-erwerben.\\
-Durch die Bauernmärkte im Mittelalter wurde es Kunden ermöglicht, zwischen den Angeboten mehrerer lokaler Händler zu
-wählen.\\
-Mit der Entwicklung des Internets YYYY und den ersten Internetvertriebsplattformen, wie zum Beispiel XXX, wird der
-Einkauf komfortabler.
-Für den Kauf eines Artikels muss man nun weder vorort beim Händler sein, noch sich auf die lokal verfügbare Auswahl
-beschränken.
-Man kann aus dem gesamten globalen Angebot, welches einem durch die tausende Onlineshops geboten wird, wählen.
 
-Mit dem gewonnen Komfort und der größeren Auswahl sinkt jedoch auch die Übersicht über den Markt.
-Es ist schwierig, das günstigste Angebot zu finden.
+In den letzten Jahren hat der Onlinehandel sowohl an Bedeutung für die Unternehmen, als auch für die Kunden gewonnen.
+Laut einer Statistik von Eurostat machte im Jahr 2017 der Onlinehandel 21\% des Gesamtumsatzes deutscher Unternehmen
+aus und stellt somit einen nicht unerheblichen Anteil dar.
+Aus einer weiteren Statistik geht hervor, dass 2016 zwei Drittel der Deutschen regelmäßig online einkauften.
+
+Die Entwicklung bringt jedoch ein Problem mit sich: Mit der steigenden Auswahl an Produkten verliert ein
+potenzieller Käufer schnell die Übersicht.
+Preisvergleichsportale versuchen deshalb, die Markttransparenz wiederherzustellen.
+Ein Käufer soll sich sicher sein, das für ihn beste Angebot zu finden.
+Das Angebot der Vergleichsportale wird von den Internetnutzern gut aufgenommen, wie eine Statistik aus 2017 zeigt:
+Rund zwei Drittel nutzen die Möglichkeit, sich im Internet weitere Informationen zum Produkt oder zum Preis für einen
+besseren Vergleich zu holen.
+
+In einem von n-tv beauftragten Test, hat das Deutsche Institut für Service-Qualität mehrere Preissuchmaschinen unter
+dem Aspekt des günstigsten Preises, der Preisaktualität und dem Nutzererlebnis verglichen.
+Im Ergebnis hat idealo.de in allen Kategorien den ersten Platz eingenommen, gefolgt von billiger.de und preis.de.
+Bemängelt wurde jedoch, dass selbst beim besten Preisvergleich nur für die Hälfte der Produkte der günstigste Shop
+angezeigt wurde.
+
+\subsection{Das Preisvergleichsportal idealo}
+\label{subsec:idealo}
+
+Die Aufgabe des Preisvergleichsportals idealo ist es, den Vergleich für den Kunden stetig zu verbessern.
+Je mehr Angebote idealo vergleicht, desto sicherer kann sich der Kunde sein, das tatsächlich günstigste Angebot zu
+finden.
+Dazu hat idealo Verträge mit mehreren Onlinehändlern, welche sich verpflichten, Daten zu ihren Angeboten an idealo zu
+übermitteln und zu aktualisieren.
+Für jeden vermittelten Kauf erhält idealo von den Shops eine kleine Provision.
+Diese basiert auf CPC (Kosten pro Klick) oder CPO (Kosten pro tatsächlicher Bestellung).
+
+Um auch zukünftig wettbewerbsfähig zu bleiben, arbeitet idealo daran auch für die letzten 50\% der Produkte,
+immer das beste Angebot liefern zu können.
+Dies erreicht es zum einen durch das Abschließen von Verträgen mit weiteren Onlineshops.
+Zum anderen möchte idealo jedoch auch sicherstellen, tatsächlich alle Angebote eines Vertragspartners zu listen.
+
+\subsection{Das Projektziel}
+\label{subsec:projektziel}
+
+Die Aufgabe des Projektes besteht darin, für idealo herauszufinden, welche Angebote der Vertragspartner sich nicht im
+Produktkatalog von idealo befinden.
+Es soll eine Software entworfen werden, mit Hilfe deren ein Mitarbeiter für einen beliebigen Vertragspartner einen
+solchen Bericht enthält.
+Dieser soll Informationen darüber enthalten, welche Produkte fehlen, aus welcher Kategorie diese stammen und zu
+welcher Preisregion die Produkte gehören.
+Eine Messung eines Shops soll dabei in einem zeitlich akzeptablen Rahmen durchführbar und wiederholbar sein.
+Durch diesen Bericht soll der Mitarbeiter dazu befähigt werden, die Ursachen für das Fehlen der Angebote herauszufinden.
+idealo vermutet, dass ein unbeabsichtigtes Fehlen von Produkten durch einen fehlerhaften Importvorgang zu erklären ist.
+Zudem könnte es sein, dass ein Händler bewusst nicht alle Produkte bei idealo führen möchte.
+
+Für die Entwicklung dieser Lösung hatten wir als fünfköpfiges Team sechs Monate Zeit.
+Zudem wurde uns ein Betreuer von idealo zur Verfügung gestellt.
+Dieser diente als Kommunikationsschnittstelle für den Austausch der funktionalen Anforderungen und als technischer
+Berater.
+Er begleitete uns während des gesamten Entwicklungsprozesses und unterstützte uns bei Fragen bezüglich der
+Systemarchitektur.
+
+\subsection{Die nichtfunktionalen Anforderungen}
+\label{subsec:nichtfunktionale-anforderungen}
+
+Zu Beginn des Projektes wurden die nichtfunktionalen Anforderungen festgelegt.
+Für den gewinnbringenden Einsatz war es idealo besonders wichtig, dass das System für möglichst alle Shops einsetzbar
+ist.
+Die allgemeinen Herausforderungen an das zu entwickelnde Softwaresystem sind vielseitig.
+Mit ca. 5000 Shops und über zwei Millionen Angeboten in Deutschland gibt es sehr viele Daten, welche verarbeitet
+werden müssen.
+Das System soll daher skalierbar, hochgradig parallel, effizient und robust sein.
+idealo möchte hierbei nicht das Tagesgeschäft der Shops beeinflussen und erwartet, dass dies bei der Umsetzung der
+Lösung berücksichtigt wird.
+
+Um den entwickelten Code später abändern oder anderweitig weiterverwenden zu können, soll dieser einfach zu
+verstehen, erweiterbar und gut dokumentiert sein.
+Diese Anforderungen hatten Auswirkungen auf die Entwicklung der gesamten Architektur, sowie der einzelnen Komponenten.
+
+\subsection{Die zugrundeliegende Microservice-Architektur}
+\label{subsec:microservice-architektur}
+
+Ausgehend von den nichtfunktionalen Anforderungen haben wir uns dafür entschieden, das Gesamtsystem als
+Microservice-Architektur zu konzipieren.
+Die Mircoservice-Architektur ermöglicht es, logisch gekapselte Komponenten zu entwickeln, welche sich sehr gut
+skalieren und erweitern lassen.
+Durch die Verwendung eines Load-Balancers, kann die Last im Gesamtsystem optimal verteilt werden.
+Des Weiteren wird Continious Deployment, also das kontinuierliche Integrieren der aktuellsten Komponenten vereinfacht.
+
+Das entwickelte Gesamtsystem besteht grob gesehen aus drei Komponenten: dem Crawler, dem Parser und dem Matcher.
+Der mögliche Datenfluss sieht dabei wie folgt aus:
+Ein idealo-Mitarbeiter fragt den Bericht für einen bestimmten Shop an.
+Wenn der Bericht noch nicht existiert, beginnt als erstes die Crawler-Komponente jede einzelne Seite des Shops
+herunterzuladen.
+Damit der Matcher die geladenen Angebote mit dem Katalog von idealo vergleichen kann, muss das heruntergeladene
+HTML-Dokument in ein Format gebracht werden, welches der Computer für den Vergleich nutzen kann.
+Dieser Schritt erledigt der Parser, welcher zwischen Crawler und Matcher agiert.
+Der Parser ist dafür verantwortlich, die relevanten Produktinformationen aus den HTML-Dateien zu extrahieren und zu
+normalisieren.
+Die extrahierten Informationen werden anschließend von dem Matcher für das Vergleichen verwendet.
+Dieser erstellt abschließend einen Bericht, der von dem Mitarbeiter abgerufen werden kann.
+
+Für die Implementierung der Architektur haben wir die Programmiersprache Java gewählt.
+Wir haben uns für diese Sprache auf Grundlage der Anforderung, dass die Software in einer virtuellen Maschine laufen
+soll, entschieden.
+Für die Umsetzung der Microservices und deren REST-Schnittstellen verwenden wir das Spring-Framework, welches die
+Anbindung an verschiedenste Datenquellen und -senken vereinfacht.
