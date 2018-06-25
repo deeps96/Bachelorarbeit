@@ -105,9 +105,47 @@ eine REST-Schnittstelle kapselt.
 Zu jedem dieser Angebote liegen die Adresse für das Angebot, sowie die  Informationen über die in
 Kapitel~\ref{subsec:technische-anforderungen-parser} genannten Attribute vor.
 Für jedes Angebot ruft der SRG die verlinkte Angebotsseite auf und speichert das HTML-Dokument dieser.
+Um die Internetshops nicht mit zu vielen Anfragen in zu kurzer Zeit zu belasten, wird zwischen jeder Angebotsseite
+eine fest definierte Zeit gewartet.
 Wir wissen nun, dass es sich bei dem HTML-Dokument um das bestimmte Angebot handelt und können dies ausnutzen.
 Dazu sucht der SRG den Wert aller einzelnen Produktattribute und erstellt für jeden Fundort eine Regel, welche auf
 das entsprechende Element zeigt.
 Nachdem er dies für alle heruntergeladenen Angebote gemacht hat, kann er aus den gesammelten Regeln eine
 finale Regelmenge bestimmen.
 Diese Regelmenge wird in einer Datenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
+
+\subsection{Der URL-Cleaner}
+\label{subsec:urlcleaner}
+
+Manche Onlinehändler manipulieren vor dem Übermitteln der Daten an idealo die Links zu den Angeboten, indem sie sie
+mit Klick-Trackern versehen.
+Mit Hilfe von Klick-Trackern können Shops beispielsweise nachvollziehen, wie oft Kunden über idealo auf deren Seite
+gelangt sind und stellen ein Kontrollwerkzeug für die CPC-Abrechnung dar.
+Um die Statistik der Shops nicht durch die Besuche des SRGs zu verfälschen, ist es idealo wichtig, dass wir die
+Angebotsadressen vor dem Aufruf von den Klickinformationen bereinigen, insofern dies möglich ist.
+Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Klicktrackern als Eingabe erwartet und
+bereinigt zurück gibt.
+
+Für die Bereinigung werden zwei Strategien nacheinander ausgeführt.
+Die erste ist für die Bereinigung von Redirects verantwortlich und die zweite für das Bereinigen von Tracker-Parametern.
+Nachdem beide Verfahren angewandt wurden, wird die bereinigte URL zurück gegeben.
+
+Redirects zeichnen sich dadurch aus, dass der Link auf einen anderen Host verweist und die Adresse erst mit dem
+Besuch zu tatsächlichen Adresse aufgelöst wird.
+Dabei gibt es zwei mögliche Verfahren der Redirect-Dienste:
+Beim ersten Verfahren wird einfach der mitgesendete URL-Parameter encodiert als Redirect gesetzt.
+Das zweite Verfahren ist etwas schwieriger, da es eine Datenbank für die Auflösung eines mitgesendeten kryptischen
+Identifikationstrings verwendet, um den Redirect aufzulösen.
+
+Für das erste Szenario encodiert der URL-Cleaner die übergebene URL und entfernt alles, was vor der Root-URL des
+Shops steht.
+Mit der zweiten Variante kann der URL-Cleaner nicht umgehen, kann dies aber - da die Root-URL des Shops nicht
+enthalten ist, erkennen und eine entsprechende Meldung zurückgeben.
+
+Um die parameter-basierten Trackerinformationen zu entfernen, löscht der URL-Cleaner alle
+Schlüssel-Wert-Parameterkombinationen, deren Schlüssel in einer Liste vorkommen.
+Diese Liste enthält alle Schlüsselnamen, die uns bei einer manuellen Recherche über mehrere hundert Shops mehrmals
+vorgekommen sind.
+
+Beispiel für Redirect
+Beispiel für Tracker-Parametern
