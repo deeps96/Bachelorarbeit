@@ -99,6 +99,12 @@ skalieren und erweitern lassen.
 Durch die Verwendung eines Load-Balancers, kann die Last im Gesamtsystem optimal verteilt werden.
 Des Weiteren wird Continious Deployment, also das kontinuierliche Integrieren der aktuellsten Komponenten vereinfacht.
 
+Für die Implementierung der Architektur haben wir die Programmiersprache Java gewählt.
+Wir haben uns für diese Sprache auf Grundlage der Anforderung, dass die Software in einer virtuellen Maschine laufen
+soll, entschieden.
+Für die Umsetzung der Microservices und deren REST-Schnittstellen verwenden wir das Spring-Framework, welches die
+Anbindung an verschiedenste Datenquellen und -senken vereinfacht.
+
 Das entwickelte Gesamtsystem besteht grob gesehen aus drei Komponenten: dem Crawler, dem Parser und dem Matcher.
 Der mögliche Datenfluss sieht dabei wie folgt aus:
 Ein idealo-Mitarbeiter fragt den Bericht für einen bestimmten Shop an.
@@ -112,11 +118,7 @@ normalisieren.
 Die extrahierten Informationen werden anschließend von dem Matcher für das Vergleichen verwendet.
 Dieser erstellt abschließend einen Bericht, der von dem Mitarbeiter abgerufen werden kann.
 
-Für die Implementierung der Architektur haben wir die Programmiersprache Java gewählt.
-Wir haben uns für diese Sprache auf Grundlage der Anforderung, dass die Software in einer virtuellen Maschine laufen
-soll, entschieden.
-Für die Umsetzung der Microservices und deren REST-Schnittstellen verwenden wir das Spring-Framework, welches die
-Anbindung an verschiedenste Datenquellen und -senken vereinfacht.
+Der Fokus dieser Arbeit liegt in der Beschreibung der konkreten Funktionsweise der Parser-Komponente.
 
 \subsection{Die technischen Anforderungen an den Parser}
 \label{subsec:technische-anforderungen-parser}
@@ -135,6 +137,6 @@ Artikelnummer) und SKU (Stock keeping unit/ eine shop-spezifische Kennung).
 
 Da die Crawler-Komponente sehr viel Zeit benötigt um alle Seiten zu erfassen, spielt der Zeitfaktor für den Parser
 keine große Rolle.
-Eine schnelle Verarbeitung der Seiten ist dennoch wünschenswert.\\
+Eine schnelle Verarbeitung der Seiten ist dennoch wünschenswert.
 Damit die Ergebnisse des Parsers als zuverlässig eingestuft werden und vom Matcher weiterverwenden werten können, ist
 eine hohe Präzision und eine hohe Extraktionsrate erforderlich.
