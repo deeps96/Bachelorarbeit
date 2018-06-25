@@ -61,22 +61,30 @@ eine gewisse Menge an Angeboten besitzt und die Produktattribute nicht manipulie
 Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
 dem Generieren der shop-spezifischen Extraktionsregeln und dem Anwenden dieser auf die von der Crawler-Komponente
 heruntergeladenen Seiten.
+Unter der Regel kann man sich zunächst so etwas wie eine Wegbeschreibung durch das HTML-Dokument zu dem gewünschten
+Element vorstellen.
 Die Grundidee der ersten Phase besteht darin, dass die Regeln, welche für das Extrahieren benötigt werden mit
 Hilfe der Daten von idealo angelernt werden können.
-Dazu lädt der Parser eine bestimmte Anzahl von Angeboten aus dem bereits bestehenden idealo-Katalog.
-Zu jedem dieser Angebote liegen die Adresse für das Angebot, sowie die  Informationen über die in
-Kapitel\ref{subsec:technische-anforderungen-parser} genannten Attribute vor.
-Der Parser lädt die verlinkten Angebotsseiten herunter und kann nun ausnutzen, dass er weiß, welche Attribute in dem
-heruntergeladenem HTML-Dokument vorhanden sein müssen.
-Dazu sucht er den den Wert aller einzelnen Produktattribute und kann sich für jedes Vorkommnis eine Regel erstellen.
-Unter der Regel kann man sich zunächst wie eine Wegbeschreibung durch das HTML-Dokument zu dem gewünschten Element
-vorstellen.
-Nachdem der Parser dies für alle heruntergeladenen Angebote gemacht hat, kann er aus den gesammelten Regeln eine
-finale Regelmenge bestimmen.
-
 Die generierten Regeln werden nun in der zweiten Phase angewendet, sodass für jedes Attribut genau ein Wert
 zugeordnet wird.
 Für jede gecrawlte Seite werden die extrahierten Werte für jedes Attribut gemeinsam abgespeichert.
 
-\subsection{Die Funktionsweise}
-\label{subsec:funktionsweise}
+Die Logik der beiden Komponenten spiegelt sich auch in der genaueren Architektur des Parsers wieder.
+Dieser besteht aus der Shop Rules Generator (SRG) Komponente und der Parser Komponente.
+Im nachfolgenden werde ich auf die Funktionsweise der beiden Komponenten einzeln eingehen.
+
+\subsection{Die Funktionsweise der Parser-Komponente}
+\label{subsec:funktionsweise-parser}
+
+Die Parser-Komponente lauscht auf eine Queue, über die sie die vom Crawler heruntergeladenen Seiten erhält.
+Der Crawler sendet zu jeder Seite auch die Webadresse und die Identifikationsnummer des zugehörigen Shops mit.
+Nachdem der Parser etwas aus der Queue empfangen hat, fragt er den SRG nach Regeln für den entsprechenden Shop.
+Sollten die Regeln noch nicht existieren, so wartet er solange, bis der SRG diese erstellt hat.
+Sobald dieser die Regeln als Antwort sendet, wendet der Parser diese Regeln auf der gecrawlten Seite an.
+Der extrahierte Preis und die Bilderlinks werden von dem Parser normalisiert, ehe sie gemeinsam mit den anderen
+Attributen als ParsedOffer in einer Datenbank persistiert werden.
+Der Matcher greift später auf diese Datenbank für den Vergleich zu.
+
+Um den nichtfunktionalen Anforderungen, insbesondere der Skalierbarkeit und Parallelität zu genügen, arbeitet die
+Parser-Komponente mit mehreren Threads und kann somit mehrere gecrawlte Seiten gleichzeitig verarbeiten.
+Zudem wurden Cache-Mechanismen verwendet, um die Anfragen an den SRG zu minimieren.
