@@ -88,3 +88,26 @@ Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 Um den nichtfunktionalen Anforderungen, insbesondere der Skalierbarkeit und Parallelität zu genügen, arbeitet die
 Parser-Komponente mit mehreren Threads und kann somit mehrere gecrawlte Seiten gleichzeitig verarbeiten.
 Zudem wurden Cache-Mechanismen verwendet, um die Anfragen an den SRG zu minimieren.
+
+
+\subsection{Die Funktionsweise des SRG}
+\label{subsec:funktionsweise-srg}
+
+Die Shop-Rules-Generator-Komponente wartet über eine REST-Schnittstelle auf eine Anfrage und gibt für den angegebenen
+Shop die Regeln für die Extraktion zurück.
+Wenn die Regel für den Shop bereits in der Datenbank existiert, wird diese vom SRG zurückgegeben.
+Andernfalls wird der Generierungsprozess für den Shop gestartet.
+
+Während des Generierungsprozesses durchläuft der SRG mehrere Phasen.
+Zuerst lädt der SRG eine bestimmte Anzahl von Angeboten von der idealo-Datenbank.
+Dazu nutzt er die von idealo zur Verfügung gestellte IdealoBridge - dies ist eine API, welche den Zugriff über
+eine REST-Schnittstelle kapselt.
+Zu jedem dieser Angebote liegen die Adresse für das Angebot, sowie die  Informationen über die in
+Kapitel~\ref{subsec:technische-anforderungen-parser} genannten Attribute vor.
+Für jedes Angebot ruft der SRG die verlinkte Angebotsseite auf und speichert das HTML-Dokument dieser.
+Wir wissen nun, dass es sich bei dem HTML-Dokument um das bestimmte Angebot handelt und können dies ausnutzen.
+Dazu sucht der SRG den Wert aller einzelnen Produktattribute und erstellt für jeden Fundort eine Regel, welche auf
+das entsprechende Element zeigt.
+Nachdem er dies für alle heruntergeladenen Angebote gemacht hat, kann er aus den gesammelten Regeln eine
+finale Regelmenge bestimmen.
+Diese Regelmenge wird in einer Datenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
