@@ -1,66 +1,82 @@
-\section{Die Extraktion produktspezifischer Daten}
+\section{Extraktion produktspezifischer Daten}
+\label{sec:extraktion-produktspezifischer-daten}
 
+Das Extrahieren der Informationen ist ein sehr wichtiger und kritischer Schritt, da die Genauigkeit die Ergebnisse
+des Matchers und somit auch des Gesamtergebnisses stark beeinflusst.
+Fehlerhafte Informationen könnten das Ergebnis so stark verfälschen, dass die Aussagekraft des Gesamtergebnisses des
+Systems in Frage gestellt werden könnte.
 
+Die größte Schwierigkeit bei der Extraktion der produktspezifischen Daten besteht darin, dass der Computer nicht
+weiß, an welchen Stellen er die gewünschten Informationen findet.
+Um dieses Problem zu lösen, unterscheiden wir zwischen zwei Herangehensweisen, welche im nachfolgenden Kapitel
+erläutert werden.
 
-- Erläuterung der zugrundeliegenden Idee:
-	- Ausnutzen, dass Shops CMS nutzen und Angebote eines einzelnen Shops ähnliche Struktur haben
-	- Idealo Datensatz nutzen, um Struktur zu erlernen
-	- HTML -> sehr strukturiert -> man lernt Struktur für jeden Shop
-\subsection{Die Funktionsweise des Extraktionsalgorithmus}
+\subsection{Die möglichen Herangehensweisen}
+\label{subsec:herangehensweisen}
 
-	- Untergliederung in 3 Komponenten -> Parser, SRG und URLCleaner anhand Herleitung
-	- Klärung/ Definition von Begriffen: Rule, Selector, NodeTypes
-	- Erklärung des Datenflusses zwischen den Komponenten in groben Schritten (Dataflow)
-	- besuchen von IdealoOffer-Links erforderlich -> warum braucht man URL-Cleaner?
-	
-\subsection{Das Erstellen von shop-spezifischen Regeln}
+\begin{comment}
+    schema.org
+\end{comment}
 
-	- High Level erklären, was die ShopRulesGenerator KLASSE macht
-	- welche Schritte werden durchlaufen? -> evntl. bietrt sich hier auch PSEUDO-Code an
-	- es werden alle occurrences gesucht und je nach NodeType wird spezieller Generator verwendet
-	-> es gibt je ein Generator pro NodeType	
-	
-\subsection{Das Bereinigen von Links mit Trackerinformationen}
-	- RedirectClean und TrackerClean erklären
-	- nun können Seiten besucht und Regeln generiert werden	
-	
-\subsubsection{Das Erstellen von Regeln für TextNodes}
+Es gibt grundsätzlich zwei Möglichkeiten, wie man das Problem der Datenextraktion angehen kann.
+Vordergründig geht es hierbei um die Frage, wie man aus den unterschiedlich strukturierten Shops Informationen
+extrahiert.
 
-	- Einfachste Selektor: CSS Selektor
+Das von uns zu lösende Problem gibt es nicht zum ersten Mal.
+Bereits Google hat sich mit der Thematik befasst, da es bei den Suchergebnissen nähere Informationen zu den Angeboten
+anzeigen möchte.
+Im Zuge dessen hat Google gemeinsam mit den Suchmaschinen von Microsoft, Yahoo und Yandex den Schema.org - Standard für
+die strukturierte Datenangabe im Internet entwickelt.
+Laut einer Schätzung von idealo verwenden rund 40\% der Shops diesen Standard.
+Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da wir eine generische Regel verwenden können,
+um die standardisierten Informationen zu erfassen.
+Dieser Option hat den klaren Vorteil, dass sie recht schnell und einfach umzusetzen ist.
 
-\subsubsection{Das Erstellen von Regeln für AttributeNodes}
+Alternativ zum shop-unspezifischen Ansatz, gibt es die shop-spezifische Herangehensweise.
+Bei dem shop-spezifischen Ansatz geht es darum, für jeden Shop gesonderte Spezifikationen zu erstellen.
+Die Regeln des shop-unspezifischen Ansatzes würden eine Untermenge des shop-spezifischen Ansatzes darstellen.
+Die Umsetzung dieser Variante wäre insgesamt anspruchsvoller.
+Insgesamt gehen wir jedoch davon aus, sowohl die Extraktionsrate als auch die Präzision des Parsers im Vergleich zu
+dem shop-unspezifischen Ansatz zu erhöhen und somit bessere Daten für das Vergleichen zu erhalten.
 
-	- Weiterentwicklung des TextNodeSelektors
-	- Zusätzlicher Selektor (non-numeric)
+Zu Beginn haben wir erste Versuche basierend auf dem Schema.org-Standard unternommen.
+Leider haben wir schnell feststellen müssen, dass die Spezifikation oft nicht richtig eingehalten wurden, was die
+Datenqualität stark verringert hat.
+Auch bei anderen Standards, welche bei der Strukturierung von Produktdaten im Internet helfen sollen wie zum Beispiel
+JSON-LD (W3C) und das Open-Graph-Protokoll (Facebook) konnten wir die gleiche Beobachtung machen.
+Wir haben uns deshalb gegen diesen Ansatz entschieden.
 
-\subsubsection{Das Erstellen von Regeln für DataNodes}
+Im nachfolgenden wird darauf eingegangen, wie wir die shop-spezifische Methode umgesetzt und in den Ablauf der
+Extraktionsprozesses integriert haben.
 
-	- Idee
-	- woraus besteht der Selektor?
-	- Pseudo-Code?
+\subsection{Annahmen und Grundidee}
+\label{subsec:annahmen-und-grundidee}
 
-\subsection{Das Bewertungssystem für Selectors}
+Wir folgen der Annahme, dass jeder Shop ein CMS (Content Management System) zur Verwaltung seiner Angebote verwendet.
+Des Weiteren gehen wir davon aus, dass sich durch die Verwendung eines CMS die Struktur der Angebote ähnelt und diese
+erlernt werden kann.
+Des Weiteren nehmen wir an, dass idealo aufgrund der Vertragsvereinbarungen für den zu untersuchenden Shops bereits
+eine gewisse Menge an Angeboten besitzt und die Produktattribute nicht manipuliert wurden.
 
-	- Wie funktioniert es?
-	- Warum ist "Müll" zu finden schlimmer als nichts zu finden? -> Weil man "nichts" von richtig unterscheiden kann
+Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
+dem Generieren der shop-spezifischen Extraktionsregeln und dem Anwenden dieser auf die von der Crawler-Komponente
+heruntergeladenen Seiten.
+Die Grundidee der ersten Phase besteht darin, dass die Regeln, welche für das Extrahieren benötigt werden mit
+Hilfe der Daten von idealo angelernt werden können.
+Dazu lädt der Parser eine bestimmte Anzahl von Angeboten aus dem bereits bestehenden idealo-Katalog.
+Zu jedem dieser Angebote liegen die Adresse für das Angebot, sowie die  Informationen über die in
+Kapitel\ref{subsec:technische-anforderungen-parser} genannten Attribute vor.
+Der Parser lädt die verlinkten Angebotsseiten herunter und kann nun ausnutzen, dass er weiß, welche Attribute in dem
+heruntergeladenem HTML-Dokument vorhanden sein müssen.
+Dazu sucht er den den Wert aller einzelnen Produktattribute und kann sich für jedes Vorkommnis eine Regel erstellen.
+Unter der Regel kann man sich zunächst wie eine Wegbeschreibung durch das HTML-Dokument zu dem gewünschten Element
+vorstellen.
+Nachdem der Parser dies für alle heruntergeladenen Angebote gemacht hat, kann er aus den gesammelten Regeln eine
+finale Regelmenge bestimmen.
 
-\subsection{Allgemeine Verbesserungen für alle Selector-Arten}
+Die generierten Regeln werden nun in der zweiten Phase angewendet, sodass für jedes Attribut genau ein Wert
+zugeordnet wird.
+Für jede gecrawlte Seite werden die extrahierten Werte für jedes Attribut gemeinsam abgespeichert.
 
-	- EAN -> Generische Regel beim Parser
-	- Left cut/ right cut
-	
-\subsection{Die Implementierung des Extraktionsalgorithmus}
-
-	- Welche Sprache, Frameworks, Dependencies wurden verwendet?
-	- Gab es Probleme? -> Flexibilität HTML, Javascript/ JSON
-	
-\subsection{Weitere Herausforderungen}
-	
-	- Was sind noch offene Verbesserungen? -> siehe README auf Github
-
-\subsection{Kategorisierung der HTML-Komponenten}
-
-	- Theoretischer Einschub, um die drei Komponentenarten zu erklären:
-	- TextNode
-	- AttributeNode
-	- DataNode
+\subsection{Die Funktionsweise}
+\label{subsec:funktionsweise}
