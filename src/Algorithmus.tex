@@ -100,26 +100,32 @@ Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 \subsection{Die Funktionsweise des SRG}
 \label{subsec:funktionsweise-srg}
 
-Die Shop-Rules-Generator-Komponente wartet über eine REST-Schnittstelle auf eine Anfrage und gibt für den angegebenen
-Shop die Regeln für die Extraktion zurück.
-Wenn die Regel für den Shop bereits in der Datenbank existiert, wird diese vom SRG zurückgegeben.
-Andernfalls wird der Generierungsprozess für den Shop gestartet.
+Um die Regeln für einen bestimmten Shop zu erhalten, fragt man den Shop Rules Generator über eine REST-Schnittstelle an.
+Dieser prüft als erstes, ob die Regel bereits in der Regeldatenbank existiert.
+Wenn die Regel bereits existiert, wird diese direkt zurückgegeben.
+Andernfalls wird der Prozess für die Regelgenerierung gestartet.
 
-Während des Generierungsprozesses durchläuft der SRG mehrere Phasen.
-Zuerst lädt der SRG eine bestimmte Anzahl von Angeboten von der idealo-Datenbank.
-Dazu nutzt er die von idealo zur Verfügung gestellte IdealoBridge - dies ist eine API, welche den Zugriff über
-eine REST-Schnittstelle kapselt.
-Zu jedem dieser Angebote liegen die Adresse für das Angebot, sowie die  Informationen über die in
-Kapitel~\ref{subsec:technische-anforderungen-parser} genannten Attribute vor.
-Für jedes Angebot ruft der SRG die verlinkte Angebotsseite auf und speichert das HTML-Dokument dieser.
-Um die Internetshops nicht mit zu vielen Anfragen in zu kurzer Zeit zu belasten, wird zwischen jeder Angebotsseite
-eine fest definierte Zeit gewartet.
-Wir wissen nun, dass es sich bei dem HTML-Dokument um das bestimmte Angebot handelt und können dies ausnutzen.
-Dazu sucht der SRG den Wert aller einzelnen Produktattribute in dem HTML-Dokument und erstellt für jeden Fundort eine
-Regel, welche auf das entsprechende Element zeigt.
-Nachdem er dies für alle heruntergeladenen Angebote gemacht hat, kann er aus den gesammelten Regeln eine
-finale Regelmenge bestimmen.
-Diese Regelmenge wird in einer Datenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
+Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
+Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
+Dies erfolgt über einen von idealo zur Verfügung gestellten API-Endpoint, welcher den Datenbankzugriff über eine
+REST-Schnittstelle kapselt.
+Dies hat den Vorteil, dass wir die Infrastruktur von idealo nutzen können und keine Kopie der Angebotsdaten
+lokal speichern müssen.
+
+Zu jedem dieser Angebote liegen die Webadresse für das Angebot, sowie die  Informationen über die in
+Kapitel~\ref{subsec:technische-anforderungen-parser} genannten Produktattribute vor.
+Außerdem wird für jedes Angebot das dazugehörige HTML-Dokument heruntergeladen.
+
+Um die Server der Onlineshops nicht mit zu vielen Anfragen auf einmal zu strapazieren, wird zwischen jedem
+Herunterladen einer Angebotsseite eine fest definierte Zeit gewartet.
+
+Für die Menge der heruntergeladenen HTML-Dokumente ist bekannt, um welche Angebote es sich handelt und welche
+konkreten Produktattribute erwartet werden.
+Dieses Wissen wird für das Anlernen der Regeln genutzt.
+Dazu werden die Werte aller Produkteigenschaften in dem HTML-Dokument gesucht.
+Für jedes Vorkommnis eines Produktattributes wird eine Regel erstellt, die den Fundort referenziert.
+Nachdem alle Regeln gesammelt wurden, wird eine finale Regelmenge bestimmt.
+Diese Regelmenge wird in der Regeldatenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
 
 \subsection{Der URL-Cleaner}
 \label{subsec:urlcleaner}
