@@ -8,7 +8,7 @@ Die Ergebnisse des Matchers sind abhängig von denen der Parser-Komponente, der 
 Einfluss auf die Ergebnisse des Matchers und somit auch des Gesamtergebnisses des Systems.
 Sollten die Extraktion stark fehlerbehaftet sein, könnte dessen Aussagekraft in Frage gestellt werden.
 
-Die eigentliche Schwierigkeit der Datenextraktion liegt in dem bestimmten der Stellen, an denen die gewünschten
+Die eigentliche Schwierigkeit der Datenextraktion liegt in dem Bestimmten der Stellen, an denen die gewünschten
 Informationen stehen.
 Um dieses Problem zu lösen, haben wir zwischen zwei Herangehensweisen unterschieden.
 Diese werden im nachfolgenden Kapitel erläutert.
@@ -19,36 +19,39 @@ Diese werden im nachfolgenden Kapitel erläutert.
 \begin{comment}
     schema.org
 \end{comment}
+Es gibt grundsätzlich zwei Möglichkeiten, wie man aus den Internetangeboten Informationen extrahieren kann.
+Wir haben zwischen dem shop-unspezifischen und den shop-spezifischen Ansatz unterschieden.
 
-Es gibt grundsätzlich zwei Möglichkeiten, wie man das Problem der Datenextraktion angehen kann.
-Vordergründig geht es hierbei um die Frage, wie man aus den unterschiedlich strukturierten Shops Informationen
-extrahiert.
+Den shop-unspezifischen Ansatz hat bereits die Initiative Schema.org aufgegriffen.
+Schema.org hat einen Standard entwickelt, den Webseitenbetreiber nutzen können, um bestimmte
+Daten zu markieren.
+Shopbetreiber können zum Beispiel die Produktrezensionen, den Preis oder auch den Produkttitel hervorheben.
+Große Suchmaschinenanbieter wie Google, Microsoft oder Yandex können dadurch sehr einfach die relevanten Informationen
+direkt in den Suchergebnissen anzeigen.
+Die Angebote der Onlinehändler werden somit besser dargestellt.
 
-Das von uns zu lösende Problem gibt es nicht zum ersten Mal.
-Bereits Google hat sich mit der Thematik befasst, da es bei den Suchergebnissen nähere Informationen zu den Angeboten
-anzeigen möchte.
-Im Zuge dessen hat Google gemeinsam mit den Suchmaschinen von Microsoft, Yahoo und Yandex den Schema.org - Standard für
-die strukturierte Datenangabe im Internet entwickelt.
 Laut einer Schätzung von idealo verwenden rund 40\% der Shops diesen Standard.
-Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da wir eine generische Regel verwenden können,
+Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da man eine generische Regel verwenden kann,
 um die standardisierten Informationen zu erfassen.
-Dieser Option hat den klaren Vorteil, dass sie recht schnell und einfach umzusetzen ist.
+Die Lösung ist recht einfach und schnell umsetzbar.
 
-Alternativ zum shop-unspezifischen Ansatz, gibt es die shop-spezifische Herangehensweise.
-Bei dem shop-spezifischen Ansatz geht es darum, für jeden Shop gesonderte Spezifikationen zu erstellen.
-Die Regeln des shop-unspezifischen Ansatzes würden eine Untermenge des shop-spezifischen Ansatzes darstellen.
-Die Umsetzung dieser Variante wäre insgesamt anspruchsvoller.
-Insgesamt gehen wir jedoch davon aus, sowohl die Extraktionsrate als auch die Präzision des Parsers im Vergleich zu
-dem shop-unspezifischen Ansatz zu erhöhen und somit bessere Daten für das Vergleichen zu erhalten.
+Alternativ zum shop-unspezifischen Ansatz gibt es die shop-spezifische Herangehensweise, d.h.\ dass für jeden
+Onlineshop individuell angepasste Spezifikationen für die Extraktion erstellt werden.
+Die Regeln des shop-spezifischen Ansatzes bilden eine Übermenge des shop-unspezifischen Ansatzes.
+
+Die Umsetzung dieser Variante ist insgesamt anspruchsvoller, da diese Spezifikationen zunächst erstellt werden müssten.
+Insgesamt gehen wir jedoch davon aus, durch diesen Ansatz sowohl die Extraktionsrate als auch die Präzision des Parsers
+im Vergleich zu dem shop-unspezifischen Ansatz zu erhöhen.
+Dadurch erhoffen wir uns bessere Daten für den Vergleich zu erhalten.
 
 Zu Beginn haben wir erste Versuche basierend auf dem Schema.org-Standard unternommen.
-Leider haben wir schnell feststellen müssen, dass die Spezifikation oft nicht richtig eingehalten wurden, was die
-Datenqualität stark verringert hat.
-Auch bei anderen Standards, welche bei der Strukturierung von Produktdaten im Internet helfen sollen wie zum Beispiel
-JSON-LD (W3C) und das Open-Graph-Protokoll (Facebook) konnten wir die gleiche Beobachtung machen.
-Wir haben uns deshalb gegen diesen Ansatz entschieden.
+Leider haben wir schnell feststellen müssen, dass die Spezifikation oft nicht richtig eingehalten wurden.
+Dies hat die Qualität der extrahierten Daten stark verringert.
+Auch bei anderen Standards, welche bei der Strukturierung von Produktdaten im Internet helfen sollen, wie zum Beispiel
+JSON-LD (W3C) und das Open-Graph-Protokoll (Facebook), konnten wir ähnliche Beobachtungen machen.
+Wir haben uns deshalb gegen den shop-unspezifischen Ansatz entschieden.
 
-Im nachfolgenden wird darauf eingegangen, wie wir die shop-spezifische Methode umgesetzt und in den Ablauf der
+Im nachfolgenden wird darauf eingegangen, wie wir die shop-spezifische Methode umgesetzt und in den Ablauf des
 Extraktionsprozesses integriert haben.
 
 \subsection{Annahmen und Grundidee}
