@@ -1,15 +1,17 @@
 \section{Extraktion produktspezifischer Daten}
 \label{sec:extraktion-produktspezifischer-daten}
 
-Das Extrahieren der Informationen ist ein sehr wichtiger und kritischer Schritt, da die Genauigkeit die Ergebnisse
-des Matchers und somit auch des Gesamtergebnisses stark beeinflusst.
-Fehlerhafte Informationen könnten das Ergebnis so stark verfälschen, dass die Aussagekraft des Gesamtergebnisses des
-Systems in Frage gestellt werden könnte.
+Das Extrahieren der produktspezifischen Informationen ist ein sehr wichtiger und kritischer Schritt des gesamten
+Softwaresystems.
+Die Genauigkeit der Parser-Komponente ist maßgeblich für die Qualität der extrahierten Daten.
+Die Ergebnisse des Matchers sind abhängig von denen der Parser-Komponente, der Parser hat somit einen starken
+Einfluss auf die Ergebnisse des Matchers und somit auch des Gesamtergebnisses des Systems.
+Sollten die Extraktion stark fehlerbehaftet sein, könnte dessen Aussagekraft in Frage gestellt werden.
 
-Die größte Schwierigkeit bei der Extraktion der produktspezifischen Daten besteht darin, dass der Computer nicht
-weiß, an welchen Stellen er die gewünschten Informationen findet.
-Um dieses Problem zu lösen, unterscheiden wir zwischen zwei Herangehensweisen, welche im nachfolgenden Kapitel
-erläutert werden.
+Die eigentliche Schwierigkeit der Datenextraktion liegt in dem bestimmten der Stellen, an denen die gewünschten
+Informationen stehen.
+Um dieses Problem zu lösen, haben wir zwischen zwei Herangehensweisen unterschieden.
+Diese werden im nachfolgenden Kapitel erläutert.
 
 \subsection{Die möglichen Herangehensweisen}
 \label{subsec:herangehensweisen}
@@ -135,7 +137,7 @@ Besuch zu tatsächlichen Adresse aufgelöst wird.
 Dabei gibt es zwei mögliche Verfahren der Redirect-Dienste:
 Beim ersten Verfahren wird einfach der mitgesendete URL-Parameter encodiert als Redirect gesetzt.
 Das zweite Verfahren ist etwas schwieriger, da es eine Datenbank für die Auflösung eines mitgesendeten kryptischen
-Identifikationstrings verwendet, um den Redirect aufzulösen.
+Identifikationsstrings verwendet, um den Redirect aufzulösen.
 
 Für das erste Szenario encodiert der URL-Cleaner die übergebene URL und entfernt alles, was vor der Root-URL des
 Shops steht.
