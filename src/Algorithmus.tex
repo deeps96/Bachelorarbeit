@@ -87,19 +87,15 @@ Dieser besteht aus dem Shop Rules Generator (SRG) und der Parser-Komponente.
 \subsection{Die Funktionsweise der Parser-Komponente}
 \label{subsec:funktionsweise-parser}
 
-Die Parser-Komponente lauscht auf eine Queue, über die sie die vom Crawler heruntergeladenen Seiten erhält.
-Der Crawler sendet zu jeder Seite auch die Webadresse und die Identifikationsnummer des zugehörigen Shops mit.
-Nachdem der Parser etwas aus der Queue empfangen hat, fragt er den SRG nach Regeln für den entsprechenden Shop.
-Sollten die Regeln noch nicht existieren, so wartet er solange, bis der SRG diese erstellt hat.
-Sobald dieser die Regeln als Antwort sendet, wendet der Parser diese Regeln auf der gecrawlten Seite an.
-Der extrahierte Preis und die Bilderlinks werden von dem Parser normalisiert, ehe sie gemeinsam mit den anderen
-Attributen als ParsedOffer in einer Datenbank persistiert werden.
+Die Parser-Komponente erhält ihre Eingaben, indem sie Nachrichten aus einer Queue konsumiert.
+Eine Nachricht enthält eine vom Crawler heruntergeladene Webseite.
+Der Crawler sendet zusätzlich zu jeder Seite die Webadresse und die Identifikationsnummer des zugehörigen Shops.
+Nach dem Erhalt einer Nachricht, lädt der Parser vom SRG die Extraktionsregeln für den entsprechenden Shop.
+Sollten die Regeln noch nicht existieren, wartet der Parser solange, bis die Regeln vom SRG erstellt wurden.
+Sobald der Parser die Regeln empfangen hat, werden die Produktattribute aus der gecrawlten Seite extrahiert.
+Die extrahierten Daten werden abschließend in einer Datenbank normalisiert gespeichert.
+
 Der Matcher greift später auf diese Datenbank für den Vergleich zu.
-
-Um den nichtfunktionalen Anforderungen, insbesondere der Skalierbarkeit und Parallelität zu genügen, arbeitet die
-Parser-Komponente mit mehreren Threads und kann somit mehrere gecrawlte Seiten gleichzeitig verarbeiten.
-Zudem wurden Cache-Mechanismen verwendet, um die Anfragen an den SRG zu minimieren.
-
 
 \subsection{Die Funktionsweise des SRG}
 \label{subsec:funktionsweise-srg}
@@ -296,3 +292,9 @@ Alle übrigen Selektoren werden in geordnet pro Produktattribut in der shop-spez
 Die Parser-Komponente verwendet den Score ebenfalls für das Evaluieren des besten Extraktionskandidaten.
 Dazu wird nach allen gefunden Werten gruppiert und die normalisierten Scores aufaddiert.
 Der Wert mit dem höchsten resultierenden Score wird zurückgegeben.
+
+\begin{comment}
+    Implementierung: Um den nichtfunktionalen Anforderungen, insbesondere der Skalierbarkeit und Parallelität zu genügen, arbeitet die
+    Parser-Komponente mit mehreren Threads und kann somit mehrere gecrawlte Seiten gleichzeitig verarbeiten.
+    Zudem wurden Cache-Mechanismen verwendet, um die Anfragen an den SRG zu minimieren.
+\end{comment}
