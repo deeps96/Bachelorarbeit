@@ -69,19 +69,20 @@ eine gewisse Menge an Angeboten besitzt und die Produktattribute nicht manipulie
 \label{subsec:grundidee}
 
 Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
-dem Generieren der shop-spezifischen Extraktionsregeln und dem Anwenden dieser auf die von der Crawler-Komponente
-heruntergeladenen Seiten.
-Unter der Regel kann man sich zunächst so etwas wie eine Wegbeschreibung durch das HTML-Dokument zu dem gewünschten
-Element vorstellen.
-Die Grundidee der ersten Phase besteht darin, dass die Regeln, welche für das Extrahieren benötigt werden mit
-Hilfe der Daten von idealo angelernt werden können.
-Die generierten Regeln werden nun in der zweiten Phase angewendet, sodass für jedes Attribut genau ein Wert
+\begin{enumerate}
+    \item Die Generierung der shop-spezifischen Extraktionsregeln/ Spezifikation
+    \item Das Anwenden der Regeln auf die vom Crawler erzeugten Seiten
+\end{enumerate}
+Die Regel ist eine Art Wegbeschreibung durch das HTML-Dokument.
+Sie führt zu dem gewünschten Element, aus dem das Produktattribut extrahiert werden soll.
+In der ersten Phase sollen die Regeln, welche für das Extrahieren benötigt werden, mit Hilfe der Daten von idealo
+angelernt werden.
+Die generierten Regeln werden in der zweiten Phase angewendet, sodass für jede Produkteigenschaft genau ein Wert
 zugeordnet wird.
-Für jede gecrawlte Seite werden die extrahierten Werte für jedes Attribut gemeinsam abgespeichert.
+Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert.
 
-Die Logik der beiden Komponenten spiegelt sich auch in der genaueren Architektur des Parsers wieder.
-Dieser besteht aus der Shop Rules Generator (SRG) Komponente und der Parser Komponente.
-Im nachfolgenden werde ich auf die Funktionsweise der beiden Komponenten einzeln eingehen.
+Die Logik der beiden Phasen spiegelt sich in der Architektur des Parsers wieder.
+Dieser besteht aus dem Shop Rules Generator (SRG) und der Parser-Komponente.
 
 \subsection{Die Funktionsweise der Parser-Komponente}
 \label{subsec:funktionsweise-parser}
