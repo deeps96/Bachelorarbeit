@@ -37,6 +37,8 @@ titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
 
 % Commands
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\IndState}[1][1]{\STATE\hspace{#1\algorithmicindent}}
+\addto\captionsngerman{\renewcommand{\lstlistingname}{Beispiel}}
 
 % Styling
 \pagestyle{headings}

@@ -3,6 +3,10 @@
 
 % TODO
 % Kurze Einleitung für das Kapitel schreiben und sagen worum es geht und warum Parser wichtig ist.
+Placeholder \\
+Placeholder \\
+Placeholder \\
+Placeholder
 
 \subsection{Die technischen Anforderungen an den Parser}
 \label{subsec:technische-anforderungen-parser}
@@ -43,7 +47,7 @@ direkt in den Suchergebnissen anzeigen.
 Die Angebote der Onlinehändler werden somit besser dargestellt.
 
 Laut einer Schätzung von idealo verwenden rund 40\% der Shops diesen Standard.
-Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da man eine generische Regel verwenden kann,
+Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da man generische Regeln verwenden kann,
 um die standardisierten Informationen zu erfassen.
 Die Lösung ist recht einfach und schnell umsetzbar.
 
@@ -85,8 +89,9 @@ Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen unter
     \item Die Generierung der shop-spezifischen Extraktionsregeln/ Spezifikation
     \item Das Anwenden der Regeln auf die vom Crawler erzeugten Seiten
 \end{enumerate}
-Die Regel ist eine Art Wegbeschreibung durch das HTML-Dokument.
-Sie führt zu dem gewünschten Element, aus dem das Produktattribut extrahiert werden soll.
+Eine Regel ist eine Sammlung von Selektoren für eine bestimme Produkteigenschaft.
+Ein Selektor ist eine Art Wegbeschreibung durch das HTML-Dokument.
+Er führt zu dem gewünschten Element, aus dem das Produktattribut extrahiert werden soll.
 In der ersten Phase sollen die Regeln, welche für das Extrahieren benötigt werden, mit Hilfe der Daten von idealo
 angelernt werden.
 Die generierten Regeln werden in der zweiten Phase angewendet, sodass für jede Produkteigenschaft genau ein Wert
@@ -96,13 +101,13 @@ Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert
 Die Logik der beiden Phasen spiegelt sich in der Architektur des Parsers wieder.
 Dieser besteht aus dem Shop Rules Generator (SRG), der Parser-Komponente und dem URL-Cleaner.
 Auf die Notwendigkeit des URL-Cleaners und dessen Funktionsweise wird in Kapitel~\ref{subsec:urlcleaner} eingegangen.
-Die resultierende Architektur ist in Abbildung~\ref{fig:architektur-parser} abgebildet.
+Die resultierende Architektur ist in Abbildung~\ref{abb:architektur-parser} abgebildet.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
     \caption{Architektur des Parsers}
-    \label{fig:architektur-parser}
+    \label{abb:architektur-parser}
 \end{figure}
 
 \subsection{Die Funktionsweise der Parser-Komponente}
@@ -112,7 +117,7 @@ Die Parser-Komponente erhält ihre Eingaben, indem sie Nachrichten aus einer Que
 Eine Nachricht enthält eine vom Crawler heruntergeladene Webseite.
 Der Crawler sendet zusätzlich zu jeder Seite die Webadresse und die Identifikationsnummer des zugehörigen Shops.
 Nach dem Erhalt einer Nachricht, lädt der Parser vom SRG die Extraktionsregeln für den entsprechenden Shop.
-Sollten die Regeln noch nicht existieren, wartet der Parser solange, bis die Regeln vom SRG erstellt wurden.
+Sollten die Regeln noch nicht existieren, wartet der Parser solange, bis diese vom SRG erstellt wurden.
 Sobald der Parser die Regeln empfangen hat, werden die Produktattribute aus der gecrawlten Seite extrahiert.
 Die extrahierten Daten werden abschließend in einer Datenbank normalisiert gespeichert.
 
@@ -122,7 +127,7 @@ Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 \label{subsec:funktionsweise-srg}
 
 Der Shop Rules Generator gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
-Sollten die Regeln noch nicht existieren, werden sie generiert.
+Sollten diese noch nicht existieren, werden sie generiert.
 
 Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
 Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
@@ -142,8 +147,10 @@ Für die Menge der heruntergeladenen HTML-Dokumente ist bekannt, um welche Angeb
 konkreten Produktattribute erwartet werden.
 Dieses Wissen wird für das Anlernen der Regeln genutzt.
 Dazu werden die Werte aller Produkteigenschaften in dem HTML-Dokument gesucht.
-Für jedes Vorkommnis eines Produktattributes wird eine Regel erstellt, die den Fundort referenziert.
+Für jedes Vorkommnis eines Produktattributes wird ein Selektor erstellt, der den Fundort referenziert und einer Regel
+zugeordnet.
 Nachdem alle Regeln gesammelt wurden, wird eine finale Regelmenge bestimmt.
+In dieser Regelmenge ist für jede Produkteigenschaft eine Menge von Selektoren enthalten.
 Diese Regelmenge wird in der Regeldatenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
 
 \subsection{Der URL-Cleaner}
@@ -202,7 +209,7 @@ nicht in der encodierten URL enthalten ist.
 \end{table}
 
 Die Tabelle~\ref{tab:trackparameter} zeigt eine Beispiel-URL mit parameterbasierten Trackerinformationen.
-\textit{(Diese wurden fett hervorgehoben).}
+\textit{(Diese sind fett hervorgehoben.)}
 Dabei können ebenfalls Parameter enthalten sein, welche nicht für das Tracking verwendet werden.
 
 Um die parameterbasierten Trackerinformationen zu entfernen, werden alle Schlüssel-Wert-Parameterkombinationen
@@ -215,141 +222,48 @@ Nachdem beide Strategien angewandt wurden, wird die bereinigte URL zurückgegebe
 \subsection{Das Erstellen von Selektoren}
 \label{subsec:erstellen-von-selektoren}
 
-Nachdem nun die allgemeine Vorgehensweise des Parsers und des Shop Rules Generators beschrieben wurden, geht es nun
-konkret um das Erstellen von Selektoren.
-Ein Selektor ist dabei wie eine Art Pfad und zeigt auf ein Element innerhalb der hierarchischen HTML-Struktur.
-Wir kategorisieren die HTML-Elemente anhand dessen, wo das gesuchte Produktattribut steht.
-Jedes HTML-Element wird durch ein Tag beschrieben.
-Es gibt nun drei mögliche Orte, an denen das Produktattribut stehen kann: innerhalb eines Tags, in der Tag-Beschreibung
-oder im Javascript.
-Im nachfolgenden wird anhand eines Beispiels erklärt, wie die Regeln für jeden Typ erstellt werden.
-Die EAN ist ein wichtiges Attribut, da es das Matching vereinfacht.
-Wir wollen daher für unsere Beispiele jeweils einen Selektor für die EAN 9332721000108 erstellen.
+Im nachfolgenden wird darauf eingegangen, wie die Selektoren während der Regelgenerierung erzeugt werden.
+Für die Erläuterung werden Begriffe wie \textit{Document Object Model (DOM)}, \textit{Element} oder \textit{Tag} aus
+dem Kontext der hierarchiebasierten Sprache HTML verwendet.
+Bei Bedarf kann der entsprechende Wikipedia-Artikel\footnotemark für einen kurzen Einstieg genutzt werden.
+\footnotetext{\url{https://de.wikipedia.org/wiki/Hypertext_Markup_Language}}
 
-\subsubsection{Das Erstellen von Text-Selektoren}
-\label{subsubsec:erstellen-von-text-selektoren}
+Um einen Selektor zu erstellen, muss zunächst ein konkretes Element der DOM-Hierarchie bestimmt werden.
+Dieses wird von dem SRG in einem vorherigen Schritt ermittelt und stellt den Fundort für ein gewünschtes
+Produktattribut dar.
 
-Wenn der gesuchte Wert in der Browser-Visualisierung der HTML-Seite enthalten ist, so lässt sich dafür ein
-Text-Selektor bauen.
-Dieser Selektor besteht zunächst lediglich aus einem eindeutigen CSS-Selektor, welcher minimal lang ist.
-Eindeutig in diesem Kontext bedeutet, dass er nur auf das konkrete Element zeigt.
-Diese Unterscheidung ist wichtig, da CSS-Selektoren auch so gebaut werden können, dass sie auf mehrere passende
-Elemente zeigen.
-Das Aufbauen des CSS-Selektors ist der "Copy selector"-Funktionalität der Entwicklerkonsole des Chrome-Browsers
-nachempfunden.
-Im Grundprinzip traversiert man ausgehend von dem Startelement über die Vater-Beziehung in der
-DOM-Hierarchie Richtung Wurzel und speichert sich zu jedem Level die Information, das wievielte Kind das aktuelle
-Element ist.
-Für das obige Beispiel würde der Text-Selektor wie folgt aussehen: XXX TODO XXX BEISPIEL MIT ID NEHMEN!
+Es wird zwischen den folgenden drei Knotentypen unterschieden: Textknoten, Beschreibungsknoten und Datenknoten.
 
-\subsubsection{Das Erstellen von Description-Selektoren}
-\label{subsubsec:erstellen-von-description-selektoren}
+\textit{Textknoten} sind Elemente, bei denen das gewünschte Produktattribut innerhalb eines Tag-Paars steht.
+Das Attribut ist somit ein sichtbarer Bestandteil der Browservisualisierung.
 
-Während unserer Recherchen ist uns häufig eine leicht abgewandelte Form aufgefallen, bei der das gewünschte Attribut
-in der Tag-Beschreibung anstatt im Inhalt des Tags stand.
-Die Tag-Beschreibung ist nicht Bestandteil der Browser-Visualiserung.
+Zu den \textit{Beschreibungsknoten} gehören die Elemente, bei denen das gesuchte Produktattribut innerhalb der
+Attributliste des Elementes vorkommt.
+Dieses Attribut ist im Gegensatz zum Textknoten kein sichtbarer Bestandteil der Visualisierung.
 
-Auch der Description-Selektor besteht wieder aus einem CSS-Selektor, welcher analog zu dem Text-Selektor aufgebaut ist.
-Des Weiteren ist jedoch auch der Attributname Bestandteil des Selektors und hilft bei der Auswahl des korrekten
-Schlüssel-Wert-Paares bei der Extraktion.
+In dem Beispiel~\ref{bsp:text-and-beschreibungsknoten} ist jeweils ein kurzes Beispiel für beide Typen aufgeführt.
+Der gesuchte Wert ist in diesem Fall die Produkteigenschaft EAN mit dem Produktattribut 9332721000108.
 
-Mit Hilfe dieses Selektors lassen sich auch die Schema.org-Spezifikationen abbilden, insofern der Shop diese befolgt.
-Um den Description-Selektor noch etwas flexibler zu machen und weniger starr an die Hierarchie des DOMs anzulehnen,
-erstellen wir zusätzlich noch einen zweiten Description Selektor für jedes Vorkommnis.
-Dieser zweite Selektor besitzt einen anderen CSS-Selektor, welcher sich nicht an der Hierarchie orientiert, sondern
-an allen anderen Schlüssel-Wert-Paaren aus der Beschreibung des Tags.
+\lstset{
+    frame = single,
+    language=html,
+}
+\begin{lstlisting}[
+    caption=Beispiele für einen Textknoten und einen Beschreibungsknoten,
+    captionpos=b,
+    label=bsp:text-and-beschreibungsknoten]
+    <div id='product-details'>
+    <span>9332721000108</span>
+    </div>
+    <meta itemprop='gtin13' content='9332721000108'>
+\end{lstlisting}
 
-Die beiden resultierenden Description-Selektoren sehen daher wie folgt aus:
-XXX TODO XXX
-XXX TODO XXX
+Die Selektoren der beiden Knotentypen sind ähnlich aufgebaut und bestehen jeweils aus einem CSS-Selektor.
+Dieser CSS-Selektor ist minimal lang und eindeutig, das heißt dass der Selektor nur auf exakt ein Element innerhalb
+des Modells zeigen kann.
+Der Aufbau des CSS-Selektors erfolgt dabei ähnlich der wie bei der "Copy selector"-Funktion der
+Chrome-Entwicklertools und wird beim traversieren vom Element zur Wurzel des Dokumentes erzeugt.
+Der Selektor für einen Beschreibungsknoten speichert zusätzlich den Schlüssel, um das korrekte Elementattribut
+auszulesen.
 
-\subsubsection{Das Erstellen von Script-Selektoren}
-\label{subsubsec:erstellen-von-script-selektoren}
-
-Die Text-Selektoren und die Description-Selektoren beziehen sich beide auf das DOM .
-Der Script-Selektor unterscheidet sich dahingehend und bezieht sich auf die auf der Seite enthaltenen
-Javascript-Einbindungen.
-Viele Content-Management-Systeme verwenden Javascript für die Abspeicherung der Produktinformationen.
-Auch JSON-LD, ein ähnlicher Standard wie Schema.org, verwendet spezielle Javascript-Tags für das Markieren von
-Produktinformationen.
-Dies macht es für uns sehr relevant, auch für diese Fälle ein Schema für den Selektoraufbau zu entwickeln.
-Der Script-Selektor ist etwas komplizierter als die bereits vorgestellten Lösungen.
-
-Bereits bei dem Text-Selektor als auch beim Description-Selektor haben wir festgestellt, dass die Hierarchie
-innerhalb des HTML-Dokumentes sehr hilfreich ist.
-Wir haben daher den Ansatz übernommen und erzeugen innerhalb des Javascript ebenfalls eine Hierarchie.
-Der Script-Selektor besteht daher aus drei Teilen:
-\begin{enumerate}
-    \item dem CSS-Selektor, welcher innerhalb des DOMs zum entsprechenden Script-Element navigiert
-    \item dem Block-Path, welcher innerhalb des Javascriptes zum korrespondierenden Block navigiert
-    \item dem JsonPath, welcher ein XPath ähnlicher Pfad zu dem gewünschten Wert ist
-\end{enumerate}
-
-Der CSS-Selektor wird wieder analog zu dem Text-Selektor aufgebaut.
-
-Der Beginn eines Blockes wird durch das Startsymbol \{ und das Ende durch das Endsymbol \} markiert, wobei eine
-öffnende Klammer eine schließende Klammer verlangt und nur Blöcke betrachtet werden, bei denen die Anzahl der
-öffnenden Klammern der der Schließenden entspricht.
-Ein Block stellt zusammengefasst einen Codeschnipsel dar, der als JSON-Objekt interpretiert werden könnte.
-
-Der Pfad wird letztendlich durch eine Tiefensuche durch die Blöcke des Javascript erstellt, was es ermöglicht auch
-verschachtelte Konstrukte abzubilden.
-
-Der JsonPath dient im letzten Schritt dazu, in dem interpretierten JSON-Objekt zu navigieren, um den gesuchten Wert
-zurückzugeben.
-JSON-Objekte bestehen aus weiteren Objekten, Arrays oder Attributen.
-Für die Generierung des JSONPaths wird daher ebenfalls eine Tiefensuche innerhalb des Blocks angewandt.
-
-Schlussendlich entsteht für das obige Beispiel folgender Script-Selektor:
-XXX TODO XXX
-
-\subsection{Eine generische Verbesserung aller Selektoren/ Die Trimming-Funktion}
-\label{subsec:generische-verbesserung}
-
-Für die Erstellung der obigen Selektoren sind wir bisher davon ausgegangen, dass der gesuchte Wert das einzige ist,
-was in dem entsprechenden Feld enthalten ist.
-Dies ist tatsächlich nur selten der Fall, so dass wir eine generische Verbesserung für alle Selektoren eingebaut haben.
-Diese Verbesserung besteht in einer Art Trimming-Funktion, welche eine bestimmte Anzahl von Zeichen links und rechts
-entfernt.
-Somit werden auch Fälle wie in Abbildung X abgedeckt.
-Der daraus resultierende Selektor sieht dadurch wie folgt aus:
-XXX TODO XXX
-
-\subsection{Die Bewertungsfunktion}
-\label{subsec:bewertungsfunktion}
-
-Mit der Vielfalt an Selektorenarten und der gesteigerten Flexibilität durch die Trimming-Funktion werden sehr viele
-Selektoren erstellt.
-Durch die gesteigerte Flexibilität fügt man jedoch auch ein "Rauschen" zu den Selektoren hinzu.
-Das bedeutet, dass nun auch Selektoren erzeugt werden, welche nur selten vorkommen.
-Sie werden für ein Angebot passend erzeugt, sind jedoch für die restlichen nicht korrekt und produzieren falsche
-Ergebnisse.
-Um diesen Umstand entgegenzuwirken, wurde eine Bewertungsfunktion eingeführt, welche nach dem Generieren aller
-Selektoren ausgeführt wird.
-Dazu wird erneut über alle von idealo geladenen Angebotsinformationen iteriert und für jeden Selektor bestimmt, wie
-oft dieser ein richtiges Ergebnis extrahiert hat.
-Richtig bedeutet in diesem Kontext, dass der extrahierte Wert genau dem Wert aus den Angebotsinformationen entspricht.
-Dabei wird für jeden Match der Score erhöht und für jeden Mismatch der Score verringert.
-Eine Ausnahme bildet jedoch der leere String "".
-In diesem Fall belassen wir den Score so wie er ist.
-Wir haben uns dazu entschieden, da wir bei dem leeren String erkennen können, dass die Regel nichts produziert hat.
-Wenn die Regel jedoch etwas Falsches zurückliefert, können wir uns später nicht mehr sicher sein, ob dies schlichtweg
-falsch, oder etwas Neues ist.
-Abschließend wird dieser Score normalisiert, das heißt er wird auf eine Skala von 0 bis 1 abgebildet, indem durch die
-Anzahl der Vorkommnisse der einzelnen Attribute in den Angeboten dividiert wird.
-Der Score 1 ist hierbei besser und bedeutet, dass in allen Fällen der richtige Wert extrahiert wurde.
-
-Nun verfügt jeder Score über eine genaue Metrik, wie gut der Selektor ist.
-Um das Rauschen zu minimieren, werden nun alle Selektoren, deren normalisierter Score sich unter einem bestimmten
-Schwellwert befindet verworfen.
-Alle übrigen Selektoren werden in geordnet pro Produktattribut in der shop-spezifischen Regel gespeichert.
-
-Die Parser-Komponente verwendet den Score ebenfalls für das Evaluieren des besten Extraktionskandidaten.
-Dazu wird nach allen gefunden Werten gruppiert und die normalisierten Scores aufaddiert.
-Der Wert mit dem höchsten resultierenden Score wird zurückgegeben.
-
-\begin{comment}
-    Implementierung: Um den nichtfunktionalen Anforderungen, insbesondere der Skalierbarkeit und Parallelität zu genügen, arbeitet die
-    Parser-Komponente mit mehreren Threads und kann somit mehrere gecrawlte Seiten gleichzeitig verarbeiten.
-    Zudem wurden Cache-Mechanismen verwendet, um die Anfragen an den SRG zu minimieren.
-\end{comment}
+% TODO Datenselektor erklären und Erstellung erläutern
