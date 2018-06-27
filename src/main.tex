@@ -14,44 +14,33 @@ titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
 
 % Packages
 \usepackage{comment}            % Kommentarblöcke
-
 \usepackage[ngerman]{babel}		% deutsche Trennmuster
 \usepackage[utf8]{inputenc}		% direkte Eingabe von Umlauten & Co. (Vorsicht: Encoding im Editor muss auch UTF-8 sein!)
-
-\usepackage[T1]{fontenc}			% T1-Schriften
-
+\usepackage[T1]{fontenc}        % T1-Schriften
 \usepackage{mathptmx}			% Times/Mathe \rmdefault
 \usepackage[scaled=.90]{helvet}	% Skalierte Helvetica \sfdefault
 \usepackage{courier}			% Courier \ttdefault
-
-\usepackage{
-amsmath,	% Mehr mathematische Symbole
-amsthm,		% Mehr mathematische Symbole
-amsfonts,	% Mehr mathematische Symbole
-graphicx, 	% Einbindung von Grafiken
-caption 		% Bildunterschriften
-}
-
-% Wenn man direkt mit dem pdflatex eine PDF-Datei erzeugt, sollten diese beiden Pakete eingebunden werden
-\usepackage{hyperref} % Hyperlinks anklickbar
-\usepackage{ae, aecompl} % bessere Bildschirmschriftarten
-
-% Code anzeigen
-\usepackage{listings}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
+\usepackage{amsmath}	        % Mehr mathematische Symbole
+\usepackage{amsthm} 		    % Mehr mathematische Symbole
+\usepackage{amsfonts}           % Mehr mathematische Symbole
+\usepackage{graphicx}        	% Einbindung von Grafiken
+\usepackage{caption}     		% Bildunterschriften
+\usepackage{hyperref}           % Hyperlinks anklickbar
+\usepackage{ae}                 % bessere Bildschirmschriftarten
+\usepackage{aecompl}            % bessere Bildschirmschriftarten
+\usepackage{listings}           % bessere Code-Anzeige
+\usepackage{algorithm}          % bessere Code-Anzeige
+\usepackage{algpseudocode}      % bessere Code-Anzeige
 \usepackage{natbib}
+\usepackage{url}                % bibtex
+\usepackage{tabularx}           % Tabelle mit fester Breite und Alignment
 
-\usepackage{url}        %bibtex
-\usepackage{tabularx}
-\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % command for table columns with fixed size and alignment
+% Commands
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 % Styling
 \pagestyle{headings}
-
 \headsep4mm % Abstand der Kopfzeile vom Text:
-
 \typearea[current]{current}     % Satzspiegel neu berechnen
 
 \input{Titelblatt}
