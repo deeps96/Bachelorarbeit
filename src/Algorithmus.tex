@@ -154,24 +154,24 @@ Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
 Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
 sind.
 Dies ist für die Shopbesitzer sehr wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren können.
-Durch die erforderlichen Besuche der Anlernphase würden diese Statistiken der Shops verfälscht werden,
-Für idealo ist es deshalb sehr wichtig, dass die Trackinginformationen vor dem Aufruf entfernt werden.
+Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Statistiken jedoch verfälschen.
+Für idealo ist es deshalb sehr wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
 
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
 bereinigt zurück gibt.
 
 Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotslinks eingefügt werden können.
-Dies ist über Redirects und URL-Parameter möglich.
-Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen.
+Dies ist sowohl über Redirects als auch URL-Parameter möglich.
+Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen:
 
 Die erste Strategie bereinigt die URL von Redirects.
-Redirects zeichnen sich dadurch aus, dass der Link auf einen anderen Host verweist und die Adresse erst mit dem
-Besuch zur tatsächlichen Adresse aufgelöst wird.
 Dabei gibt es zwei mögliche Verfahren der Redirect-Dienste:
-Beim ersten Verfahren wird der mitgesendete URL-Parameter encodiert als Redirect gesetzt.
+Beim ersten Verfahren leitet der zwischengeschaltete Server den Besucher anhand der mitgesendeten URL-Parameter auf
+die korrekte Seite weiter.
 Die ursprüngliche URL ist hierbei somit bereits in der Redirect-URL enthalten.
-Das zweite Verfahren ist etwas schwieriger, da es eine Datenbank für die Auflösung eines mitgesendeten kryptischen
-Identifikationsstrings verwendet, um den Redirect aufzulösen.
+Das zweite Verfahren ist etwas schwieriger, da anstatt der Ziel-Adresse lediglich ein kryptischer String mitgesendet
+wird.
+Die Weiterleitung ist erst nach der serverseitigen Zuordnung des kryptischen Strings zur tatsächlichen Adresse möglich.
 
 In der Tabelle~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Redirect-Links aussehen könnten.
 Eine Mischform der beiden Varianten ist ebenfalls möglich.
@@ -180,15 +180,14 @@ Eine Mischform der beiden Varianten ist ebenfalls möglich.
     \centering
     \begin{tabular}{ l | l }
         Redirect mit URL-Parameter                  &   cptrack.com/?redir=www.shop.de/product1\\
-        Redirect mit krypt. Identifikationsstring   &   bit.ly/2Kqyrz2
+        Redirect mit krypt.\ Identifikationsstring   &   bit.ly/2Kqyrz2
     \end{tabular}
     \caption{Beispiele der Redirect-Verfahren}
     \label{tab:redirect}
 \end{table}
 
-Für das erste mögliche Redirect-Szenario wird die übergebene URL zuerst encodiert.
+Für das erste Redirect-Szenario wird die übergebene URL zunächst encodiert.
 Anschließend wird die Root-Url des Shops in der encodierten URL gesucht und alles davor entfernt.
-
 Für das zweite Szenario haben wir keine zufriedenstellende Lösung finden können.
 Allerdings erkennt der URL-Cleaner jedoch, dass er mit diesem Fall nicht umgehen kann, da die Root-URL des Shops
 nicht in der encodierten URL enthalten ist.
@@ -202,9 +201,9 @@ nicht in der encodierten URL enthalten ist.
     \label{tab:trackparameter}
 \end{table}
 
-Die Tabelle~\ref{tab:trackparameter} zeigt ein Beispiel-URL mit parameterbasierten Trackerinformationen.
+Die Tabelle~\ref{tab:trackparameter} zeigt eine Beispiel-URL mit parameterbasierten Trackerinformationen.
+\textit{(Diese wurden fett hervorgehoben).}
 Dabei können ebenfalls Parameter enthalten sein, welche nicht für das Tracking verwendet werden.
-Die Trackerparameter wurden in dem Beispiel fett hervorgehoben.
 
 Um die parameterbasierten Trackerinformationen zu entfernen, werden alle Schlüssel-Wert-Parameterkombinationen
 gelöscht, deren Schlüssel in einer vorher angelegten Liste vorkommen.
