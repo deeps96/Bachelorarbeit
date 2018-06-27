@@ -4,9 +4,26 @@
 Das Extrahieren der produktspezifischen Informationen ist ein sehr wichtiger und kritischer Schritt des gesamten
 Softwaresystems.
 Die Genauigkeit der Parser-Komponente ist maßgeblich für die Qualität der extrahierten Daten.
-Die Ergebnisse des Matchers sind abhängig von denen der Parser-Komponente, der Parser hat somit einen starken
-Einfluss auf die Ergebnisse des Matchers und somit auch des Gesamtergebnisses des Systems.
+Die Ergebnisse des Matchers sind abhängig von denen der Parser-Komponente.
+Der Parser hat somit einen starken Einfluss auf die Ergebnisse des Matchers und somit auch des Gesamtergebnisses des
+Systems.
 Sollten die Extraktion stark fehlerbehaftet sein, könnte dessen Aussagekraft in Frage gestellt werden.
+
+\subsection{Die technischen Anforderungen an den Parser}
+\label{subsec:technische-anforderungen-parser}
+
+Die Herausforderung der Parser-Komponente besteht hauptsächlich darin, das heterogene Informationsschemata der
+verschiedenen Shops in ein homogenes, normalisierten Schema zu bringen.
+Im Detail geht es darum, zu jedem Angebot den Titel, die Produktbeschreibung, den Preis, die Marke, die Kategorie,
+die Produktbilder sowie weitere eindeutige Merkmale im Format von idealo zu erfassen.
+Diese eindeutigen Merkmale sind zum Beispiel die standardisierte EAN (Europäische Artikelnummer), HAN (Händler
+Artikelnummer) und SKU (Stock keeping unit/ eine shop-spezifische Kennung).
+
+Da die Crawler-Komponente sehr viel Zeit benötigt um alle Seiten zu erfassen, spielt der Zeitfaktor für den Parser
+keine große Rolle.
+Eine schnelle Verarbeitung der Seiten ist dennoch wünschenswert.
+Damit die Ergebnisse des Parsers als zuverlässig eingestuft werden und vom Matcher weiterverwenden werten können, ist
+eine hohe Präzision und eine hohe Extraktionsrate erforderlich.
 
 Die eigentliche Schwierigkeit der Datenextraktion liegt in dem Bestimmten der Stellen, an denen die gewünschten
 Informationen stehen.
