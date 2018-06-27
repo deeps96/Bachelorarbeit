@@ -77,7 +77,7 @@ Daraus resultierend gehen wir davon aus, dass sich durch die Verwendung eines CM
 Des Weiteren nehmen wir an, dass idealo aufgrund der Vertragsvereinbarungen für die zu untersuchenden Shops bereits
 eine gewisse Menge an Angeboten besitzt und die Produktattribute nicht manipuliert wurden.
 
-\subsection{Grundidee}
+\subsection{Die Grundidee}
 \label{subsec:grundidee}
 
 Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
@@ -94,7 +94,16 @@ zugeordnet wird.
 Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert.
 
 Die Logik der beiden Phasen spiegelt sich in der Architektur des Parsers wieder.
-Dieser besteht aus dem Shop Rules Generator (SRG) und der Parser-Komponente.
+Dieser besteht aus dem Shop Rules Generator (SRG), der Parser-Komponente und dem URL-Cleaner.
+Auf die Notwendigkeit des URL-Cleaners und dessen Funktionsweise wird in Kapitel~\ref{subsec:urlcleaner} eingegangen.
+Die resultierende Architektur ist in Abbildung~\ref{fig:architektur-parser} abgebildet.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
+    \caption{Architektur des Parsers}
+    \label{fig:architektur-parser}
+\end{figure}
 
 \subsection{Die Funktionsweise der Parser-Komponente}
 \label{subsec:funktionsweise-parser}
@@ -112,10 +121,8 @@ Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 \subsection{Die Funktionsweise des SRG}
 \label{subsec:funktionsweise-srg}
 
-Um die Regeln für einen bestimmten Shop zu erhalten, fragt man den Shop Rules Generator über eine REST-Schnittstelle an.
-Dieser prüft als erstes, ob die Regel bereits in der Regeldatenbank existiert.
-Wenn die Regel bereits existiert, wird diese direkt zurückgegeben.
-Andernfalls wird der Prozess für die Regelgenerierung gestartet.
+Der Shop Rules Generator gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
+Sollten die Regeln noch nicht existieren, werden sie generiert.
 
 Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
 Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
@@ -205,11 +212,6 @@ Diese Liste enthält alle Tracker-Schlüsselnamen, die bei einer manuellen Reche
 häufiger vorgekommen sind.
 
 Nachdem beide Strategien angewandt wurden, wird die bereinigte URL zurückgegeben.
-
-Der URL-Cleaner war die letzte fehlende Komponente in der Parserarchitektur.
-Die finale Architektur des Parser sieht daher wie folgt aus:
-
-XXX TODO XXX
 
 \subsection{Das Erstellen von Selektoren}
 \label{subsec:erstellen-von-selektoren}
