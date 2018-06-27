@@ -130,38 +130,74 @@ Diese Regelmenge wird in der Regeldatenbank gespeichert und bei zukünftigen Anf
 \subsection{Der URL-Cleaner}
 \label{subsec:urlcleaner}
 
-Manche Onlinehändler manipulieren vor dem Übermitteln der Daten an idealo die Links zu den Angeboten, indem sie sie
-mit Klick-Trackern versehen.
-Mit Hilfe von Klick-Trackern können Shops beispielsweise nachvollziehen, wie oft Kunden über idealo auf deren Seite
-gelangt sind und stellen ein Kontrollwerkzeug für die CPC-Abrechnung dar.
-Um die Statistik der Shops nicht durch die Besuche des SRGs zu verfälschen, ist es idealo wichtig, dass wir die
-Angebotsadressen vor dem Aufruf von den Klickinformationen bereinigen, insofern dies möglich ist.
-Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Klicktrackern als Eingabe erwartet und
+Manche Onlinehändler manipulieren vor der Übermittlung ihrer Angebote an idealo die Links zu deren Angeboten.
+Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
+Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
+sind.
+Dies ist für die Shopbesitzer sehr wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren können.
+Durch die erforderlichen Besuche der Anlernphase würden diese Statistiken der Shops verfälscht werden,
+Für idealo ist es deshalb sehr wichtig, dass die Trackinginformationen vor dem Aufruf entfernt werden.
+
+Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
 bereinigt zurück gibt.
 
-Für die Bereinigung werden zwei Strategien nacheinander ausgeführt.
-Die erste ist für die Bereinigung von Redirects verantwortlich und die zweite für das Bereinigen von Tracker-Parametern.
-Nachdem beide Verfahren angewandt wurden, wird die bereinigte URL zurück gegeben.
+Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotslinks eingefügt werden können.
+Dies ist über Redirects und URL-Parameter möglich.
+Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen.
 
+Die erste Strategie bereinigt die URL von Redirects.
 Redirects zeichnen sich dadurch aus, dass der Link auf einen anderen Host verweist und die Adresse erst mit dem
-Besuch zu tatsächlichen Adresse aufgelöst wird.
+Besuch zur tatsächlichen Adresse aufgelöst wird.
 Dabei gibt es zwei mögliche Verfahren der Redirect-Dienste:
-Beim ersten Verfahren wird einfach der mitgesendete URL-Parameter encodiert als Redirect gesetzt.
+Beim ersten Verfahren wird der mitgesendete URL-Parameter encodiert als Redirect gesetzt.
+Die ursprüngliche URL ist hierbei somit bereits in der Redirect-URL enthalten.
 Das zweite Verfahren ist etwas schwieriger, da es eine Datenbank für die Auflösung eines mitgesendeten kryptischen
 Identifikationsstrings verwendet, um den Redirect aufzulösen.
 
-Für das erste Szenario encodiert der URL-Cleaner die übergebene URL und entfernt alles, was vor der Root-URL des
-Shops steht.
-Mit der zweiten Variante kann der URL-Cleaner nicht umgehen, kann dies aber - da die Root-URL des Shops nicht
-enthalten ist, erkennen und eine entsprechende Meldung zurückgeben.
+In der Tabelle~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Redirect-Links aussehen könnten.
+Eine Mischform der beiden Varianten ist ebenfalls möglich.
 
-Um die parameter-basierten Trackerinformationen zu entfernen, löscht der URL-Cleaner alle
-Schlüssel-Wert-Parameterkombinationen, deren Schlüssel in einer bestimmten Liste vorkommen.
-Diese Liste enthält alle Schlüsselnamen, die uns bei einer manuellen Recherche über mehrere hundert Shops häufiger
-vorgekommen sind.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ l | l }
+        Redirect mit URL-Parameter                  &   cptrack.com/?redir=www.shop.de/product1\\
+        Redirect mit krypt. Identifikationsstring   &   bit.ly/2Kqyrz2
+    \end{tabular}
+    \caption{Beispiele der Redirect-Verfahren}
+    \label{tab:redirect}
+\end{table}
 
-Beispiel für Redirect
-Beispiel für Tracker-Parametern
+Für das erste mögliche Redirect-Szenario wird die übergebene URL zuerst encodiert.
+Anschließend wird die Root-Url des Shops in der encodierten URL gesucht und alles davor entfernt.
+
+Für das zweite Szenario haben wir keine zufriedenstellende Lösung finden können.
+Allerdings erkennt der URL-Cleaner jedoch, dass er mit diesem Fall nicht umgehen kann, da die Root-URL des Shops
+nicht in der encodierten URL enthalten ist.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c }
+        http://www.shop.de/product?\textbf{partner=idealo}?pid=96
+    \end{tabular}
+    \caption{URL mit parameterbasierten Trackinginformationen}
+    \label{tab:trackparameter}
+\end{table}
+
+Die Tabelle~\ref{tab:trackparameter} zeigt ein Beispiel-URL mit parameterbasierten Trackerinformationen.
+Dabei können ebenfalls Parameter enthalten sein, welche nicht für das Tracking verwendet werden.
+Die Trackerparameter wurden in dem Beispiel fett hervorgehoben.
+
+Um die parameterbasierten Trackerinformationen zu entfernen, werden alle Schlüssel-Wert-Parameterkombinationen
+gelöscht, deren Schlüssel in einer vorher angelegten Liste vorkommen.
+Diese Liste enthält alle Tracker-Schlüsselnamen, die bei einer manuellen Recherche über mehrere hundert Shops
+häufiger vorgekommen sind.
+
+Nachdem beide Strategien angewandt wurden, wird die bereinigte URL zurückgegeben.
+
+Der URL-Cleaner war die letzte fehlende Komponente in der Parserarchitektur.
+Die finale Architektur des Parser sieht daher wie folgt aus:
+
+XXX TODO XXX
 
 \subsection{Das Erstellen von Selektoren}
 \label{subsec:erstellen-von-selektoren}
@@ -217,7 +253,7 @@ XXX TODO XXX
 \subsubsection{Das Erstellen von Script-Selektoren}
 \label{subsubsec:erstellen-von-script-selektoren}
 
-Die Text-Selektoren und die Description-Selektoren beziehen sich beide auf das DOM.
+Die Text-Selektoren und die Description-Selektoren beziehen sich beide auf das DOM .
 Der Script-Selektor unterscheidet sich dahingehend und bezieht sich auf die auf der Seite enthaltenen
 Javascript-Einbindungen.
 Viele Content-Management-Systeme verwenden Javascript für die Abspeicherung der Produktinformationen.
