@@ -44,7 +44,8 @@ caption 		% Bildunterschriften
 \usepackage{natbib}
 
 \usepackage{url}        %bibtex
-\usepackage{graphicx}
+\usepackage{tabularx}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % command for table columns with fixed size and alignment
 
 % Styling
 \pagestyle{headings}
@@ -76,8 +77,7 @@ caption 		% Bildunterschriften
     \input{Abschluss}
     \newpage
 
-    \bibliography{main}
-    \bibliographystyle{plaindin}      % BibTeX Styles nach Norm DIN 1505
+    \input{Literaturverzeichnis}
 
     \newpage
     \input{Selbststaendigkeitserklaerung.tex}

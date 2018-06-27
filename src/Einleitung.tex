@@ -15,7 +15,6 @@ Händler oder auf die lokale Verfügbarkeit beschränken.
     https://de.statista.com/statistik/studie/id/6558/dokument/produktvergleich-im-internet-statista-dossier/
 \end{comment}
 
-
 In den letzten Jahren hat der Onlinehandel sowohl an Bedeutung für die Unternehmen, als auch für die Kunden gewonnen.
 Laut einer Statistik von Eurostat machte im Jahr 2017 der Onlinehandel 21\% des Gesamtumsatzes deutscher Unternehmen
 aus und stellt somit einen nicht unerheblichen Anteil dar.
@@ -60,7 +59,6 @@ Es soll eine Software entworfen werden, mit Hilfe deren ein Mitarbeiter für ein
 solchen Bericht enthält.
 Dieser soll Informationen darüber enthalten, welche Produkte fehlen, aus welcher Kategorie diese stammen und zu
 welcher Preisregion die Produkte gehören.
-Eine Messung eines Shops soll dabei in einem zeitlich akzeptablen Rahmen durchführbar und wiederholbar sein.
 Durch diesen Bericht soll der Mitarbeiter dazu befähigt werden, die Ursachen für das Fehlen der Angebote herauszufinden.
 idealo vermutet, dass ein unbeabsichtigtes Fehlen von Produkten durch einen fehlerhaften Importvorgang zu erklären ist.
 Zudem könnte es sein, dass ein Händler bewusst nicht alle Produkte bei idealo führen möchte.
@@ -72,50 +70,28 @@ Berater.
 Er begleitete uns während des gesamten Entwicklungsprozesses und unterstützte uns bei Fragen bezüglich der
 Systemarchitektur.
 
-\subsection{Die nichtfunktionalen Anforderungen}
-\label{subsec:nichtfunktionale-anforderungen}
-
-Zu Beginn des Projektes wurden die nichtfunktionalen Anforderungen festgelegt.
-Für den gewinnbringenden Einsatz war es idealo besonders wichtig, dass das System für möglichst alle Shops einsetzbar
-ist.
-Die allgemeinen Herausforderungen an das zu entwickelnde Softwaresystem sind vielseitig.
-Mit ca.\ 5000 Shops und über zwei Millionen Angeboten in Deutschland gibt es sehr viele Daten, welche verarbeitet
-werden müssen.
-Das System soll daher skalierbar, hochgradig parallel, effizient und robust sein.
-idealo möchte hierbei nicht das Tagesgeschäft der Shops beeinflussen und erwartet, dass dies bei der Umsetzung der
-Lösung berücksichtigt wird.
-
-Um den entwickelten Code später abändern oder anderweitig weiterverwenden zu können, soll dieser einfach zu
-verstehen, erweiterbar und gut dokumentiert sein.
-Diese Anforderungen hatten Auswirkungen auf die Entwicklung der gesamten Architektur, sowie der einzelnen Komponenten.
-
 \subsection{Die zugrundeliegende Microservice-Architektur}
 \label{subsec:microservice-architektur}
 
-Ausgehend von den nichtfunktionalen Anforderungen haben wir uns dafür entschieden, das Gesamtsystem als
-Microservice-Architektur zu konzipieren.
+Wir haben uns dafür entschieden, das Gesamtsystem als Microservice-Architektur zu konzipieren.
 Die Mircoservice-Architektur ermöglicht es, logisch gekapselte Komponenten zu entwickeln, welche sich sehr gut
 skalieren und erweitern lassen.
-Durch die Verwendung eines Load-Balancers, kann die Last im Gesamtsystem optimal verteilt werden.
-Des Weiteren wird Continuous Deployment, also das kontinuierliche Integrieren der aktuellsten Komponenten vereinfacht.
-
-Für die Implementierung der Architektur haben wir die Programmiersprache Java gewählt.
-Wir haben uns für diese Sprache auf Grundlage der Anforderung, dass die Software in einer virtuellen Maschine laufen
-soll, entschieden.
-Für die Umsetzung der Microservices und deren REST-Schnittstellen verwenden wir das Spring-Framework, welches die
-Anbindung an verschiedenste Datenquellen und -senken vereinfacht.
+Eine ausführlichere Begründung für diese Architekturentscheidung kann in der Bachelorarbeit von Dmitrii
+Zhamanakov nachgeschlagen werden.
+Für die Implementierung der Architektur haben wir die Programmiersprache Java gewählt und verwenden diese in
+Kombination mit dem Spring-Framework.
 
 Das entwickelte Gesamtsystem besteht grob gesehen aus drei Komponenten: dem Crawler, dem Parser und dem Matcher.
-Der mögliche Datenfluss sieht dabei wie folgt aus:
-Ein idealo-Mitarbeiter fragt den Bericht für einen bestimmten Shop an.
-Wenn der Bericht noch nicht existiert, beginnt als erstes die Crawler-Komponente jede einzelne Seite des Shops
-herunterzuladen.
+Der \textit{Crawler} ist für das Herunterladen jeder einzelnen Seite eines Shops verantwortlich.
+Jonas Pohlmann hat sich im Projektverlauf intensiv mit verschiedenen Crawling-Frameworks auseinandergesetzt und diese
+in seiner Bachelorarbeit verglichen.
+
+Die Funktionsweise der \textit{Matcher}-Komponente wird in der Bachelorarbeit von Tom Schwarzburg näher beschrieben.
+Der Matcher vergleicht die vom System gefundenen Angebote mit den Angeboten, die idealo bereits kennt.
+
 Damit der Matcher die geladenen Angebote mit dem Katalog von idealo vergleichen kann, muss das heruntergeladene
 HTML-Dokument in ein Format gebracht werden, welches der Computer für den Vergleich nutzen kann.
 Dieser Schritt erledigt der Parser, welcher zwischen Crawler und Matcher agiert.
 Der Parser ist dafür verantwortlich, die relevanten Produktinformationen aus den HTML-Dateien zu extrahieren und zu
 normalisieren.
-Die extrahierten Informationen werden anschließend von dem Matcher für das Vergleichen verwendet.
-Dieser erstellt abschließend einen Bericht, der von dem Mitarbeiter abgerufen werden kann.
-
 Der Fokus dieser Arbeit liegt in der Beschreibung der konkreten Funktionsweise der Parser-Komponente.
