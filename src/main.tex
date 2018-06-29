@@ -34,11 +34,12 @@ titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
 \usepackage{natbib}
 \usepackage{url}                % bibtex
 \usepackage{tabularx}           % Tabelle mit fester Breite und Alignment
+\usepackage{tikz}               % Zahl im Kreis
 
 % Commands
-\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
-\newcommand{\IndState}[1][1]{\STATE\hspace{#1\algorithmicindent}}
-\addto\captionsngerman{\renewcommand{\lstlistingname}{Beispiel}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % Tabelle mit fester Breite und linkem Alignment
+\addto\captionsngerman{\renewcommand{\lstlistingname}{Beispiel}} % Beschreibung für Listings-Captions
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 % Styling
 \pagestyle{headings}
