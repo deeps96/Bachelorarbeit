@@ -3,29 +3,44 @@
 
 In diesem Kapitel wird untersucht, wie gut der Extraktionsalgorithmus funktioniert.
 Dazu wird zunächst die Qualität der idealo-Daten, welche zum Anlernen und zum Evaluieren genutzt wird, grob analysiert.
-Mit Hilfe der durchgeführten Messungen werden abschließend die Auswirkungen der Ergebnisse auf das Matching abgeleitet.
+Mit Hilfe der durchgeführten Messungen werden abschließend die Auswirkungen der Ergebnisse auf das Matching
+abgeleitet.\\
+\newline
+Sowohl für das Antrainieren der Extraktionsregeln als auch für die Evaluierung der Ergebnisse wurden Angebotsdaten
+von idealo verwendet.
+Für die Messung wurden 7500 Angebote von 50 Shops genutzt.
+Je Shop wurden max\. 50 Angebote für die Erstellung der Regeln und 100 Angebote für die Evaluierung als Testmenge
+verwendet.
+Die Auswahl der Shops erfolgte basierend auf der Shopübersicht\footnotemark von idealo.
+\footnotetext{https://www.idealo.de/preisvergleich/AllePartner.html}
+Für jedes Angebot existiert mindestens der Titel, der Preis und die SKU.
+Alle nachfolgenden Messungen basieren auf einem Schnappschuss der Angebotsdaten, sowie der verlinkten Angebotswebseiten.
+Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die Gefahr besteht, dass die
+Angebotsdaten von idealo mit denen von der Webseite nicht übereinstimmen.
+Deshalb wurden nicht mehr als 150 Angebote je Shop heruntergeladen.
 
-\subsection{Die Testdaten}
-\label{subsec:testdaten}
+Die \textbf{Accuracy} des Parser wurde bestimmt, indem die Extraktionsregeln auf der Testmenge angewandt wurden.
+Die Genauigkeit wurde dabei in Abhängigkeit der Menge der Angebote (SaS), welche für das Anlernen verwendet wurden,
+sowie des in Kapitel~\ref{subsec:bewertungssystem} eingeführten Filter-Schwellwertes (F) bestimmt.
+In der Tabelle~\ref{tab:accuracy-precision} sind die Genauigkeit und die Präzision aufgeführt.
+Die Genauigkeit gibt an, wie oft ein Produktattribut korrekt erfasst wurde.
+Die Präzision berücksichtigt zusätzlich die Fälle, in denen der Parser explizit nichts zurück gibt.
 
-Sowohl für das Antrainieren der Regeln als auch für das Evaluieren des Parsers werden Daten von idealo genutzt.
-Für die nachfolgenden Messungen wurden Angebote von 50 Shops verwendet.
-Für jeden Shop wurden 150 Angebote geladen.
-Maximal 50 der 150 Angebote werden für das Anlernen verwendet.
-Die Evaluation findet mit den restlichen 100 Angeboten statt.
-
-Nachfolgend soll ein grober, quantitativer Überblick über die idealo-Daten gegeben werden.
-
-\begin{figure}[H]
+\begin{table}[h]
     \centering
-    \includegraphics[width=\textwidth, trim=1.5cm 9.5cm 1.5cm 11cm, clip]{resources/Attributabdeckung-idealo-Daten.pdf}
-    \caption{Attributabdeckung der idealo-Daten}
-    \label{abb:testdaten}
-\end{figure}
+    \begin{tabular}{ c | c c c | c c c }
+        &   \multicolumn{3}{c}{\textit{Genauigkeit in \%}}    &   \multicolumn{3}{c}{\textit{Präzision in \%}} \\
+        \textbf{F\textbackslash SaS} & \textbf{10} & \textbf{20} & \textbf{50} & \textbf{10} & \textbf{20} & \textbf{50}  \\
+        \hline
+        \textbf{0}      &   50.59 &   50.78 &   51.07         &   72.73 &   70.81 &   69.62 \\
+        \textbf{50}     &   52.12 &   53.50 &   \textbf{53.98}&   88.66 &   90.39 &   91.22 \\
+        \textbf{60}     &   51.87 &   53.07 &   53.15         &   94.15 &   94.03 &   94.93 \\
+        \textbf{70}     &   50.15 &   51.37 &   52.02         &   96.15 &   96.39 &   95.86 \\
+        \textbf{80}     &   47.92 &   49.69 &   50.05         &   97.84 &   97.81 &   97.76 \\
+        \textbf{90}     &   44.61 &   46.92 &   46.57         &   98.16 &   98.14 &   98.42 \\
+        \textbf{100}    &   41.48 &   39.27 &   36.00         &   98.17 &   97.64 &   \textbf{98.90}
 
-Der Abbildung~\ref{abb:testdaten} kann man entnehmen, dass es für jedes untersuchte Angebot einen Titel, einen Preis
-und die SKU gibt.
-Interessanterweise sind andere Produkteigenschaften, welche für die eindeutige Zuordnung genutzt werden können,
-häufiger nicht vorhanden.
-Der Verlauf der Attributabdeckung ähnelt sich in allen Datenreihen.
-Die Verteilungen der Attribute innerhalb des Test- und des Trainingsset sind also ähnlich.
+    \end{tabular}
+    \caption{Genauigkeit und Präzision bei unterschiedlichen Konfigurationen}
+    \label{tab:accuracy-precision}
+\end{table}
