@@ -53,6 +53,11 @@ In diesem Fall ist es nicht möglich zu entscheiden, ob das vom Parser extrahier
     \label{tab:accuracy-precision}
 \end{table}
 
+Es musste leider festgestellt werden, dass beim Erstellen der Evaluierungsdaten ein Shop durch eine
+Captcha-Absicherung keine nutzbaren Webseiten lieferte.
+Für diesen Shop konnten folglich keinerlei Regeln für keine der Produkteigenschaften erstellt werden.
+Dies wirkt sich leicht negativ auf die Treffergenauigkeit aus.
+
 Die vom Parser extrahierten Angebotsinformationen werden von der Matcher-Komponente für den ähnlichkeitsbasierten
 Vergleich verwendet.
 Dazu ist es wichtig, eine gute Balance zwischen Treffergenauigkeit und Genauigkeit zu finden.
@@ -60,7 +65,7 @@ Da es nicht unbedingt darum geht, dass die extahierten Informationen \textit{exa
 ist die Treffergenauigkeit etwas wichtiger, als die Genauigkeit.
 Daher scheinen die besten Ergebnisse bei einem Schwellwert von $F=0.6$ und $SaS=50$ erreicht zu werden.
 
-Für jede Nichtübereinstimmung wurde die Levensthein-Distanz zum erwarteten Wert von idealo berechnet.
+Für jede Nichtübereinstimmung wurde die Levenshtein-Distanz zum erwarteten Wert von idealo berechnet.
 In etwa 50\% der Nichtübereinstimmungen haben eine Distanz kleiner gleich drei und sind somit sehr ähnlich.
 Eine manuelle Prüfung hat ergeben, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine eindeutige
 Übereinstimmung verhindern.
