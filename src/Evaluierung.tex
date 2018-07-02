@@ -31,6 +31,8 @@ In der Tabelle~\ref{tab:accuracy-precision} sind die Treffergenauigkeit (\textit
 Die Treffergenauigkeit gibt an, wie oft ein Produktattribut korrekt erfasst wurde und entspricht in diesem Fall der
 Trefferquote (\textit{recall}).
 Die Genauigkeit berücksichtigt zusätzlich die Fälle, in denen der Parser explizit nichts zurück gibt.
+In allen Statistiken wurden die Produkteigenschaften ignoriert, bei denen idealo keine Produktattribute gespeichert hat.
+In diesem Fall ist es nicht möglich zu entscheiden, ob das vom Parser extrahierte korrekt ist.
 
 \begin{table}[h]
     \centering
@@ -57,3 +59,9 @@ Dazu ist es wichtig, eine gute Balance zwischen Treffergenauigkeit und Genauigke
 Da es nicht unbedingt darum geht, dass die extahierten Informationen \textit{exakt} dem Schema von idealo entspricht,
 ist die Treffergenauigkeit etwas wichtiger, als die Genauigkeit.
 Daher scheinen die besten Ergebnisse bei einem Schwellwert von $F=0.6$ und $SaS=50$ erreicht zu werden.
+
+Für jede Nichtübereinstimmung wurde die Levensthein-Distanz zum erwarteten Wert von idealo berechnet.
+In etwa 50\% der Nichtübereinstimmungen haben eine Distanz kleiner gleich drei und sind somit sehr ähnlich.
+Eine manuelle Prüfung hat ergeben, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine eindeutige
+Übereinstimmung verhindern.
+
