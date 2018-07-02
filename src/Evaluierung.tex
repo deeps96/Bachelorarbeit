@@ -5,8 +5,10 @@ In diesem Kapitel wird untersucht, wie gut der Extraktionsalgorithmus funktionie
 Da die Qualität der Regeln und damit der extrahierten Werte von den Lerndaten abhängt, werden diese als erstes
 analysiert.
 Anschließend werden die typischen Kenngrößen der binären Klassifikatoren bestimmt.
-Abschließend werden für den Matcher relevanten Faktoren näher untersucht.\\
-\newline
+Abschließend werden für den Matcher relevanten Faktoren näher untersucht.
+
+\subsection{Die Testdaten}
+\label{subsec:testdaten}
 Sowohl für das Antrainieren der Extraktionsregeln als auch für die Evaluierung der Ergebnisse wurden Angebotsdaten
 von idealo verwendet.
 Für die Messung wurden 7500 Angebote von 50 Shops genutzt.
@@ -22,6 +24,8 @@ Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die 
 Angebotsdaten von idealo mit denen von der Webseite nicht übereinstimmen.
 Deshalb wurden nicht mehr als 150 Angebote je Shop heruntergeladen.
 
+\subsection{Die Genauigkeitsmessung}
+\label{subsec:genauigkeitsmessung}
 Die Genauigkeit des Parser wurde bestimmt, indem die Extraktionsregeln auf der Testmenge angewandt wurden.
 Die Treffergenauigkeit wurde dabei in Abhängigkeit der Menge der Angebote \textit{SaS}, welche für das Anlernen
 verwendet wurden, sowie des in Kapitel~\ref{subsec:bewertungssystem} eingeführten Filter-Schwellwertes \textit{F}
@@ -53,11 +57,6 @@ In diesem Fall ist es nicht möglich zu entscheiden, ob das vom Parser extrahier
     \label{tab:accuracy-precision}
 \end{table}
 
-Es musste leider festgestellt werden, dass beim Erstellen der Evaluierungsdaten ein Shop durch eine
-Captcha-Absicherung keine nutzbaren Webseiten lieferte.
-Für diesen Shop konnten folglich keinerlei Regeln für keine der Produkteigenschaften erstellt werden.
-Dies wirkt sich leicht negativ auf die Treffergenauigkeit aus.
-
 Die vom Parser extrahierten Angebotsinformationen werden von der Matcher-Komponente für den ähnlichkeitsbasierten
 Vergleich verwendet.
 Dazu ist es wichtig, eine gute Balance zwischen Treffergenauigkeit und Genauigkeit zu finden.
@@ -70,3 +69,17 @@ In etwa 50\% der Nichtübereinstimmungen haben eine Distanz kleiner gleich drei 
 Eine manuelle Prüfung hat ergeben, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine eindeutige
 Übereinstimmung verhindern.
 
+\subsection{Mögliche Fehlerquellen der Messung}
+\label{subsec:fehlerquellen}
+
+Es musste leider festgestellt werden, dass beim Erstellen der Evaluierungsdaten ein Shop durch eine
+Captcha-Absicherung keine nutzbaren Webseiten lieferte.
+Für diesen Shop konnten folglich keinerlei Regeln für keine der Produkteigenschaften erstellt werden.
+Dies wirkt sich leicht negativ auf die Treffergenauigkeit aus.
+
+Des Weiteren hat die Verwendung der idealo-Daten als Trainings- und Lerndaten den Nachteil, dass diese teilweise
+manuell oder durch Normalisierungsprozesse von idealo manipuliert wurden.
+Die Angebotsdaten können somit von den Spezifikationen der Webseite abweichen.
+Dieser Fall wurde sehr häufig bei dem Titel und der Produktbeschreibung beobachtet.
+Dies führt dazu, dass die Erstellung der Regeln erschwert wird und manche eigentlich korrekt extrahierte
+Produktattribute fälschlicherweise als inkorrekt markiert werden.
