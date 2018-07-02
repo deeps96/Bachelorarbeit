@@ -96,22 +96,16 @@ zugeordnet wird.
 Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert.
 
 Die Logik der beiden Phasen spiegelt sich in der Architektur des Parsers wieder.
-Dieser besteht aus dem Shop Rules Generator (SRG) und der Parser-Komponente.
+Dieser besteht aus dem Shop Rules Generator (SRG), der Parser-Komponente und dem URL-Cleaner.
+Auf die Notwendigkeit des URL-Cleaners und dessen Funktionsweise wird in Kapitel~\ref{subsec:urlcleaner} eingegangen.
 Die resultierende Architektur ist in Abbildung~\ref{abb:architektur-parser} abgebildet.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
+    \includegraphics[width=15cm, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
     \caption{Architektur des Parsers}
     \label{abb:architektur-parser}
 \end{figure}
-
-Manche Onlinehändler manipulieren vor der Übermittlung ihrer Angebote an idealo die Links zu deren Angeboten.
-Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
-Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
-sind.
-Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Statistiken jedoch verfälschen.
-Die URL-Cleaner-Komponente erwartet Adressem mit Trackinginformationen als Eingabe und gibt diese bereinigt zurück.
 
 \subsection{Die Funktionsweise der Parser-Komponente}
 \label{subsec:funktionsweise-parser}
@@ -155,6 +149,72 @@ zugeordnet.
 Nachdem alle Regeln gesammelt wurden, wird eine finale Regelmenge bestimmt.
 In dieser Regelmenge ist für jede Produkteigenschaft eine Menge von Selektoren enthalten.
 Diese Regelmenge wird in der Regeldatenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
+
+\subsection{Der URL-Cleaner}
+\label{subsec:urlcleaner}
+
+Manche Onlinehändler manipulieren vor der Übermittlung ihrer Angebote an idealo die Links zu deren Angeboten.
+Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
+Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
+sind.
+Dies ist für die Shopbesitzer sehr wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren können.
+Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Statistiken jedoch verfälschen.
+Für idealo ist es deshalb sehr wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
+
+Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
+bereinigt zurück gibt.
+
+Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotslinks eingefügt werden können.
+Dies ist sowohl über Redirects als auch URL-Parameter möglich.
+Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen:
+
+Die erste Strategie bereinigt die URL von Redirects.
+Dabei gibt es zwei mögliche Verfahren der Redirect-Dienste:
+Beim ersten Verfahren leitet der zwischengeschaltete Server den Besucher anhand der mitgesendeten URL-Parameter auf
+die korrekte Seite weiter.
+Die ursprüngliche URL ist hierbei somit bereits in der Redirect-URL enthalten.
+Das zweite Verfahren ist etwas schwieriger, da anstatt der Ziel-Adresse lediglich ein kryptischer String mitgesendet
+wird.
+Die Weiterleitung ist erst nach der serverseitigen Zuordnung des kryptischen Strings zur tatsächlichen Adresse möglich.
+
+In der Tabelle~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Redirect-Links aussehen könnten.
+Eine Mischform der beiden Varianten ist ebenfalls möglich.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ l | l }
+        Redirect mit URL-Parameter                  &   cptrack.com/?redir=www.shop.de/product1\\
+        Redirect mit krypt.\ Identifikationsstring   &   bit.ly/2Kqyrz2
+    \end{tabular}
+    \caption{Beispiele der Redirect-Verfahren}
+    \label{tab:redirect}
+\end{table}
+
+Für das erste Redirect-Szenario wird die übergebene URL zunächst encodiert.
+Anschließend wird die Root-Url des Shops in der encodierten URL gesucht und alles davor entfernt.
+Für das zweite Szenario haben wir keine zufriedenstellende Lösung finden können.
+Allerdings erkennt der URL-Cleaner jedoch, dass er mit diesem Fall nicht umgehen kann, da die Root-URL des Shops
+nicht in der encodierten URL enthalten ist.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c }
+        http://www.shop.de/product?\textbf{partner=idealo}?pid=96
+    \end{tabular}
+    \caption{URL mit parameterbasierten Trackinginformationen}
+    \label{tab:trackparameter}
+\end{table}
+
+Die Tabelle~\ref{tab:trackparameter} zeigt eine Beispiel-URL mit parameterbasierten Trackerinformationen.
+\textit{(Diese sind fett hervorgehoben.)}
+Dabei können ebenfalls Parameter enthalten sein, welche nicht für das Tracking verwendet werden.
+
+Um die parameterbasierten Trackerinformationen zu entfernen, werden alle Schlüssel-Wert-Parameterkombinationen
+gelöscht, deren Schlüssel in einer vorher angelegten Liste vorkommen.
+Diese Liste enthält alle Tracker-Schlüsselnamen, die bei einer manuellen Recherche über mehrere hundert Shops
+häufiger vorgekommen sind.
+
+Nachdem beide Strategien angewandt wurden, wird die bereinigte URL zurückgegeben.
 
 \subsection{Das Erstellen von Selektoren}
 \label{subsec:erstellen-von-selektoren}
