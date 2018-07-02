@@ -62,12 +62,36 @@ Vergleich verwendet.
 Dazu ist es wichtig, eine gute Balance zwischen Treffergenauigkeit und Genauigkeit zu finden.
 Da es nicht unbedingt darum geht, dass die extahierten Informationen \textit{exakt} dem Schema von idealo entspricht,
 ist die Treffergenauigkeit etwas wichtiger, als die Genauigkeit.
-Daher scheinen die besten Ergebnisse bei einem Schwellwert von $F=0.6$ und $SaS=50$ erreicht zu werden.
+Laut den in Tabelle~\ref{tab:accuracy-precision} angegeben Werten, scheinen die besten Ergebnisse bei einem
+Schwellwert von $F=0.6$ und $SaS=50$ erreicht zu werden.
 
 Für jede Nichtübereinstimmung wurde die Levenshtein-Distanz zum erwarteten Wert von idealo berechnet.
 In etwa 50\% der Nichtübereinstimmungen haben eine Distanz kleiner gleich drei und sind somit sehr ähnlich.
 Eine manuelle Prüfung hat ergeben, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine eindeutige
 Übereinstimmung verhindern.
+
+Eine nähere Betrachtung der Kennziffern je Attribut liefert weitere Aufschlüsse, welche für das Matching relevant sind.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
+    \caption{Treffergenauigkeit und Genauigkeit pro Attribut für $SaS=50$}
+    \label{abb:testdaten}
+\end{figure}
+
+Den Diagrammen aus Abbildung~\ref{abb:testdaten} kann man mehrere, für das Matching nützliche Informationen entnehmen.
+Wie erwartet, wird die Produktbeschreibung und die Kategorie selten extrahiert.
+Dies hängt damit zusammen, dass diese Informationen am stärksten von idealo manipuliert werden.
+Interessanterweise wird die HAN ebenfalls selten extrahiert, was vermutlich mit den Testdaten zusammenhängt.
+In diesen kommt die HAN nur in zwei von drei Angeboten vor und ist damit die am seltensten angegebene
+Produkteigenschaft.
+Am häufigsten wird die Bildurl und die Marke gefunden.
+Aus dem Diagramm, welches die Genauigkeit je Attribut darstellt kann man sehr gut entnehmen, dass der Schwellwert ein
+gutes Mittel ist, die Genauigkeit direkt zu beeinflussen.
+Insgesamt kann man für die Matcher-Komponente eine sehr interessante Erkenntnis gewinnen, welche wir vorher nicht in
+Betracht gezogen haben.
+So scheint die Bildurl sehr häufig und korrekt erfasst zu werden.
+Die Bildurl kann als starker Selektor, ähnlich wie den eindeutigen Produkteigenschaften verwendet werden.
 
 \subsection{Mögliche Fehlerquellen der Messung}
 \label{subsec:fehlerquellen}
