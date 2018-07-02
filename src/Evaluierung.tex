@@ -1,10 +1,11 @@
-\section{Die Untersuchung der Genauigkeit der Selektoren}
+\section{Die Evaluierung des Extraktionsalgorithmus}
 \label{sec:evaluierung}
 
 In diesem Kapitel wird untersucht, wie gut der Extraktionsalgorithmus funktioniert.
-Dazu wird zunächst die Qualität der idealo-Daten, welche zum Anlernen und zum Evaluieren genutzt wird, grob analysiert.
-Mit Hilfe der durchgeführten Messungen werden abschließend die Auswirkungen der Ergebnisse auf das Matching
-abgeleitet.\\
+Da die Qualität der Regeln und damit der extrahierten Werte von den Lerndaten abhängt, werden diese als erstes
+analysiert.
+Anschließend werden die typischen Kenngrößen der binären Klassifikatoren bestimmt.
+Abschließend werden für den Matcher relevanten Faktoren näher untersucht.\\
 \newline
 Sowohl für das Antrainieren der Extraktionsregeln als auch für die Evaluierung der Ergebnisse wurden Angebotsdaten
 von idealo verwendet.
@@ -13,23 +14,28 @@ Je Shop wurden max.\ 50 Angebote für die Erstellung der Regeln und 100 Angebote
 verwendet.
 Die Auswahl der Shops erfolgte basierend auf der Shopübersicht\footnotemark von idealo.
 \footnotetext{https://www.idealo.de/preisvergleich/AllePartner.html}
-Für jedes Angebot existiert mindestens der Titel, der Preis und die SKU .
+Für jedes Angebot existieren mindestens Angaben zum Titel, dem Preis und der SKU .
+Eine HAN und eine Produktbeschreibung existieren am seltensten.
+
 Alle nachfolgenden Messungen basieren auf einem Schnappschuss der Angebotsdaten, sowie der verlinkten Angebotswebseiten.
 Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die Gefahr besteht, dass die
 Angebotsdaten von idealo mit denen von der Webseite nicht übereinstimmen.
 Deshalb wurden nicht mehr als 150 Angebote je Shop heruntergeladen.
 
 Die Genauigkeit des Parser wurde bestimmt, indem die Extraktionsregeln auf der Testmenge angewandt wurden.
-Die Genauigkeit wurde dabei in Abhängigkeit der Menge der Angebote (SaS), welche für das Anlernen verwendet wurden,
-sowie des in Kapitel~\ref{subsec:bewertungssystem} eingeführten Filter-Schwellwertes (F) bestimmt.
-In der Tabelle~\ref{tab:accuracy-precision} sind die Genauigkeit und die Präzision aufgeführt.
-Die Genauigkeit gibt an, wie oft ein Produktattribut korrekt erfasst wurde.
-Die Präzision berücksichtigt zusätzlich die Fälle, in denen der Parser explizit nichts zurück gibt.
+Die Treffergenauigkeit wurde dabei in Abhängigkeit der Menge der Angebote \textit{SaS}, welche für das Anlernen
+verwendet wurden, sowie des in Kapitel~\ref{subsec:bewertungssystem} eingeführten Filter-Schwellwertes \textit{F}
+bestimmt.
+In der Tabelle~\ref{tab:accuracy-precision} sind die Treffergenauigkeit (\textit{accuracy}) und die Genauigkeit
+(\textit{precision}) aufgeführt.
+Die Treffergenauigkeit gibt an, wie oft ein Produktattribut korrekt erfasst wurde und entspricht in diesem Fall der
+Trefferquote (\textit{recall}).
+Die Genauigkeit berücksichtigt zusätzlich die Fälle, in denen der Parser explizit nichts zurück gibt.
 
 \begin{table}[h]
     \centering
     \begin{tabular}{ c | c c c | c c c }
-        &   \multicolumn{3}{c}{\textit{Genauigkeit in \%}}    &   \multicolumn{3}{c}{\textit{Präzision in \%}} \\
+        &   \multicolumn{3}{c}{\textit{Treffergenauigkeit in \%}}    &   \multicolumn{3}{c}{\textit{Genauigkeit in \%}} \\
         \textbf{F\textbackslash SaS} & \textbf{10} & \textbf{20} & \textbf{50} & \textbf{10} & \textbf{20} & \textbf{50}  \\
         \hline
         \textbf{0}       &   50.59 &   50.78 &   51.07         &   72.73 &   70.81 &   69.62 \\
@@ -41,7 +47,13 @@ Die Präzision berücksichtigt zusätzlich die Fälle, in denen der Parser expli
         \textbf{1.0}     &   41.48 &   39.27 &   36.00         &   98.17 &   97.64 &   \textbf{98.90}
 
     \end{tabular}
-    \caption{Genauigkeit und Präzision bei unterschiedlichen Konfigurationen}
+    \caption{Treffergenauigkeit und Genauigkeit bei unterschiedlichen Konfigurationen}
     \label{tab:accuracy-precision}
 \end{table}
 
+Die vom Parser extrahierten Angebotsinformationen werden von der Matcher-Komponente für den ähnlichkeitsbasierten
+Vergleich verwendet.
+Dazu ist es wichtig, eine gute Balance zwischen Treffergenauigkeit und Genauigkeit zu finden.
+Da es nicht unbedingt darum geht, dass die extahierten Informationen \textit{exakt} dem Schema von idealo entspricht,
+ist die Treffergenauigkeit etwas wichtiger, als die Genauigkeit.
+Daher scheinen die besten Ergebnisse bei einem Schwellwert von $F=0.6$ und $SaS=50$ erreicht zu werden.
