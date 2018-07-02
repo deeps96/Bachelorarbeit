@@ -19,7 +19,7 @@ Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die 
 Angebotsdaten von idealo mit denen von der Webseite nicht übereinstimmen.
 Deshalb wurden nicht mehr als 150 Angebote je Shop heruntergeladen.
 
-Die \textbf{Accuracy} des Parser wurde bestimmt, indem die Extraktionsregeln auf der Testmenge angewandt wurden.
+Die Genauigkeit des Parser wurde bestimmt, indem die Extraktionsregeln auf der Testmenge angewandt wurden.
 Die Genauigkeit wurde dabei in Abhängigkeit der Menge der Angebote (SaS), welche für das Anlernen verwendet wurden,
 sowie des in Kapitel~\ref{subsec:bewertungssystem} eingeführten Filter-Schwellwertes (F) bestimmt.
 In der Tabelle~\ref{tab:accuracy-precision} sind die Genauigkeit und die Präzision aufgeführt.
@@ -32,15 +32,16 @@ Die Präzision berücksichtigt zusätzlich die Fälle, in denen der Parser expli
         &   \multicolumn{3}{c}{\textit{Genauigkeit in \%}}    &   \multicolumn{3}{c}{\textit{Präzision in \%}} \\
         \textbf{F\textbackslash SaS} & \textbf{10} & \textbf{20} & \textbf{50} & \textbf{10} & \textbf{20} & \textbf{50}  \\
         \hline
-        \textbf{0}      &   50.59 &   50.78 &   51.07         &   72.73 &   70.81 &   69.62 \\
-        \textbf{50}     &   52.12 &   53.50 &   \textbf{53.98}&   88.66 &   90.39 &   91.22 \\
-        \textbf{60}     &   51.87 &   53.07 &   53.15         &   94.15 &   94.03 &   94.93 \\
-        \textbf{70}     &   50.15 &   51.37 &   52.02         &   96.15 &   96.39 &   95.86 \\
-        \textbf{80}     &   47.92 &   49.69 &   50.05         &   97.84 &   97.81 &   97.76 \\
-        \textbf{90}     &   44.61 &   46.92 &   46.57         &   98.16 &   98.14 &   98.42 \\
-        \textbf{100}    &   41.48 &   39.27 &   36.00         &   98.17 &   97.64 &   \textbf{98.90}
+        \textbf{0}       &   50.59 &   50.78 &   51.07         &   72.73 &   70.81 &   69.62 \\
+        \textbf{0.5}     &   52.12 &   53.50 &   \textbf{53.98}&   88.66 &   90.39 &   91.22 \\
+        \textbf{0.6}     &   51.87 &   53.07 &   53.15         &   94.15 &   94.03 &   94.93 \\
+        \textbf{0.7}     &   50.15 &   51.37 &   52.02         &   96.15 &   96.39 &   95.86 \\
+        \textbf{0.8}     &   47.92 &   49.69 &   50.05         &   97.84 &   97.81 &   97.76 \\
+        \textbf{0.9}     &   44.61 &   46.92 &   46.57         &   98.16 &   98.14 &   98.42 \\
+        \textbf{1.0}     &   41.48 &   39.27 &   36.00         &   98.17 &   97.64 &   \textbf{98.90}
 
     \end{tabular}
     \caption{Genauigkeit und Präzision bei unterschiedlichen Konfigurationen}
     \label{tab:accuracy-precision}
 \end{table}
+

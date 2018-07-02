@@ -327,6 +327,7 @@ Der resultierende Datenselektor sieht wie in Tabelle~\ref{tab:datenselektor} dar
     \label{tab:datenselektor}
 \end{table}
 
+\newpage
 \subsection{Die Trimming-Funktion}
 \label{subsec:trimming-funktion}
 
@@ -361,7 +362,8 @@ Wir haben uns dafür entschieden, da man den leeren String von einem unerwünsch
 kann.
 Dies soll nicht so schwer ins Gewicht fallen, wie eine fehlerhaft extrahierte Information, da man später beim
 Extraktionsvorgang genau diesen Fall unterscheiden kann.
-Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese normalisiert.
+Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese auf den
+Intervall 0 bis 1 normalisiert.
 Alle Regeln mit einem normalisierten Index unter einem bestimmten Schwellwert werden verworfen.
 Die Parser-Komponente verwendet diesen Qualitätsindex, um aus allen gefundenen Werten den besten zu ermitteln.
 Dazu gruppiert sie nach den extrahierten Werten und summiert den Qualitätsindex.
