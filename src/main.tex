@@ -6,8 +6,8 @@
 % Preamble
 \documentclass[
 a4paper,		% Verwenden von A4 als Seitenformat
-12pt,			% Festlegung der Standardtextgröße auf 12pt
-pagesize,
+11pt,			% Festlegung der Standardtextgröße auf 12pt
+%pagesize,
 headsepline,
 titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
 ]{scrartcl}
@@ -35,6 +35,7 @@ titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
 \usepackage{url}                % bibtex
 \usepackage{tabularx}           % Tabelle mit fester Breite und Alignment
 \usepackage{tikz}               % Zahl im Kreis
+\usepackage{geometry}
 
 % Commands
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % Tabelle mit fester Breite und linkem Alignment
@@ -43,10 +44,14 @@ titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
 
 % Styling
 \pagestyle{headings}
-\headsep4mm % Abstand der Kopfzeile vom Text:
-\typearea[current]{current}     % Satzspiegel neu berechnen
 \setlength{\footskip}{10mm}
-\setlength{\textheight}{1.1\textheight}
+\geometry{
+    left=2cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=3cm,
+    bindingoffset=5mm
+}
 
 \input{Titelblatt}
 
