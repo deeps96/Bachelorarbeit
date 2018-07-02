@@ -1,19 +1,31 @@
 \section{Die Untersuchung der Genauigkeit der Selektoren}
+\label{sec:evaluierung}
 
-	- Was wird gemessen?
-		 -> wie oft Selektoren das liefern, was Idealo erwartet und wie oft etwas falsches
-		 -> Welche Attribute häufig gute Selektoren haben
-	
+In diesem Kapitel wird untersucht, wie gut der Extraktionsalgorithmus funktioniert.
+Dazu wird zunächst die Qualität der idealo-Daten, welche zum Anlernen und zum Evaluieren genutzt wird, grob analysiert.
+Mit Hilfe der durchgeführten Messungen werden abschließend die Auswirkungen der Ergebnisse auf das Matching abgeleitet.
+
 \subsection{Die Testdaten}
+\label{subsec:testdaten}
 
-	- Idealo Offers erforderlich für Erstellung der Selektoren als auch der Evaluierung
-	- Welche Probleme haben diese Daten?
-	- Snapshot
-	- Wie wurden die Shops ausgewählt? -> einfach die ersten, die bei Idealo in der Shopauflistung enthalten sind und bei denen der SRG Seiten herunterladen kann
-	
-\subsection{Die Ergebnisse der Genauigkeitsmessung}
+Sowohl für das Antrainieren der Regeln als auch für das Evaluieren des Parsers werden Daten von idealo genutzt.
+Für die nachfolgenden Messungen wurden Angebote von 50 Shops verwendet.
+Für jeden Shop wurden 150 Angebote geladen.
+Maximal 50 der 150 Angebote werden für das Anlernen verwendet.
+Die Evaluation findet mit den restlichen 100 Angeboten statt.
 
-	- Wie genau sind die Selektoren? -> Accuracy berechnen
-	- Wie oft werden Selektoren mit NS = 1.0 (oder > 0.85) für welches Attribut gefunden?
-	- Welche Fehlerquellen gibt es?
-	- Aussage zur Brauchbarkeit der Selektoren treffen (Vergleich zu nicht-shop-spezifischen ziehen?)
+Nachfolgend soll ein grober, quantitativer Überblick über die idealo-Daten gegeben werden.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, trim=0 3cm 0 3cm, clip]{resources/Attributabdeckung-idealo-Daten.pdf}
+    \caption{Attributabdeckung der idealo-Daten}
+    \label{abb:testdaten}
+\end{figure}
+
+Der Abbildung~\ref{abb:testdaten} kann man entnehmen, dass es für jedes untersuchte Angebot einen Titel, einen Preis
+und die SKU gibt.
+Interessanterweise sind andere Produkteigenschaften, welche für die eindeutige Zuordnung genutzt werden können,
+häufiger nicht vorhanden.
+Der Verlauf der Attributabdeckung ähnelt sich in allen Datenreihen.
+Die Verteilungen der Attribute innerhalb des Test- und des Trainingsset sind also ähnlich.
