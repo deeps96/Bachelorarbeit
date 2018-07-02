@@ -266,9 +266,6 @@ Der Aufbau des CSS-Selektors erfolgt analog zu der "Copy selector"-Funktion der 
 Der Selektor für einen Beschreibungsknoten speichert zusätzlich einen Schlüssel, um das korrekte Elementattribut
 auszulesen.
 
-\subsubsection{Die Erstellung der Skript-Selektoren}
-\label{subsubsec:erstellung-script-selektoren}
-
 Wir haben festgestellt, dass viele Internetshops Javascript auf ihrer Webseite verwenden.
 Oftmals sind in diesem Fall die produktspezifischen Daten bereits in einer strukturierten Form im Javascript
 als Objekt in der Javascript Objekt Notation (JSON) enthalten.
@@ -332,6 +329,46 @@ Der resultierende Datenselektor sieht wie in Tabelle~\ref{tab:datenselektor} dar
     \caption{Datenselektor für Beispiel~\ref{exa:datenselektor}}
     \label{tab:datenselektor}
 \end{table}
+
+\subsection{Die Trimming-Funktion}
+\label{subsec:trimming-funktion}
+
+Eine generische Verbesserung, welche auf alle Selektoren angewendet werden kann ist die Trimming-Funktion.
+Häufig stehen vor und nach den gesuchten Produktattributen andere irrelevante Informationen.
+Vor der gesuchten EAN steht zum Beispiel der String 'EAN:\textvisiblespace', welcher entfernt werden soll.
+Die generierten Regeln enthalten Informationen, wie viele Stellen links oder rechts abgeschnitten werden sollen.
+Diese bezeichnen wir als Left-Cut und Right-Cut.
+Sollte vor der gesuchten EAN immer derselbe String stehen, so gibt es keine Streuung in den Left-Cut-Werten.
+Wenn es sich bei dem Produktattribut um die Beschreibung handelt und diese durch manuelle Änderungen von idealo von
+denen der Webseite abweicht, so gibt es eine starke Streuung der Left- und Right-Cut-Werten.
+
+\subsection{Das Bewertungssystem für die Selektoren}
+\label{subsec:bewertungssystem}
+
+Durch die verschiedenen Möglichkeiten Selektoren zu generieren sowie durch die Trimmingfunktion werden sehr viele
+Selektoren erstellt.
+Die gewonnene Flexibilität ist zwar gewollt, hat jedoch den Nachteil das ein "Rauschen" der extrahierten Daten entsteht.
+Dieses "Rauschen" entsteht dadurch, dass nun sehr viele Daten extrahiert werden.
+Allerdings ist nun nicht mehr bekannt, welche extrahierten Informationen korrekt oder falsch sind.
+Um diesen Fakt entgegenzuwirken wurde ein Bewertungssystem für Selektoren eingeführt.
+Nachdem alle Selektoren mit Hilfe der Angebote von idealo angelernt wurden, wird jedem Selektor ein Qualitätsindex
+zugewiesen.
+Es wird dafür noch einmal über die Angebote, welche zum Anlernen genutzt wurden, von idealo iteriert.
+Für jedes Angebot werden alle Selektoren angewandt und die extrahierten Produktattribute mit denen von idealo
+verglichen.
+Sollten die Werte identisch sein, so wird der Qualitätsindex des Selektors erhöht.
+Wenn die Werte unterschiedlich sind, so wird der Index verringert.
+Ein Ausnahmefall bildet der leere String: Wird dieser als extrahierter Wert zurückgegeben, so bleibt der
+Qualitätsindex unverändert.
+Wir haben uns dafür entschieden, da man den leeren String von einem unerwünschten bzw\. falschen Wert unterscheiden
+kann.
+Dies soll nicht so schwer ins Gewicht fallen, wie eine fehlerhaft extrahierte Information, da man später beim
+Extraktionsvorgang genau diesen Fall unterscheiden kann.
+Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese normalisiert.
+Alle Regeln mit einem normalisierten Index unter einem bestimmten Schwellwert werden verworfen.
+Die Parser-Komponente verwendet diesen Qualitätsindex, um aus allen gefundenen Werten den besten zu ermitteln.
+Dazu gruppiert sie nach den extrahierten Werten und summiert den Qualitätsindex.
+Für jedes Produktattribut wird somit nur das beste Ergebnis gespeichert.
 
 \subsection{Die Implementierung}
 \label{subsec:implementierung}
