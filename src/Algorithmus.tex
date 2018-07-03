@@ -102,7 +102,7 @@ Die resultierende Architektur ist in Abbildung~\ref{abb:architektur-parser} abge
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
+    \includegraphics[width=10cm, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
     \caption{Architektur des Parsers}
     \label{abb:architektur-parser}
 \end{figure}
@@ -222,10 +222,10 @@ Nachdem beide Strategien angewandt wurden, wird die bereinigte URL zurückgegebe
 Im nachfolgenden wird darauf eingegangen, wie die Selektoren während der Regelgenerierung erzeugt werden.
 Für die Erläuterung werden Begriffe wie \textit{Document Object Model (DOM)}, \textit{Element} oder \textit{Tag} aus
 dem Kontext der hierarchiebasierten Sprache HTML verwendet.
-Bei Bedarf kann der entsprechende Wikipedia-Artikel\footnotemark für einen kurzen Einstieg genutzt werden.
+Bei Bedarf kann der entsprechende Wikipedia-Artikel\footnotemark für einen kurzen Einstieg gelesen werden.
 \footnotetext{\url{https://de.wikipedia.org/wiki/Hypertext_Markup_Language}}
 
-Um einen Selektor zu erstellen, muss zunächst ein konkretes Element der DOM-Hierarchie bestimmt werden.
+Um einen Selektor zu erstellen muss zunächst ein konkretes Element der DOM-Hierarchie bestimmt werden.
 Dieses wird von dem SRG in einem vorherigen Schritt ermittelt und stellt den Fundort für ein gewünschtes
 Produktattribut dar.
 
@@ -327,7 +327,6 @@ Der resultierende Datenselektor sieht wie in Tabelle~\ref{tab:datenselektor} dar
     \label{tab:datenselektor}
 \end{table}
 
-\newpage
 \subsection{Die Trimming-Funktion}
 \label{subsec:trimming-funktion}
 

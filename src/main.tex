@@ -8,8 +8,9 @@
 a4paper,		% Verwenden von A4 als Seitenformat
 11pt,			% Festlegung der Standardtextgröße auf 12pt
 %pagesize,
-headsepline,
-titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
+%headsepline,   % Linie unter Kopfzeile
+titlepage,		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
+%parskip=half    % paragraph skip
 ]{scrartcl}
 
 % Packages
@@ -44,11 +45,12 @@ titlepage		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseite
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 % Styling
-\pagestyle{headings}
+%\pagestyle{headings}   % Kopfzeile
+\pagestyle{blank}
 \setlength{\footskip}{10mm}
 \geometry{
-    left=2cm,
-    right=2.5cm,
+    left=2.5cm,
+    right=3cm,
     top=2.5cm,
     bottom=3cm,
     bindingoffset=5mm
