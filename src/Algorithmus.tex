@@ -26,45 +26,50 @@ als zuverlässig eingestuft werden.
 Je genauer die Ergebnisse des Parsers im Format von idealo vorliegen, desto einfacher sollte der Vergleich durch die
 Matcher-Komponente werden.
 
-\subsection{Die möglichen Herangehensweisen}
+\subsection{Die Positionsbestimmung der Produktattribute}
 \label{subsec:herangehensweisen}
 
 Die eigentliche Schwierigkeit der Datenextraktion liegt in der Bestimmung der Stellen, an denen die gewünschten
 Informationen stehen.
-Es gibt grundsätzlich zwei Möglichkeiten, wie man aus den Angeboten Informationen extrahieren kann.
+Es gibt grundsätzlich zwei Möglichkeiten, wie man die Informationen aus den Angeboten extrahieren kann.
 Wir haben zwischen dem shop-unspezifischen und den shop-spezifischen Ansatz unterschieden.
 
-Den shop-unspezifischen Ansatz hat bereits die Initiative Schema.org aufgegriffen.
-Schema.org hat einen Standard entwickelt, den Webseitenbetreiber nutzen können, um bestimmte
-Daten zu markieren.
-Shopbetreiber können zum Beispiel die Produktrezensionen, den Preis oder auch den Produkttitel hervorheben.
-Große Suchmaschinenanbieter wie Google, Microsoft oder Yandex können dadurch sehr einfach die relevanten Informationen
+Die Initiative Schema.org hat bereits 2011\footnotemark eine erste Lösung für den \textit{shop-unspezifischen} Ansatz
+entwickelt.
+\footnotetext{\url{https://schema.org/docs/about.html}}
+Schema.org hat einen Standard entwickelt, den Webseitenbetreiber nutzen können, um bestimmte Daten zu markieren.
+Shopbetreiber können zum Beispiel die Produktrezensionen, den Preis oder auch den Produktnamen hervorheben.
+Große Suchmaschinenanbieter wie Google, Microsoft oder Yandex können dadurch sehr einfach relevante Informationen
 direkt in den Suchergebnissen anzeigen.
 Die Angebote der Onlinehändler werden somit besser dargestellt.
 
 Laut einer Schätzung von idealo verwenden rund 40\% der Shops diesen Standard.
 Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da man generische Regeln verwenden kann,
 um die standardisierten Informationen zu erfassen.
-Die Lösung ist recht einfach und schnell umsetzbar.
-
-Alternativ zum shop-unspezifischen Ansatz gibt es die shop-spezifische Herangehensweise, d.h.\ dass für jeden
+Eine Lösung zum Auslesen dieser Informationen ist recht einfach und schnell umsetzbar.
+\\
+\\
+Alternativ zum shop-unspezifischen Ansatz gibt es die \textit{shop-spezifische} Herangehensweise, d.h.\ dass für jeden
 Onlineshop individuell angepasste Spezifikationen für die Extraktion erstellt werden.
 Die Regeln des shop-spezifischen Ansatzes bilden eine Übermenge des shop-unspezifischen Ansatzes.
 
-Die Umsetzung dieser Variante ist insgesamt anspruchsvoller, da diese Spezifikationen zunächst erstellt werden müssten.
-Insgesamt gehen wir jedoch davon aus, durch diesen Ansatz sowohl die Extraktionsrate als auch die Präzision des Parsers
-im Vergleich zu dem shop-unspezifischen Ansatz zu erhöhen.
-Dadurch erhoffen wir uns bessere Daten für den Vergleich zu erhalten.
+Die Umsetzung dieser Variante ist anspruchsvoller, da diese Spezifikationen zunächst erstellt werden müssten.
+Wir nehmen jedoch an, dass durch diesen Ansatz sowohl die Trefferquote als auch die Präzision des Parsers
+im Vergleich zu dem shop-unspezifischen Ansatz erhöht werden.
 
 Zu Beginn haben wir erste Versuche basierend auf dem Schema.org-Standard unternommen.
 Leider haben wir schnell feststellen müssen, dass die Spezifikation oft nicht richtig eingehalten wurden.
 Dies hat die Qualität der extrahierten Daten stark verringert.
 Auch bei anderen Standards, welche bei der Strukturierung von Produktdaten im Internet helfen sollen, wie zum Beispiel
-JSON-LD (W3C) und das Open-Graph-Protokoll (Facebook), konnten wir ähnliche Beobachtungen machen.
+JSON-LD\footnotemark (W3C) und das Open-Graph-Protokoll\footnotemark (Facebook), konnten wir ähnliche Beobachtungen
+machen.
+\footnotetext{\url{https://json-ld.org/}}
+\footnotetext{\url{http://www.ogp.me/}}
+
 Wir haben uns deshalb gegen den shop-unspezifischen Ansatz entschieden.
 
-Im nachfolgenden wird darauf eingegangen, wie wir die shop-spezifische Methode umgesetzt und in den Ablauf des
-Extraktionsprozesses integriert haben.
+Im nachfolgenden wird darauf eingegangen, welche Annahmen für die Umsetzung der shop-spezifischen Methode getroffen
+wurden.
 
 \subsection{Annahmen}
 \label{subsec:annahmen}
