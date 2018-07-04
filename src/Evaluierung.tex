@@ -9,25 +9,26 @@ treffen.
 
 \subsection{Die Testdaten der Evaluierung}
 \label{subsec:testdaten}
-Sowohl für das Antrainieren der Extraktionsregeln als auch für die Evaluierung der Ergebnisse wurden Angebotsdaten
-von idealo verwendet.
-Für die Messung wurden 7500 Angebote von 50 Shops genutzt.
+Sowohl für das Antrainieren der Extraktionsregeln als auch für die Evaluierung der Ergebnisse wurden die von idealo
+zur Verfügung gestellten Angebotsdaten verwendet.
+Für die nachfolgenden Messungen wurden 7500 Angebote von 50 Shops genutzt.
 
-Je Shop wurden max.\ 50 Angebote für die Erstellung der Regeln und 100 Angebote als Testmenge für die Evaluierung
-verwendet.
+Je Händler wurden max.\ 50 Angebote als Trainingsmenge für die Erstellung der Regeln und 100 Angebote als Testmenge für
+die Evaluierung verwendet.
 Die Auswahl der Shops erfolgte basierend auf den ersten Listeneinträgen der Shopübersicht\footnotemark von idealo.
 \footnotetext{https://www.idealo.de/preisvergleich/AllePartner.html}
-
-Für jedes Angebot existieren die Angaben zum Titel, dem Preis und der SKU .
-Die HAN und die Produktbeschreibung eines Angebotes existieren am seltensten.
-Das Verhältnis der fehlenden zu den vorhandenen Produktattributen der Trainingsmenge ähnelt dem Verhältnis der
-Testmenge.
 
 Alle nachfolgenden Messungen basieren auf einem Schnappschuss der Angebotsdaten inklusive der verlinkten Webseiten.
 Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die Angebotsdaten von idealo
 möglicherweise nicht mit denen von der Webseite übereinstimmen.
 Damit die Trackingstatistiken der Shopbetreiber nicht verfälscht werden, wurden nicht mehr als 150 Angebote je Shop
 heruntergeladen.
+
+Eine Analyse der gesamten Testdaten hat ergeben, dass für jedes Angebot die Angaben zum Titel, dem Preis und der SKU
+existieren.
+Die HAN und die Produktbeschreibung eines Angebotes existieren hingegen am seltensten.
+Das Verhältnis der fehlenden zu den vorhandenen Produktattributen der Trainingsmenge ähnelt dem Verhältnis der
+Testmenge.
 
 \subsection{Die Messergebnisse}
 \label{subsec:genauigkeitsmessung}
