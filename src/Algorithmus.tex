@@ -342,14 +342,17 @@ Der resultierende Datenselektor sieht wie in Tabelle~\ref{tab:datenselektor} dar
 \end{table}
 \vspace{-0.5cm}
 
-\subsection{Die Trimming-Funktion}
+\subsection{Die Trimm-Funktion}
 \label{subsec:trimming-funktion}
 
-Eine generische Verbesserung, welche auf alle Selektoren angewendet werden kann ist die Trimming-Funktion.
 Häufig stehen vor und nach den gesuchten Produktattributen andere irrelevante Informationen.
 Vor der gesuchten EAN steht zum Beispiel der String 'EAN:\textvisiblespace', welcher entfernt werden soll.
-Die generierten Regeln enthalten Informationen, wie viele Stellen links oder rechts abgeschnitten werden sollen.
+Eine generische Verbesserung, welche auf alle Selektoren angewendet werden kann, ist die Trimm-Funktion.
+
+Diese fügt zu den generierten Regeln Informationen hinzu, wie viele Stellen links oder rechts abgeschnitten werden
+sollen.
 Diese bezeichnen wir als Left-Cut und Right-Cut.
+
 Sollte vor der gesuchten EAN immer derselbe String stehen, so gibt es keine Streuung in den Left-Cut-Werten.
 Wenn es sich bei dem Produktattribut um die Beschreibung handelt und diese durch manuelle Änderungen von idealo von
 denen der Webseite abweicht, so gibt es eine starke Streuung der Left- und Right-Cut-Werten.
