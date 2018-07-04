@@ -41,14 +41,14 @@ titlepage,		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseit
 
 % Commands
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % Tabelle mit fester Breite und linkem Alignment
-\addto\captionsngerman{\renewcommand{\lstlistingname}{Beispiel}} % Beschreibung für Listings-Captions
+\addto\captionsngerman{\renewcommand{\lstlistingname}{Quelltext}} % Beschreibung für Listings-Captions
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 % Styling
 %\pagestyle{headings}   % Kopfzeile
-\setlength{\parindent}{0pt} % Nicht einrücken nach neuem Absatz
 \pagestyle{blank}
-\setlength{\footskip}{10mm}
+\setlength{\parindent}{0pt} % Nicht einrücken nach neuem Absatz
+\setlength{\footskip}{10mm} % Abstand Textblock <-> Fußzeile
 \geometry{
     left=2.5cm,
     right=3cm,
