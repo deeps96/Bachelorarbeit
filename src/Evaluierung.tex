@@ -80,8 +80,8 @@ Dies hängt vermutlich damit zusammen, dass diese Informationen am stärksten vo
 Interessanterweise wird die HAN ebenfalls selten extrahiert, was vermutlich durch das häufige Fehlen der HAN in den
 Testdaten zusammenhängt.
 
-Die in der Bildurl enthaltene ID und die Marke werden häufig gefunden und somit vermutlich sehr nützliche Features für
-den maschinenlernbasierten Vergleich des Matchers sein.
+Die in der Bild-URL enthaltene ID und die Marke werden häufig gefunden und somit vermutlich sehr nützliche Features
+für den maschinenlernbasierten Vergleich des Matchers sein.
 
 \begin{figure}[H]
     \centering
@@ -93,17 +93,15 @@ den maschinenlernbasierten Vergleich des Matchers sein.
 Zu guter letzt kann man dem Diagramm entnehmen, dass der Filterschwellwert ein gutes Mittel ist, um die Accuracy und
 Precision zu beeinflussen und ein höherer SaS-Wert tendenziell besser ist.
 
-\subsection{Mögliche Fehlerquellen der Messung}
+\subsection{Mögliche Fehlerquellen der Messungen}
 \label{subsec:fehlerquellen}
 
-Es musste leider festgestellt werden, dass beim Erstellen der Evaluierungsdaten ein Shop durch eine
-Captcha-Absicherung keine nutzbaren Webseiten lieferte.
-Für diesen Shop konnten folglich keinerlei Regeln für keine der Produkteigenschaften erstellt werden.
-Dies wirkt sich leicht negativ auf die Treffergenauigkeit aus.
+Bei einer genaueren Analyse der Testdaten musste leider festgestellt werden, dass beim Herunterladen der
+Angebotsseiten eines Shops aufgrund einer Captcha-Absicherung keine nutzbaren Webseiten geliefert wurden.
+Für diesen Shop konnten folglich keine Regeln erstellt werden, was sich nachteilig auf die Accuracy auswirkt.
 
-Des Weiteren hat die Verwendung der idealo-Daten als Trainings- und Lerndaten den Nachteil, dass diese teilweise
-manuell oder durch Normalisierungsprozesse von idealo manipuliert wurden.
-Die Angebotsdaten können somit von den Spezifikationen der Webseite abweichen.
-Dieser Fall wurde sehr häufig bei dem Titel und der Produktbeschreibung beobachtet.
-Dies führt dazu, dass die Erstellung der Regeln erschwert wird und manche eigentlich korrekt extrahierte
-Produktattribute fälschlicherweise als inkorrekt markiert werden.
+Des Weiteren trifft die in Kapitel~\ref{subsec:annahmen} getroffene Annahme, dass die idealo-Daten nicht von denen der
+Shops abweichen, nicht zu.
+Die Angebotsdaten werden von idealo teilweise manuell oder durch Normalisierungsprozesse manipuliert, was die
+Regelerstellung erschweren kann.
+Zudem werden möglicherweise korrekt extrahierte Produktattribute fälschlicherweise als inkorrekt markiert.
