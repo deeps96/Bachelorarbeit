@@ -1,4 +1,4 @@
-\section{Die Evaluierung des Extraktionsalgorithmus}
+\section{Die Genauigkeitsmessung des Extraktionsalgorithmus}
 \label{sec:evaluierung}
 
 Der entwickelte Algorithmus deckt die grundlegenden Elementtypen für die Datenextraktion ab.
@@ -7,22 +7,27 @@ entwickelte Algorithmus?
 Genau diese Frage wird in diesem Kapitel beantwortet, um eine grobe Aussage für das weitere Matchingverfahren zu
 treffen.
 
-\subsection{Die Testdaten}
+\subsection{Die Testdaten der Evaluierung}
 \label{subsec:testdaten}
 Sowohl für das Antrainieren der Extraktionsregeln als auch für die Evaluierung der Ergebnisse wurden Angebotsdaten
 von idealo verwendet.
 Für die Messung wurden 7500 Angebote von 50 Shops genutzt.
-Je Shop wurden max.\ 50 Angebote für die Erstellung der Regeln und 100 Angebote für die Evaluierung als Testmenge
+
+Je Shop wurden max.\ 50 Angebote für die Erstellung der Regeln und 100 Angebote als Testmenge für die Evaluierung
 verwendet.
 Die Auswahl der Shops erfolgte basierend auf der Shopübersicht\footnotemark von idealo.
 \footnotetext{https://www.idealo.de/preisvergleich/AllePartner.html}
-Für jedes Angebot existieren mindestens Angaben zum Titel, dem Preis und der SKU .
-Eine HAN und eine Produktbeschreibung existieren am seltensten.
 
-Alle nachfolgenden Messungen basieren auf einem Schnappschuss der Angebotsdaten, sowie der verlinkten Angebotswebseiten.
-Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die Gefahr besteht, dass die
-Angebotsdaten von idealo mit denen von der Webseite nicht übereinstimmen.
-Deshalb wurden nicht mehr als 150 Angebote je Shop heruntergeladen.
+Für jedes Angebot existieren die Angaben zum Titel, dem Preis und der SKU .
+Die HAN und die Produktbeschreibung eines Angebotes existieren am seltensten.
+Das Verhältnis der fehlenden zu den vorhandenen Produktattributen der Trainingsmenge ähnelt dem Verhältnis der
+Testmenge.
+
+Alle nachfolgenden Messungen basieren auf einem Schnappschuss der Angebotsdaten inklusive der verlinkten Webseiten.
+Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die Angebotsdaten von idealo
+möglicherweise nicht mit denen von der Webseite übereinstimmen.
+Damit die Trackingstatistiken der Shopbetreiber nicht verfälscht werden, wurden nicht mehr als 150 Angebote je Shop
+heruntergeladen.
 
 \subsection{Die Genauigkeitsmessung}
 \label{subsec:genauigkeitsmessung}
