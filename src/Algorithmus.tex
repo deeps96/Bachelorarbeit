@@ -169,44 +169,49 @@ Manche Onlinehändler manipulieren vor der Übermittlung ihrer Angebote an ideal
 Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
 Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
 sind.
+
 Dies ist für die Shopbesitzer sehr wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren können.
 Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Statistiken jedoch verfälschen.
 Für idealo ist es deshalb sehr wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
-
+\\
+\\
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
 bereinigt zurück gibt.
 
-Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotslinks eingefügt werden können.
-Dies ist sowohl über Redirects als auch URL-Parameter möglich.
+Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotlinks eingefügt werden können.
+Dies ist sowohl über Weiterleitungen als auch URL-Parameter möglich.
 Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen:
+\\
+\\
+Die erste Strategie bereinigt die URL von Weiterleitungen.
+Dabei gibt es zwei mögliche Verfahren der Weiterleitungsdienste:
 
-Die erste Strategie bereinigt die URL von Redirects.
-Dabei gibt es zwei mögliche Verfahren der Redirect-Dienste:
 Beim ersten Verfahren leitet der zwischengeschaltete Server den Besucher anhand der mitgesendeten URL-Parameter auf
 die korrekte Seite weiter.
-Die ursprüngliche URL ist hierbei somit bereits in der Redirect-URL enthalten.
+Die ursprüngliche URL ist hierbei somit bereits in der Modifizierten enthalten.
+
 Das zweite Verfahren ist etwas schwieriger, da anstatt der Ziel-Adresse lediglich ein kryptischer String mitgesendet
 wird.
 Die Weiterleitung ist erst nach der serverseitigen Zuordnung des kryptischen Strings zur tatsächlichen Adresse möglich.
 
-In der Tabelle~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Redirect-Links aussehen könnten.
+In der Tabelle~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Weiterleitungen aussehen könnten.
 Eine Mischform der beiden Varianten ist ebenfalls möglich.
 
 \begin{table}[h]
     \centering
     \begin{tabular}{ l | l }
-        Redirect mit URL-Parameter                  &   cptrack.com/?redir=www.shop.de/product1\\
-        Redirect mit krypt.\ Identifikationsstring   &   bit.ly/2Kqyrz2
+        URL-Parameter                 &   cptrack.com/?redir=\textbf{www.shop.de/product1}\\
+        krypt.\ Identifikationsstring   &   bit.ly/\textbf{2Kqyrz2}
     \end{tabular}
-    \caption{Beispiele der Redirect-Verfahren}
+    \caption{Beispiele der Weiterleitungsverfahren}
     \label{tab:redirect}
 \end{table}
 
-Für das erste Redirect-Szenario wird die übergebene URL zunächst encodiert.
+Für die Bereinigung von Weiterleitungen wird die übergebene URL zunächst encodiert.
 Anschließend wird die Root-Url des Shops in der encodierten URL gesucht und alles davor entfernt.
-Für das zweite Szenario haben wir keine zufriedenstellende Lösung finden können.
-Allerdings erkennt der URL-Cleaner jedoch, dass er mit diesem Fall nicht umgehen kann, da die Root-URL des Shops
-nicht in der encodierten URL enthalten ist.
+Für die Weiterleitungen, welche kryptische Identifikationsstrings verwenden, haben wir keine zufriedenstellende Lösung
+finden können.
+Allerdings wird dieser Fall durch das Fehlen der Root-URL des Shops in der encodierten URL erkannt.
 
 \begin{table}[h]
     \centering
@@ -218,7 +223,6 @@ nicht in der encodierten URL enthalten ist.
 \end{table}
 
 Die Tabelle~\ref{tab:trackparameter} zeigt eine Beispiel-URL mit parameterbasierten Trackerinformationen.
-\textit{(Diese sind fett hervorgehoben.)}
 Dabei können ebenfalls Parameter enthalten sein, welche nicht für das Tracking verwendet werden.
 
 Um die parameterbasierten Trackerinformationen zu entfernen, werden alle Schlüssel-Wert-Parameterkombinationen
