@@ -131,35 +131,36 @@ Zum Schluss werden diese in einer Datenbank normalisiert abgespeichert.
 
 Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 
-\subsection{Die Funktionsweise des SRG}
+\subsection{Die Funktionsweise des Shop Rules Generators}
 \label{subsec:funktionsweise-srg}
 
-Der Shop Rules Generator gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
+Der Shop Rules Generator (SRG) gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
 Sollten diese noch nicht existieren, werden sie generiert.
-
 Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
-Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
+
+Zuerst werden eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
 Dies erfolgt über einen von idealo zur Verfügung gestellten API-Endpoint, welcher den Datenbankzugriff über eine
 REST-Schnittstelle kapselt.
 Dies hat den Vorteil, dass wir die Infrastruktur von idealo nutzen können und keine Kopie der Angebotsdaten
 lokal speichern müssen.
 
-Zu jedem dieser Angebote liegen die Webadresse für das Angebot, sowie die  Informationen über die in
+Zu jedem dieser Angebote liegen die Webadresse, sowie die Informationen über die in
 Kapitel~\ref{subsec:technische-anforderungen-parser} genannten Produktattribute vor.
 Außerdem wird für jedes Angebot das dazugehörige HTML-Dokument heruntergeladen.
 
-Um die Server der Onlineshops nicht mit zu vielen Anfragen auf einmal zu strapazieren, wird zwischen jedem
-Herunterladen einer Angebotsseite eine fest definierte Zeit gewartet.
+Um die Server der Onlineshops nicht durch zu viele simultane Anfragen zu strapazieren, wird nach jedem
+Download eine fest definierte Zeit gewartet.
 
-Für die Menge der heruntergeladenen HTML-Dokumente ist bekannt, um welche Angebote es sich handelt und welche
+Für die Menge der heruntergeladenen HTML-Dokumente ist somit bekannt, um welche Angebote es sich handelt und welche
 konkreten Produktattribute erwartet werden.
+
 Dieses Wissen wird für das Anlernen der Regeln genutzt.
 Dazu werden die Werte aller Produkteigenschaften in dem HTML-Dokument gesucht.
 Für jedes Vorkommnis eines Produktattributes wird ein Selektor erstellt, der den Fundort referenziert und einer Regel
 zugeordnet.
-Nachdem alle Regeln gesammelt wurden, wird eine finale Regelmenge bestimmt.
-In dieser Regelmenge ist für jede Produkteigenschaft eine Menge von Selektoren enthalten.
-Diese Regelmenge wird in der Regeldatenbank gespeichert und bei zukünftigen Anfragen direkt zurückgegeben.
+
+Nachdem alle Regeln gesammelt wurden, wird eine finale Regelmenge bestimmt, welche in der Regeldatenbank gespeichert
+und bei zukünftigen Anfragen direkt zurückgegeben wird.
 
 \subsection{Der URL-Cleaner}
 \label{subsec:urlcleaner}
