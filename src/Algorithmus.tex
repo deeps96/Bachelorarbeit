@@ -232,7 +232,7 @@ häufiger vorgekommen sind.
 
 Nachdem beide Strategien angewandt wurden, wird die bereinigte URL zurückgegeben.
 
-\subsection{Das Erstellen von Selektoren}
+\subsection{Die Erstellung von Selektoren}
 \label{subsec:erstellen-von-selektoren}
 
 Im nachfolgenden wird darauf eingegangen, wie die Selektoren während der Regelerstellung erzeugt werden.
@@ -383,22 +383,3 @@ Alle Regeln mit einem normalisierten Index unter einem bestimmten Schwellwert we
 Die Parser-Komponente verwendet diesen Qualitätsindex, um aus allen gefundenen Werten den besten zu ermitteln.
 Dazu gruppiert sie nach den extrahierten Werten und summiert den Qualitätsindex.
 Für jedes Produktattribut wird somit nur das beste Ergebnis gespeichert.
-
-\subsection{Die Implementierung}
-\label{subsec:implementierung}
-
-Bei der praktischen Umsetzung der theoretischen Ideen spielten vorallem die nichtfunktionalen Anforderungen eine
-wichtige Rolle.
-Diese sind in der Bachelorarbeit von Dmitrii Zhamanakov aufgeführt.
-Die nichtfunktionalen Anforderungen an den Parser bestehen hauptsächlich in der Parallelisierung und der
-Selbstheilung des Microservices.
-Da der Parser keinen Zustand besitzt, ist eine Skalierung ohne weiteres möglich.
-Die Parallelisierung wurde durch die Verwendung des asynchrones Threadpools von Spring erreicht.
-Die Selbstheilung, also das flexible Umgehen mit anderen fehlerhaften Komponenten wurde hauptsächlich durch den
-Einsatz von Retry-Mechanismen erreicht.
-
-Neben den nichtfunktionalen Anforderungen gab es jedoch auch mehrere kleine Herausforderungen.
-Diese sind hauptsächlich auf die sehr laxe Einhaltung des HTML-Standards zurückzuführen und stellen somit einen von
-der Theorie abweichenden, unerwarteten Faktor dar.
-Laut der Metriken der verwendeten Rabbit-MQ ist eine Parser-Instanz auf unserer Hardware in der Lage bis zu 70 Seiten
-pro Sekunde zu verarbeiten.
