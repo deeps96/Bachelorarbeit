@@ -360,28 +360,29 @@ denen der Webseite abweicht, so gibt es eine starke Streuung der Left- und Right
 \subsection{Das Bewertungssystem für die Selektoren}
 \label{subsec:bewertungssystem}
 
-Durch die verschiedenen Möglichkeiten Selektoren zu generieren sowie durch die Trimmingfunktion werden sehr viele
-Selektoren erstellt.
-Die gewonnene Flexibilität ist zwar gewollt, hat jedoch den Nachteil das ein "Rauschen" der extrahierten Daten entsteht.
-Dieses "Rauschen" entsteht dadurch, dass nun sehr viele Daten extrahiert werden.
-Allerdings ist nun nicht mehr bekannt, welche extrahierten Informationen korrekt oder falsch sind.
-Um diesen Fakt entgegenzuwirken wurde ein Bewertungssystem für Selektoren eingeführt.
-Nachdem alle Selektoren mit Hilfe der Angebote von idealo angelernt wurden, wird jedem Selektor ein Qualitätsindex
-zugewiesen.
-Es wird dafür noch einmal über die Angebote, welche zum Anlernen genutzt wurden, von idealo iteriert.
+Durch die verschiedenen Methodiken Selektoren zu erstellen und durch die zuvor beschriebene Trim-Funktion wurde die
+Flexibilität des Parser erhöht.
+Dies hat jedoch den Nachteil das ein sogenanntes \textit{Rauschen} in den extrahierten Daten entsteht.
+
+Dieses Rauschen entsteht dadurch, dass nun potenziell sehr viele Daten extrahiert werden, bei denen nicht mehr bekannt
+ist, welche extrahierten Informationen korrekt oder falsch sind.
+Damit die Anzahl der falsch extrahierten Produktattribute minimiert wird, haben wir ein Bewertungssystem für
+Selektoren eingeführt.
+
+Nach der Erstellung aller Selektoren, wird jedem Selektor ein Qualitätsindex zugewiesen.
 Für jedes Angebot werden alle Selektoren angewandt und die extrahierten Produktattribute mit denen von idealo
 verglichen.
-Sollten die Werte identisch sein, so wird der Qualitätsindex des Selektors erhöht.
-Wenn die Werte unterschiedlich sind, so wird der Index verringert.
+Je nachdem ob der extrahierte Wert mit dem von idealo übereinstimmt, wird der Index erhöht oder verringert.
+
 Ein Ausnahmefall bildet der leere String: Wird dieser als extrahierter Wert zurückgegeben, so bleibt der
 Qualitätsindex unverändert.
 Wir haben uns dafür entschieden, da man den leeren String von einem unerwünschten bzw.\  falschen Wert unterscheiden
 kann.
-Dies soll nicht so schwer ins Gewicht fallen, wie eine fehlerhaft extrahierte Information, da man später beim
-Extraktionsvorgang genau diesen Fall unterscheiden kann.
-Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese auf den
-Intervall 0 bis 1 normalisiert.
+
+Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese auf den Intervall $[0; 1]$
+normalisiert.
 Alle Regeln mit einem normalisierten Index unter einem bestimmten Schwellwert werden verworfen.
-Die Parser-Komponente verwendet diesen Qualitätsindex, um aus allen gefundenen Werten den besten zu ermitteln.
-Dazu gruppiert sie nach den extrahierten Werten und summiert den Qualitätsindex.
+
+Die Parser-Komponente verwendet den Qualitätsindex, um aus allen gefundenen Werten den Besten zu ermitteln.
+Dazu gruppiert sie nach den extrahierten Werten und summiert den normalisierten Index.
 Für jedes Produktattribut wird somit nur das beste Ergebnis gespeichert.
