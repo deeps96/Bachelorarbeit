@@ -82,20 +82,25 @@ Daraus resultierend gehen wir davon aus, dass sich durch die Verwendung eines CM
 Außerdem erwarten wir, dass idealo aufgrund der Vertragsvereinbarungen für die zu untersuchenden Shops bereits
 eine gewisse Menge an Angeboten besitzt und die Produktattribute nicht manipuliert wurden.
 
-\subsection{Die Grundidee}
+\subsection{Die zwei Schritte der Datenextraktion}
 \label{subsec:grundidee}
 
+Für die nachfolgenden Erklärungen werden die beiden Begriffe Regel und Selektor definiert.
+Eine \textit{Regel} ist eine Sammlung von Selektoren für eine bestimme Produkteigenschaft.
+Jeder \textit{Selektor} dieser Regel stellt eine Wegbeschreibung durch das HTML-Dokument dar.
+Er führt zu dem gewünschten Element, aus dem das Produktattribut extrahiert werden soll.
+\\
+\\
 Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
 \begin{enumerate}
     \item Die Generierung der shop-spezifischen Extraktionsregeln/ Spezifikation
-    \item Das Anwenden der Regeln auf die vom Crawler erzeugten Seiten
+    \item Die Anwendung der Regeln auf die vom Crawler erzeugten Seiten
 \end{enumerate}
-Eine Regel ist eine Sammlung von Selektoren für eine bestimme Produkteigenschaft.
-Ein Selektor ist eine Art Wegbeschreibung durch das HTML-Dokument.
-Er führt zu dem gewünschten Element, aus dem das Produktattribut extrahiert werden soll.
-In der ersten Phase sollen die Regeln, welche für das Extrahieren benötigt werden, mit Hilfe der Daten von idealo
+
+In der ersten Phase sollen die Regeln, welche für die Extraktion benötigt werden, mit Hilfe der Daten von idealo
 angelernt werden.
-Die generierten Regeln werden in der zweiten Phase angewendet, sodass für jede Produkteigenschaft genau ein Wert
+
+Die generierten Regeln werden in der zweiten Phase angewendet, sodass zu jeder Produkteigenschaft genau ein Wert
 zugeordnet wird.
 Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert.
 
@@ -106,7 +111,7 @@ Die resultierende Architektur ist in Abbildung~\ref{abb:architektur-parser} abge
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
+    \includegraphics[width=13cm, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
     \caption{Architektur des Parsers}
     \label{abb:architektur-parser}
 \end{figure}
