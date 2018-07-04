@@ -121,11 +121,13 @@ Die resultierende Architektur ist in Abbildung~\ref{abb:architektur-parser} abge
 
 Die Parser-Komponente erhält ihre Eingaben, indem sie Nachrichten aus einer Queue konsumiert.
 Eine Nachricht enthält eine vom Crawler heruntergeladene Webseite.
-Der Crawler sendet zusätzlich zu jeder Seite die Webadresse und die Identifikationsnummer des zugehörigen Shops.
-Nach dem Erhalt einer Nachricht, lädt der Parser vom SRG die Extraktionsregeln für den entsprechenden Shop.
+Der Crawler sendet zusätzlich zu jeder Seite, die Webadresse und die Identifikationsnummer des zugehörigen Shops mit.
+Nach dem Erhalt einer Nachricht, lädt der Parser vom Shop Rules Generator (SRG) die Extraktionsregeln für den
+entsprechenden Shop.
+
 Sollten die Regeln noch nicht existieren, wartet der Parser solange, bis diese vom SRG erstellt wurden.
 Sobald der Parser die Regeln empfangen hat, werden die Produktattribute aus der gecrawlten Seite extrahiert.
-Die extrahierten Daten werden abschließend in einer Datenbank normalisiert gespeichert.
+Zum Schluss werden diese in einer Datenbank normalisiert abgespeichert.
 
 Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 
