@@ -14,8 +14,8 @@ cache:
 script:
 - cd ./src/
 - tectonic ./main.tex
-- makeindex ./main.idx
-- tectonic ./main.tex --print
+#- makeindex ./main.idx
+#- tectonic ./main.tex --print
 - cd ../
 deploy:
   provider: releases
