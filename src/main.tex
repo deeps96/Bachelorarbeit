@@ -42,7 +42,7 @@ titlepage,		% Erstellen einer Titelseite, Automatisches zentrieren der Titelseit
 % Commands
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % Tabelle mit fester Breite und linkem Alignment
 \addto\captionsngerman{\renewcommand{\lstlistingname}{Quelltext}} % Beschreibung für Listings-Captions
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\DeclareRobustCommand{\circled}[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 % Styling
 %\pagestyle{headings}   % Kopfzeile
