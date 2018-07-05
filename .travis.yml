@@ -6,7 +6,7 @@ script:
 deploy:
   provider: releases
   api_key:
-    secure: VVr/JXM3k0aANQe3MG2Uo6acu7/hKgU22whfYgqTCPR38KJtn4nsQMj4FKGkkjT0FsORPAWGQ00H264T5vJlRCRaViLpcjOqhAkHUuA9uOud2TMBJKCvtQDBiNYI0epvkYwDE8vi5HTqbzeetTkU56gCjNLRZDDZpHsMg6/UOEc=
+    secure: H1Ru1C8fyJ+Ncj3d7ni4WnYhWeydkvdSxKUnE9VRqNnKpdUh9uTxZC3XLRyq6s+jFqyXAtAJ6V7RXiSaheuwkI7pm3ABmApombxsRrfYzA3Kiuguh+2J1tben0NsKCzwFCugbel3zTnze+PHwWOHW0CGpmwkNX0wXwz/lZoyhSw=
   file:
   - _build/Bachelorarbeit.pdf
   skip_cleanup: true
