@@ -1,1 +1,25 @@
 \section{Der Abschluss}
+
+Der Preisvergleich ist ein wichtiges Instrument, um die Markttransparenz im Internet zu gewährleisten.
+Damit ein möglichst objektiver Preisvergleich sichergestellt werden kann, ist es erforderlich, einen möglichst
+vollständigen Angebotskatalog zu vergleichen.
+Das Ziel des Softwaresystems \textit{Scout} ist es, die Vollständigkeit des idealo-Angebotskatalogs zu untersuchen.
+
+Für das Erfassen aller Produkte eines Onlinehändlers stellt die Datenextraktion einen wichtigen und schwierigen
+Schritt dar.
+In dieser Arbeit wurden zwei mögliche Herangehensweisen für das Extrahieren der Produktattribute vorgestellt.
+Der shop-spezifische Ansatz produziert im Vergleich zum shop-unspezifischen als zuverlässigere Lösung herausgestellt.
+Die Evaluierung hat ergeben, dass der Algorithmus je nach Anwendungsfall eine sehr hohe Präzision erreichen kann.
+Auf den Testdaten von idealo wurde zwar nur jedes zweite Attribut gefunden, dafür jedoch auch eine Präzesion von über
+95\% erreicht.
+\\
+~\\
+Für die zukünftige Weiterentwicklung besteht noch Potenzial bei der Entwicklung weiterer Selektoren, um die
+Flexibilität des Parser weiter zu erhöhen.
+Des Weiteren kann man untersuchen, ob die Qualität der Selektoren durch eine gezielte Auswahl der Angebote, welche
+für das Anlernen verwendet werden, verbessert werden kann.
+
+Abschließend möchte ich auf ein Problem bei der technischen Umsetzung im Zusammenhang mit der Bibliothek
+Jsoup\footnotemark hinweisen: Für eine produktive Weiterentwicklung sollte man evaluieren, wie man eine höhere
+Flexibilität bei fehlerhaften HTML-Dokumenten gewährleisten könnte.
+\footnotetext{https://jsoup.org}
