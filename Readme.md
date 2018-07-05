@@ -1,0 +1,1 @@
+[![Build Status](https://api.travis-ci.com/deeps96/Bachelorarbeit.svg)](https://travis-ci.com/deeps96/Bachelorarbeit)
