@@ -19,7 +19,7 @@ deploy:
   provider: releases
   api_key:
     secure: Kw4+QA78jKvvrZvJQzhPKEO2frl6VImKfLjIGQEOsYHXngH33qMH8rMWUvGBn4+coR2qvuJx4vU2aw5rQdddT/QNWtg1EGSv/pd9CvZ1MkxGnjz2Cw2upvYrBJKHumEuoRAjI2j1mSgNnxAcucg3x524tfb+pSioarck9lQlfbNKR4h+hzLm61yNYMiN+MboYUkfzD2A8/Ws/RoGw3QdfhFXy1e18zTjRHQ49YOSeNiuQBgPFoKYUc4PXRqWvQyw4GtH1exMDawg7rq4P3iNZA1CLeZUwH48uwa2l8yOAt0IqdFrrcC76tWOjoW4VNzR/vb5mZTIR3H3VBpNip0C9kaoQzexZbKLeL04qmFSApJ1PEMqymzwblIzAQwsmRGmicttHW6ea1mNIm3dDj4g39q2a789rK41IlBAJXlDT+gFH6eHN2I6iZ0bC2CIlEdtQeZWD0pD2bT4osrk2Kj4PYiz+2FmBsWEbbwrNfKJ+duZeTkkIscYpNhUVIkXiCaqvLJB45LmMQAHn3sQ0HJN+TEfxhSD0AIVmhipmzTkoPunQii3s/JYcpHlZ8y8utz4wE8zZPE/bwyMxjJdsYohZWqDNA4AaVadba/kZiPb9ciRXOGfID0PJg++dNBxPfSNbQjOlMHZbT+32/WLsyzlEyBfioAjiphJnEqAl0XSnYU=
-  file: ./Bachelorarbeit.pdf
+  file: ./src/main.pdf
   skip_cleanup: true
   on:
     branch: master
