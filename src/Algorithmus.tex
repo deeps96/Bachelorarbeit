@@ -48,7 +48,7 @@ Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da man gen
 um die standardisierten Informationen zu erfassen.
 Eine Lösung zum Auslesen dieser Informationen ist recht einfach und schnell umsetzbar.
 \\
-\\
+~\\
 Alternativ zum shop-unspezifischen Ansatz gibt es die \textit{shop-spezifische} Herangehensweise, d.h.\ dass für jeden
 Onlineshop individuell angepasste Spezifikationen für die Extraktion erstellt werden.
 Die Regeln des shop-spezifischen Ansatzes bilden eine Übermenge des shop-unspezifischen Ansatzes.
@@ -90,7 +90,7 @@ Eine \textit{Regel} ist eine Sammlung von Selektoren für eine bestimme Produkte
 Jeder \textit{Selektor} dieser Regel stellt eine Wegbeschreibung durch das HTML-Dokument dar.
 Er führt zu dem gewünschten Element, aus dem das Produktattribut extrahiert werden soll.
 \\
-\\
+~\\
 Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
 \begin{enumerate}
     \item Die Generierung der shop-spezifischen Extraktionsregeln/ Spezifikation
@@ -174,7 +174,7 @@ Dies ist für die Shopbesitzer sehr wichtig, da sie somit die CPC-Abrechnung von
 Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Statistiken jedoch verfälschen.
 Für idealo ist es deshalb sehr wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
 \\
-\\
+~\\
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
 bereinigt zurück gibt.
 
@@ -182,7 +182,7 @@ Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in An
 Dies ist sowohl über Weiterleitungen als auch URL-Parameter möglich.
 Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen:
 \\
-\\
+~\\
 Die erste Strategie bereinigt die URL von Weiterleitungen.
 Dabei gibt es zwei mögliche Verfahren der Weiterleitungsdienste:
 
@@ -272,7 +272,7 @@ Der Aufbau des CSS-Selektors erfolgt analog zu der "Copy selector"-Funktion der 
 Der Selektor für einen Beschreibungsknoten speichert zusätzlich einen Schlüssel, um das korrekte Elementattribut
 auszulesen.
 \\
-\\
+~\\
 Wir haben festgestellt, dass viele Internetshops Javascript auf ihrer Webseite verwenden.
 Oftmals sind in diesem Fall die produktspezifischen Daten bereits in einer strukturierten Form im Javascript
 als Objekt in der Javascript Objekt Notation (JSON) enthalten.
