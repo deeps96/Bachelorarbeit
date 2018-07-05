@@ -14,14 +14,12 @@ cache:
 script:
 - cd ./src/
 - tectonic ./main.tex
-#- makeindex ./main.idx
-#- tectonic ./main.tex --print
 - cd ../
 deploy:
   provider: releases
   api_key:
-    secure: h8ZD+jGsuk8sg2lhrRZ6jglJM/NCdthV7P+vEKJ+l7dByJRUHCEsvrKAd1gegUmtuHVjGvJ44dmCyg22KVc202Um7zQNPgY82gbgn1gRLBnOQ1dik4WpvHC+TivrMLjJpbSHnsj44K3NyB0HPQMRM0ayJ8dyNwLA63o2v/OaiFaQm5Vilyf3t3OXK0/t0hxKrYYgeGsywzHId8dO8rZ4VKXLO4UsQ0JTGSznFdlGqdGmWtguj5fFWCDBxY8hRXZMlrvA3sllcTx+2eWCe+sytaD3qExL95taOSdACzLmt/jkddk02AOe8v3cpB7VZUmnWRc6NsHLstVetaiOgYVSxenkUIXyVhnxp7i8rdSs/nfOTmHZQnZ5EUPG8a4BDjCbSoe1OdxzDxdM2XtqcX/dUsKDL5maEB9sPNlJpKFGLZXrrYTzpDp26j02xuRws4GfJICvUi3zFF+QJyTCPR/ACCD7wyywV5Wo+F3K1E+hLBPOyGg8Dyx4sQ6zzgIh6K+8J8UCNdRjort21S/Uv4Lad0q1pBsboMWRzivXlQH9vNkTyIMaTypb+d8UK7RgN3JYXKTlX+Ylw3dnqwwEa9iLq+nfa4CYBXn5XevSnEOCRPxT2fkEZB62xk6g4e4kHVDFqMEGMmRonMq8PLPquuftLFhAq2CgkqbR/frXGXJQ778=
-  file: "./Bachelorarbeit.pdf"
+    secure: Kw4+QA78jKvvrZvJQzhPKEO2frl6VImKfLjIGQEOsYHXngH33qMH8rMWUvGBn4+coR2qvuJx4vU2aw5rQdddT/QNWtg1EGSv/pd9CvZ1MkxGnjz2Cw2upvYrBJKHumEuoRAjI2j1mSgNnxAcucg3x524tfb+pSioarck9lQlfbNKR4h+hzLm61yNYMiN+MboYUkfzD2A8/Ws/RoGw3QdfhFXy1e18zTjRHQ49YOSeNiuQBgPFoKYUc4PXRqWvQyw4GtH1exMDawg7rq4P3iNZA1CLeZUwH48uwa2l8yOAt0IqdFrrcC76tWOjoW4VNzR/vb5mZTIR3H3VBpNip0C9kaoQzexZbKLeL04qmFSApJ1PEMqymzwblIzAQwsmRGmicttHW6ea1mNIm3dDj4g39q2a789rK41IlBAJXlDT+gFH6eHN2I6iZ0bC2CIlEdtQeZWD0pD2bT4osrk2Kj4PYiz+2FmBsWEbbwrNfKJ+duZeTkkIscYpNhUVIkXiCaqvLJB45LmMQAHn3sQ0HJN+TEfxhSD0AIVmhipmzTkoPunQii3s/JYcpHlZ8y8utz4wE8zZPE/bwyMxjJdsYohZWqDNA4AaVadba/kZiPb9ciRXOGfID0PJg++dNBxPfSNbQjOlMHZbT+32/WLsyzlEyBfioAjiphJnEqAl0XSnYU=
+  file: ./Bachelorarbeit.pdf
   skip_cleanup: true
   on:
-      branch: master
+    branch: master
