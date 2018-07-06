@@ -107,7 +107,7 @@ Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert
 Die Logik der beiden Phasen spiegelt sich in der Architektur des Parsers wieder.
 Dieser Parser besteht aus dem Shop Rules Generator (SRG), der Parser-Komponente und dem URL-Cleaner.
 Auf die Notwendigkeit des URL-Cleaners und dessen Funktionsweise wird in Kapitel~\ref{subsec:urlcleaner} eingegangen.
-Die resultierende Architektur ist in Abbildung~\ref{abb:architektur-parser} abgebildet.
+Die resultierende Architektur ist in \textsc{Abbildung}~\ref{abb:architektur-parser} abgebildet.
 
 \begin{figure}[H]
     \centering
@@ -195,7 +195,7 @@ Das zweite Verfahren ist etwas schwieriger, da anstatt der Ziel-Adresse lediglic
 wird.
 Die Weiterleitung ist erst nach der serverseitigen Zuordnung des kryptischen Strings zur tatsächlichen Adresse möglich.
 
-In der Tabelle~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Weiterleitungen aussehen könnten.
+In der\textsc{Tabelle}~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Weiterleitungen aussehen könnten.
 Eine Mischform der beiden Varianten ist ebenfalls möglich.
 
 \begin{table}[h]
@@ -223,7 +223,7 @@ Allerdings wird dieser Fall durch das Fehlen der Root-URL des Shops in der encod
     \label{tab:trackparameter}
 \end{table}
 
-Die Tabelle~\ref{tab:trackparameter} zeigt eine Beispiel-URL mit parameterbasierten Trackerinformationen.
+Die\textsc{Tabelle}~\ref{tab:trackparameter} zeigt eine Beispiel-URL mit parameterbasierten Trackerinformationen.
 Dabei können ebenfalls Parameter enthalten sein, welche nicht für das Tracking verwendet werden.
 
 Um die parameterbasierten Trackerinformationen zu entfernen, werden alle Schlüssel-Wert-Parameterkombinationen
@@ -248,7 +248,7 @@ Zu den \textit{Beschreibungsknoten} gehören die Elemente, bei denen das gesucht
 Attributliste des Elementes vorkommt.
 Dieses Attribut ist im Gegensatz zum Textknoten kein sichtbarer Bestandteil der Visualisierung.
 
-In dem Quelltext~\ref{code:text-und-beschreibungsknoten} ist jeweils ein kurzes Beispiel für beide Typen aufgeführt.
+In dem \textsc{Quelltext}~\ref{code:text-und-beschreibungsknoten} ist jeweils ein kurzes Beispiel für beide Typen aufgeführt.
 Der gesuchte Wert ist in diesem Fall die Produkteigenschaft EAN mit dem Produktattribut 9332721000108.
 \vspace{0.25cm}
 \lstset{
@@ -276,7 +276,7 @@ auszulesen.
 Wir haben festgestellt, dass viele Internetshops Javascript auf ihrer Webseite verwenden.
 Oftmals sind in diesem Fall die produktspezifischen Daten bereits in einer strukturierten Form im Javascript
 als Objekt in der Javascript Objekt Notation (JSON) enthalten.
-In dem Quelltext~\ref{code:datenselektor} ist ein solches Skript vereinfacht dargestellt.
+In dem \textsc{Quelltext}~\ref{code:datenselektor} ist ein solches Skript vereinfacht dargestellt.
 \vspace{0.25cm}
 \lstset{
     escapeinside={(}{)},
@@ -327,7 +327,7 @@ Block, welcher als JSON interpretiert werden kann.
 Für die Navigation durch das JSON-Objekt wird ein \textit{JSONPath} erstellt.
 Ein JSONPath ist ähnlich einem XPath aufgebaut ist somit standardisiert nutzbar.
 
-Der resultierende Datenselektor sieht wie in Tabelle~\ref{tab:datenselektor} dargestellt aus.
+Der resultierende Datenselektor sieht wie in\textsc{Tabelle}~\ref{tab:datenselektor} dargestellt aus.
 
 \begin{table}[h]
     \centering
