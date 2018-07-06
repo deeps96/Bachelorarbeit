@@ -70,18 +70,18 @@ Die Accuracy entspricht in diesem Fall gleichzeitig dem Recall.
 \end{table}
 
 In etwa die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
-auf und sind somit sehr ähnlich.
+auf und sind somit ähnlich.
 Eine manuelle Prüfung hat ergeben, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine
 Übereinstimmung verhindern.
 
 Eine nähere Betrachtung der Kennziffern je Attribut liefert Abbildung~\ref{abb:testdaten}.
 
 Wie erwartet, wird die Produktbeschreibung und die Kategorie selten extrahiert.
-Dies hängt vermutlich damit zusammen, dass diese Informationen am stärksten von idealo manipuliert werden.
-Interessanterweise wird die HAN ebenfalls selten extrahiert, was vermutlich durch das häufige Fehlen der HAN in den
+Dies hängt damit zusammen, dass diese Informationen am stärksten von idealo manipuliert werden.
+Interessanterweise wird die HAN ebenfalls selten extrahiert, was mit dem häufigen Fehlen der HAN in den
 Testdaten zusammenhängt.
 
-Die in der Bild-URL enthaltene ID und die Marke werden häufig gefunden und somit vermutlich sehr nützliche Features
+Die in der Bild-URL enthaltene ID und die Marke werden häufig gefunden und somit nützliche Features
 für den maschinenlernbasierten Vergleich des Matchers sein.
 
 \begin{figure}[H]

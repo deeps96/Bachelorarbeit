@@ -3,7 +3,7 @@
 
 Der Parser ist dafür verantwortlich die für den Vergleich relevanten Produktinformationen aus HTML-Dateien zu
 extrahieren und zu normalisieren.
-Dies ist ein sehr wichtiger Schritt, da die Qualität der extrahierten Werte die Ergebnisse der Matcher-Komponente
+Dies ist ein wichtiger Schritt, da die Qualität der extrahierten Werte die Ergebnisse der Matcher-Komponente
 stark beeinflussen könnte.
 
 \subsection{Die technischen Anforderungen an den Parser}
@@ -17,7 +17,7 @@ die Produktbilder sowie weitere eindeutige Merkmale im Format von idealo zu erfa
 Diese eindeutigen Merkmale sind zum Beispiel die standardisierte EAN (Europäische Artikelnummer), HAN (Händler
 Artikelnummer) und SKU (Stock keeping unit -- eine shop-spezifische Kennung).
 
-Da die Crawler-Komponente sehr viel Zeit benötigt um alle Seiten zu erfassen, spielt der Zeitfaktor für den Parser
+Da die Crawler-Komponente viel Zeit benötigt um alle Seiten zu erfassen, spielt der Zeitfaktor für den Parser
 keine große Rolle.
 Eine schnelle Verarbeitung der Seiten ist dennoch wünschenswert.
 
@@ -39,7 +39,7 @@ entwickelt.
 \footnotetext{\url{https://schema.org/docs/about.html}}
 Schema.org hat einen Standard entwickelt, den Webseitenbetreiber nutzen können, um bestimmte Daten zu markieren.
 Shopbetreiber können zum Beispiel die Produktrezensionen, den Preis oder auch den Produktnamen hervorheben.
-Große Suchmaschinenanbieter wie Google, Microsoft oder Yandex können dadurch sehr einfach relevante Informationen
+Große Suchmaschinenanbieter wie Google, Microsoft oder Yandex können dadurch einfach relevante Informationen
 direkt in den Suchergebnissen anzeigen.
 Die Angebote der Onlinehändler werden somit besser dargestellt.
 
@@ -170,9 +170,9 @@ Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
 Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
 sind.
 
-Dies ist für die Shopbesitzer sehr wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren können.
+Dies ist für die Shopbesitzer wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren können.
 Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Statistiken jedoch verfälschen.
-Für idealo ist es deshalb sehr wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
+Für idealo ist es deshalb wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
 \\
 ~\\
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
@@ -362,7 +362,7 @@ Durch die verschiedenen Methodiken Selektoren zu erstellen und durch die zuvor b
 Flexibilität des Parser erhöht.
 Dies hat jedoch den Nachteil das ein sogenanntes \textit{Rauschen} in den extrahierten Daten entsteht.
 
-Dieses Rauschen entsteht dadurch, dass nun potenziell sehr viele Daten extrahiert werden, bei denen nicht mehr bekannt
+Dieses Rauschen entsteht dadurch, dass nun potenziell viele Daten extrahiert werden, bei denen nicht mehr bekannt
 ist, welche extrahierten Informationen korrekt oder falsch sind.
 Damit die Anzahl der falsch extrahierten Produktattribute minimiert wird, haben wir ein Bewertungssystem für
 Selektoren eingeführt.
