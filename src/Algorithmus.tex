@@ -1,16 +1,16 @@
-\section{Extraktion Produktspezifischer Daten}
+\section{Die Extraktion Produktspezifischer Daten}
 \label{sec:extraktion-produktspezifischer-daten}
 
 Der Parser ist dafür verantwortlich die für den Vergleich relevanten Produktinformationen aus HTML-Dateien zu
 extrahieren und zu normalisieren.
-Dies sind wichtige Schritte, da die Qualität der extrahierten Werte die Ergebnisse der Matcher-Komponente
+Dies sind wichtige Prozessschritte, da die Qualität der extrahierten Werte die Ergebnisse der Matcher-Komponente
 stark beeinflussen könnte.
 
 \subsection{Die technischen Anforderungen an den Parser}
 \label{subsec:technische-anforderungen-parser}
 
 Die Herausforderung der Parser-Komponente besteht hauptsächlich darin, das heterogene Informationsschemata der
-verschiedenen Shops in ein homogenes, normalisierten Schema zu bringen.
+verschiedenen Shops in ein homogenes, genormtes Schema zu bringen.
 
 Im Detail geht es darum, zu jedem Angebot den Titel, die Produktbeschreibung, den Preis, die Marke, die Kategorie,
 die Produktbilder sowie weitere eindeutige Merkmale im Format von idealo zu erfassen.
@@ -19,18 +19,18 @@ Artikelnummer) und SKU (Stock keeping unit -- eine shop-spezifische Kennung).
 
 Da die Crawler-Komponente viel Zeit benötigt um alle Seiten zu erfassen, spielt der Zeitfaktor für den Parser
 keine große Rolle.
-Eine schnelle Verarbeitung der Seiten ist dennoch wünschenswert.
+Eine schnelle Verarbeitung der Seiten ist dennoch wünschenswert, um eine gute Skalierbarkeit zu gewährleisten.
 
 Es gilt sowohl eine hohe Trefferzahl als auch eine hohe Genauigkeit zu erzielen, damit die  Ergebnisse des Parsers
 als zuverlässig eingestuft werden.
-Je genauer die Ergebnisse des Parsers im Format von idealo vorliegen, desto einfacher sollte der Vergleich durch die
+Je genauer die Ergebnisse des Parsers im Format von idealo sind, desto einfacher sollte der Vergleich durch die
 Matcher-Komponente werden.
 
 \subsection{Die Positionsbestimmung der Produktattribute}
 \label{subsec:herangehensweisen}
 
 Die eigentliche Schwierigkeit der Datenextraktion liegt in der Bestimmung der Stellen, an denen die gewünschten
-Informationen stehen.
+Informationen vorliegen.
 Es gibt grundsätzlich zwei Möglichkeiten, wie man die Informationen aus den Angeboten extrahieren kann.
 Wir haben zwischen dem shop-unspezifischen und den shop-spezifischen Ansatz unterschieden.
 
@@ -58,7 +58,7 @@ Wir nehmen jedoch an, dass durch diesen Ansatz sowohl die Trefferquote als auch 
 im Vergleich zu dem shop-unspezifischen Ansatz erhöht werden.
 
 Zu Beginn haben wir erste Versuche basierend auf dem Schema.org-Standard unternommen.
-Leider haben wir schnell feststellen müssen, dass die Spezifikation oft nicht richtig eingehalten wurden.
+Wir haben aber schnell feststellen müssen, dass die Schema.org-Parameter oft nicht richtig genutzt wurden.
 Das Nichteinhalten des Standards hatte zur Folge, dass die Qualität der extrahierten Daten nicht ausreichend war.
 Auch bei anderen Standards, welche bei der Strukturierung von Produktdaten im Internet helfen sollen, wie zum Beispiel
 JSON-LD\footnotemark (W3C) und das Open-Graph-Protokoll\footnotemark (Facebook), konnten wir ähnliche Beobachtungen
@@ -100,7 +100,7 @@ Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen unter
 In der ersten Phase sollen die Regeln, welche für die Extraktion benötigt werden, mit Hilfe der Daten von idealo
 angelernt werden.
 
-Die generierten Regeln werden in der zweiten Phase angewendet, sodass zu jeder Produkteigenschaft genau ein Wert
+Diese generierten Regeln werden in der zweiten Phase angewendet, sodass zu jeder Produkteigenschaft genau ein Wert
 zugeordnet wird.
 Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert.
 
@@ -165,14 +165,14 @@ und bei zukünftigen Anfragen direkt zurückgegeben wird.
 \subsection{Der URL-Cleaner}
 \label{subsec:urlcleaner}
 
-Manche Onlinehändler manipulieren vor der Übermittlung ihrer Angebote an idealo die Links zu deren Angeboten.
+Einige Onlinehändler manipulieren vor der Übermittlung ihrer Angebote an idealo die Links zu deren Angeboten.
 Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
 Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
 sind.
 
 Diese Statistiken sind für die Shopbesitzer wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren
 können.
-Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Statistiken jedoch verfälschen.
+Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Tracking-Statistiken jedoch verfälschen.
 Für idealo ist es deshalb wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
 \\
 ~\\
@@ -208,11 +208,12 @@ Eine Mischform der beiden Varianten ist ebenfalls möglich.
     \label{tab:redirect}
 \end{table}
 
-Für die Bereinigung von Weiterleitungen wird die übergebene URL zunächst encodiert.
-Anschließend wird die Root-Url des Shops in der encodierten URL gesucht und alles davor entfernt.
-Für die Weiterleitungen, welche kryptische Identifikationsstrings verwenden, haben wir keine zufriedenstellende Lösung
-finden können.
-Allerdings wird dieser Fall durch das Fehlen der Root-URL des Shops in der encodierten URL erkannt.
+Für die Bereinigung von Weiterleitungen wird die übergebene URL zunächst dekodiert.
+Anschließend wird die Root-URL des Shops in der dekodierten URL gesucht und alles davor entfernt.
+Für die Weiterleitungen, welche kryptische Identifikationsstrings verwenden, haben wir noch keine zufriedenstellende
+Lösung finden können.
+Allerdings wird dieser Fall durch das Fehlen der Root-URL des Shops in der dekodierten URL erkannt und kann somit
+gesondert behandelt werden.
 
 \begin{table}[h]
     \centering
@@ -321,7 +322,7 @@ Dieser CSS-Selektor zeigt zu dem entsprechenden Script-Tag im DOM\@.
 Um innerhalb des Javascriptes das richtige JSON-Objekt zu finden, wird ein Pfad verwendet, welcher durch die
 verschiedenen Code-Blöcke navigiert.
 Ein Block ist jeweils durch \textit{\{} und \textit{\}} markiert.
-Der \textit{Block-Pfad} entsteht durch eine Tiefensuche durch die verschachtelten Blöcke und zeigt auf einen
+Der \textit{Block-Pfad} entsteht mit Hilfe einer Tiefensuche durch die verschachtelten Blöcke und zeigt auf einen
 Block, welcher als JSON interpretiert werden kann.
 
 Für die Navigation durch das JSON-Objekt wird ein \textit{JSONPath} erstellt.
@@ -345,7 +346,8 @@ Der resultierende Datenselektor sieht wie in\textsc{Tabelle}~\ref{tab:datenselek
 \label{subsec:trimming-funktion}
 
 Häufig stehen vor und nach den gesuchten Produktattributen andere irrelevante Informationen.
-Vor der gesuchten EAN steht zum Beispiel der String 'EAN:\textvisiblespace', welcher entfernt werden soll.
+Häufig befindet sich vor der gesuchten EAN zum Beispiel der String 'EAN:\textvisiblespace', welcher entfernt
+werden sollte, um eine Bearbeitung überhaupt zu ermöglichen.
 Eine generische Verbesserung, welche auf alle Selektoren angewendet werden kann, ist die Trimm-Funktion.
 
 Diese Funktion fügt zu den generierten Selektoren Informationen hinzu, wie viele Stellen links oder rechts
