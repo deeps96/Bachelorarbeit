@@ -15,7 +15,7 @@ verschiedenen Shops in ein homogenes, genormtes Schema zu bringen.
 Im Detail geht es darum, zu jedem Angebot den Titel, die Produktbeschreibung, den Preis, die Marke, die Kategorie,
 die Produktbilder sowie weitere eindeutige Merkmale im Format von idealo zu erfassen.
 Diese eindeutigen Merkmale sind zum Beispiel die standardisierte EAN (Europäische Artikelnummer), HAN (Händler
-Artikelnummer) und SKU (Stock keeping unit -- eine shop-spezifische Kennung).
+Artikelnummer) und SKU (Stock keeping unit -- eine Shop-spezifische Kennung).
 
 Da die Crawler-Komponente viel Zeit benötigt um alle Seiten zu erfassen, spielt der Zeitfaktor für den Parser
 keine große Rolle.
@@ -32,30 +32,30 @@ Matcher-Komponente werden.
 Die eigentliche Schwierigkeit der Datenextraktion liegt in der Bestimmung der Stellen, an denen die gewünschten
 Informationen vorliegen.
 Es gibt grundsätzlich zwei Möglichkeiten, wie man die Informationen aus den Angeboten extrahieren kann.
-Wir haben zwischen dem shop-unspezifischen und den shop-spezifischen Ansatz unterschieden.
+Wir haben zwischen dem Shop-unspezifischen und den Shop-spezifischen Ansatz unterschieden.
 
 Die Initiative Schema.org hat bereits 2011\footnotemark eine erste Lösung für den \textit{shop-unspezifischen} Ansatz
 entwickelt.
 \footnotetext{\url{https://schema.org/docs/about.html}}
 Schema.org hat einen Standard entwickelt, den Webseitenbetreiber nutzen können, um bestimmte Daten zu markieren.
-Shopbetreiber können zum Beispiel die Produktrezensionen, den Preis oder auch den Produktnamen hervorheben.
+Shop-Betreiber können zum Beispiel die Produktrezensionen, den Preis oder auch den Produktnamen hervorheben.
 Große Suchmaschinenanbieter wie Google, Microsoft oder Yandex können dadurch einfach relevante Informationen
 direkt in den Suchergebnissen anzeigen.
 Die Angebote der Onlinehändler werden somit besser dargestellt.
 
 Laut einer Schätzung von idealo verwenden rund 40\% der Shops diesen Standard.
-Diese Herangehensweise bezeichnen wir als shop-unspezifischen Ansatz, da man generische Regeln verwenden kann,
+Diese Herangehensweise bezeichnen wir als Shop-unspezifischen Ansatz, da man generische Regeln verwenden kann,
 um die standardisierten Informationen zu erfassen.
 Eine Lösung zum Auslesen dieser Informationen ist recht einfach und schnell umsetzbar.
 \\
 ~\\
-Alternativ zum shop-unspezifischen Ansatz gibt es die \textit{shop-spezifische} Herangehensweise, d.h.\ dass für jeden
+Alternativ zum Shop-unspezifischen Ansatz gibt es die \textit{shop-spezifische} Herangehensweise, d.h.\ dass für jeden
 Onlineshop individuell angepasste Spezifikationen für die Extraktion erstellt werden.
-Die Regeln des shop-spezifischen Ansatzes bilden eine Übermenge des shop-unspezifischen Ansatzes.
+Die Regeln des Shop-spezifischen Ansatzes bilden eine Übermenge des Shop-unspezifischen Ansatzes.
 
 Die Umsetzung dieser Variante ist anspruchsvoller, da diese Spezifikationen zunächst erstellt werden müssten.
 Wir nehmen jedoch an, dass durch diesen Ansatz sowohl die Trefferquote als auch die Präzision des Parsers
-im Vergleich zu dem shop-unspezifischen Ansatz erhöht werden.
+im Vergleich zu dem Shop-unspezifischen Ansatz erhöht werden.
 
 Zu Beginn haben wir erste Versuche basierend auf dem Schema.org-Standard unternommen.
 Wir haben aber schnell feststellen müssen, dass die Schema.org-Parameter oft nicht richtig genutzt wurden.
@@ -66,9 +66,9 @@ machen.
 \footnotetext{\url{https://json-ld.org/}}
 \footnotetext{\url{http://www.ogp.me/}}
 
-Wir haben uns deshalb gegen den shop-unspezifischen Ansatz entschieden.
+Wir haben uns deshalb gegen den Shop-unspezifischen Ansatz entschieden.
 
-\subsection{Die Annahmen für die Umsetzung der shop-spezifischen Methode}
+\subsection{Die Annahmen für die Umsetzung der Shop-spezifischen Methode}
 \label{subsec:annahmen}
 
 Für die Umsetzung der Parser-Komponente haben wir zwei Annahmen getroffen, welche die Konzeption des Algorithmus
@@ -91,9 +91,9 @@ Jeder \textit{Selektor} dieser Regel stellt eine Wegbeschreibung durch das HTML-
 Er führt zu dem gewünschten Element, aus dem das Produktattribut extrahiert werden soll.
 \\
 ~\\
-Der grobe Ablauf der shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
+Der grobe Ablauf der Shop-spezifischen Datenextraktion kann in zwei Phasen untergliedert werden:
 \begin{enumerate}
-    \item Die Generierung der shop-spezifischen Extraktionsregeln/ Spezifikation
+    \item Die Generierung der Shop-spezifischen Extraktionsregeln/ Spezifikation
     \item Die Anwendung der Regeln auf die vom Crawler erzeugten Seiten
 \end{enumerate}
 
@@ -138,8 +138,8 @@ Der Shop Rules Generator (SRG) gibt auf Anfrage die Regeln für einen beliebigen
 Sollten diese Regeln noch nicht existieren, werden sie generiert.
 Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
 
-Zuerst werden eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
-Dieser Vorgang erfolgt über einen von idealo zur Verfügung gestellten API-Endpoint, welcher den Datenbankzugriff über
+Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
+Dieser Vorgang erfolgt über einen von idealo zur Verfügung gestellten API-Endpunkt, welcher den Datenbankzugriff über
 eine REST-Schnittstelle kapselt.
 Diese Vorgehensweise hat den Vorteil, dass wir die Infrastruktur von idealo nutzen können und keine Kopie der
 Angebotsdaten lokal speichern müssen.
@@ -170,16 +170,16 @@ Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
 Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
 sind.
 
-Diese Statistiken sind für die Shopbesitzer wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren
+Diese Statistiken sind für die Shop-Besitzer wichtig, da sie somit die CPC-Abrechnung von idealo kontrollieren
 können.
 Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Tracking-Statistiken jedoch verfälschen.
 Für idealo ist es deshalb wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
 \\
 ~\\
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
-bereinigt zurück gibt.
+bereinigt zurückgibt.
 
-Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotlinks eingefügt werden können.
+Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotslinks eingefügt werden können.
 Das Einfügen ist sowohl über Weiterleitungen als auch URL-Parameter möglich.
 Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen:
 \\
@@ -382,7 +382,7 @@ Qualitätsindex unverändert.
 Wir haben uns für diese Variante entschieden, weil man den leeren String von einem unerwünschten bzw.\
 falschen Wert unterscheiden kann.
 
-Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese auf den Intervall $[0; 1]$
+Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese auf das Intervall $[0; 1]$
 normalisiert.
 Alle Regeln mit einem normalisierten Index unter einem bestimmten Schwellwert werden verworfen.
 
