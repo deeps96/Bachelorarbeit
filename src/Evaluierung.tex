@@ -3,14 +3,14 @@
 
 Der entwickelte Algorithmus deckt die grundlegenden Elementtypen für die Datenextraktion ab und ist in der Lage bis
 zu 70 Seiten pro Sekunde zu verarbeiten.
-Wie bereits eingangs erwähnt wurde, ist die Qualität der Extraktion von großer Bedeutung - doch wie genau ist der
-entwickelte Algorithmus?
+Wie bereits eingangs erwähnt wurde, ist die Qualität der Extraktion für den Vergleich von großer Bedeutung - doch wie
+genau ist der entwickelte Algorithmus?
 Genau diese Frage wird in diesem Kapitel beantwortet, um eine grobe Aussage für das weitere Matchingverfahren zu
 treffen.
 
 \subsection{Die Testdaten der Evaluierung}
 \label{subsec:testdaten}
-Sowohl für das Antrainieren der Extraktionsregeln als auch für die Evaluierung der Ergebnisse wurden die von idealo
+Sowohl für das Antrainieren der Extraktionsregeln, als auch für die Evaluierung der Ergebnisse wurden die von idealo
 zur Verfügung gestellten Angebotsdaten verwendet.
 Für die nachfolgenden Messungen wurden 7500 Angebote von 50 Shops genutzt.
 
@@ -22,8 +22,8 @@ Die Auswahl der Shops erfolgte basierend auf den ersten Listeneinträgen der Sho
 Alle nachfolgenden Messungen basieren auf einem Schnappschuss der Angebotsdaten inklusive der verlinkten Webseiten.
 Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die Angebotsdaten von idealo
 möglicherweise nicht mit denen von der Webseite übereinstimmen.
-Damit die Trackingstatistiken der Shopbetreiber nicht verfälscht werden, wurden nicht mehr als 150 Angebote je Shop
-heruntergeladen.
+Damit die Trackingstatistiken der Shopbetreiber nicht verfälscht werden, wurden nicht mehr als insgesamt 150 Angebote
+je Shop heruntergeladen.
 
 Eine Analyse der gesamten Testdaten hat ergeben, dass für jedes Angebot die Angaben zum Titel, dem Preis und der SKU
 existieren.
@@ -69,7 +69,7 @@ Die Accuracy entspricht in diesem Fall gleichzeitig dem Recall.
     \label{tab:accuracy-precision}
 \end{table}
 
-In etwa die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
+Ca. die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
 auf und sind somit ähnlich.
 Eine manuelle Prüfung hat ergeben, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine
 Übereinstimmung verhindern.
