@@ -67,6 +67,7 @@ verschiedenen Konfigurationen basierend auf den Angeboten aller Shops aufgeführ
     \caption{Accuracy und Precision bei unterschiedlichen Konfigurationen unter Berücksichtigung der gesamten
     Angebotsmenge aller Shops}
     \label{tab:accuracy-precision}
+    \vspace{-0.5cm}
 \end{table}
 
 Wie nehmen an, dass für die Matcher-Komponente aufgrund des ähnlichkeitsbasierenden Vergleichs eine höhere Accuracy
@@ -79,7 +80,8 @@ Ca. die Hälfte der Nichtübereinstimmungen besitzen eine Distanz von $\leq 3$ u
 unterschiedliche Trennzeichen zurückzuführen.
 Außerdem war es häufiger der Fall, dass der Preis um wenige Centbeträge von der Momentaufnahme der idealo-Daten
 abwich.
-
+Ein konkretes Beispiel ist zum Beispiel der extrahierte Wert ``jack-wolfskin'', welcher von dem gesuchten Wert ``Jack
+Wolfskin'' um die Distanz $1$ abweicht.
 Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:testdaten}.
 
 Wie erwartet, wird die Produktbeschreibung und die Kategorie selten extrahiert.
@@ -95,6 +97,7 @@ für den maschinenlernbasierten Vergleich des Matchers sein.
     \includegraphics[width=\textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
     \caption{Accuracy (links) und Precision (rechts) pro Attribut für $SaS=50$}
     \label{abb:testdaten}
+    \vspace{-0.5cm}
 \end{figure}
 
 Zu guter letzt kann man dem Diagramm entnehmen, dass der Filterschwellwert ein gutes Mittel ist, um die Accuracy und
