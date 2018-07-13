@@ -132,6 +132,14 @@ Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 Der \textit{Shop Rules Generator} gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
 Sollten diese Regeln noch nicht existieren, werden sie generiert.
 Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
+In Abbildung~\ref{abb:datenfluss-srg} ist der Datenfluss des Vorgangs abgebildet.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, trim=0 6cm 0 5cm, clip]{resources/Datenfluss-SRG.pdf}
+    \caption{Datenfluss des Generierungsprozesses für einen Shop}
+    \label{abb:datenfluss-srg}
+\end{figure}
 
 Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
 Die Anzahl der zu ladenden Angebote definieren wir als ``Sample Size'' und kürzen dieses mit $SaS$ ab.
@@ -172,8 +180,8 @@ Für idealo ist es deshalb wichtig, dass die Trackinginformationen vor dem Aufru
 
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
 bereinigt zurückgibt.
-Auf die konkrete Funktionsweise des URL-Cleaners wird im nachfolgenden nicht weiter eingegangen, da der Fokus dieser
-Arbeit auf dem Parser liegt.
+Der Fokus dieser Arbeit liegt jedoch auf der Funktionsweise des SRG.
+Auf die konkrete Funktionsweise des URL-Cleaners wird daher nicht weiter eingegangen.
 
 \subsection{Die Erstellung der Selektoren}
 \label{subsec:erstellen-von-selektoren}
@@ -192,6 +200,7 @@ Dieses Attribut ist im Gegensatz zum Textknoten kein sichtbarer Bestandteil der 
 
 In dem \textsc{Quelltext}~\ref{code:text-und-beschreibungsknoten} ist jeweils ein kurzes Beispiel für beide Typen aufgeführt.
 Der gesuchte Wert ist in diesem Fall die Produkteigenschaft EAN mit dem Produktattribut 9332721000108.
+
 \vspace{0.25cm}
 \lstset{
     escapeinside={(}{)},
@@ -213,12 +222,14 @@ Die Selektoren der beiden Knotentypen sind ähnlich aufgebaut und bestehen jewei
 Der Aufbau des CSS-Selektors erfolgt analog zu der ``Copy~selector''-Funktion der Chrome-Entwicklertools.
 Der Selektor für einen Beschreibungsknoten speichert zusätzlich einen Schlüssel, um das korrekte Elementattribut
 auszulesen.
+Ein konkretes Beispiel für einen CSS-Selektor wird für den nachfolgend beschriebenen Datenselektor angegeben.
 \\
 ~\\
 Wir haben festgestellt, dass viele Internetshops Javascript auf ihrer Webseite verwenden.
 Oftmals sind in diesem Fall die produktspezifischen Daten bereits in einer strukturierten Form im Javascript
 als Objekt in der Javascript Objekt Notation (JSON) enthalten.
 In dem \textsc{Quelltext}~\ref{code:datenselektor} ist ein solches Skript vereinfacht dargestellt.
+
 \vspace{0.25cm}
 \lstset{
     escapeinside={(}{)},
@@ -238,15 +249,20 @@ In dem \textsc{Quelltext}~\ref{code:datenselektor} ist ein solches Skript verein
 }
 \begin{minipage}[c]{\textwidth} % avoid page break within lstlisting
     \begin{lstlisting}[label={code:datenselektor}]
-        <script>
-            var gtmGuaranteeProduct1 = {
-                "name":"Versicherung für 2 Jahre",
-            };
-            var product2400462 = {
-                "name":"Product",
-                "ean":"9332721000108"
-            };
-        </script>
+        <html>
+            <head>
+                <meta charset="utf-8">
+                <script>
+                    var gtmGuaranteeProduct1 = {
+                        "name":"Versicherung für 2 Jahre",
+                    };
+                    var product2400462 = {
+                        "name":"Product",
+                        "ean":"9332721000108"
+                    };
+                </script>
+            </head>
+        </html>
     \end{lstlisting}
     \vspace{-0.25cm}
     \captionof{lstlisting}{Javascript, dass produktspezifische Informationen enthält}
@@ -298,8 +314,8 @@ Durch die verschiedenen Methoden Selektoren zu erstellen und durch die zuvor bes
 Flexibilität des Parser erhöht.
 Dies hat jedoch den Nachteil das ein sogenanntes \textit{Rauschen} in den extrahierten Daten entsteht.
 
-Dieses Rauschen entsteht dadurch, dass für die gecrawlten HTML-Dokumente nun potenziell viele Daten extrahiert werden,
-bei denen nicht mehr bekanntist, welche extrahierten Informationen korrekt oder falsch sind.
+Dieses Rauschen entsteht dadurch, dass aus den gecrawlten HTML-Dokumenten viele Daten extrahiert werden,
+bei denen nicht mehr bekannt ist, welche extrahierten Informationen korrekt oder falsch sind.
 Damit die Anzahl der falsch extrahierten Produktattribute minimiert wird, haben wir ein Bewertungssystem für
 Selektoren eingeführt.
 
