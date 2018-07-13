@@ -1,12 +1,15 @@
 \section{Die Genauigkeitsmessung des Extraktionsalgorithmus}
 \label{sec:evaluierung}
 
-Der entwickelte Algorithmus deckt die grundlegenden Elementtypen für die Datenextraktion ab und ist in der Lage bis
-zu 70 Seiten pro Sekunde zu verarbeiten.
+Der entwickelte Algorithmus deckt die grundlegenden Knotentypen für die Datenextraktion, welche in
+Kapitel~\ref{subsec:erstellen-von-selektoren} eingeführt wurden, ab und ist in der Lage bis zu 70 Seiten pro Sekunde
+zu verarbeiten.
 Wie bereits eingangs erwähnt wurde, ist die Qualität der Extraktion für den Vergleich von großer Bedeutung - doch wie
 genau ist der entwickelte Algorithmus?
 Genau diese Frage wird in diesem Kapitel beantwortet, um eine grobe Aussage für das weitere Matchingverfahren zu
 treffen.
+Außerdem wird darauf eingegangen, wie die Parameter $SaS$ und $F$ gewählt werden sollten, um die bestmöglichsten
+Ergebnisse zu erzielen.
 
 \subsection{Die Testdaten der Evaluierung}
 \label{subsec:testdaten}
@@ -16,14 +19,13 @@ Für die nachfolgenden Messungen wurden 7500 Angebote von 50 Shops genutzt.
 
 Je Händler wurden max.\ 50 Angebote als Trainingsmenge für die Erstellung der Regeln und 100 Angebote als Testmenge für
 die Evaluierung verwendet.
-Die Auswahl der Shops erfolgte basierend auf den ersten Listeneinträgen der Shopübersicht\footnotemark von idealo.
-\footnotetext{https://www.idealo.de/preisvergleich/AllePartner.html}
+Die Auswahl der Shops erfolgte zufällig.
 
-Alle nachfolgenden Messungen basieren auf einem Schnappschuss der Angebotsdaten inklusive der verlinkten Webseiten.
+Alle nachfolgenden Messungen basieren auf einer Momentaufnahme der Angebotsdaten inklusive der verlinkten Webseiten.
 Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die Angebotsdaten von idealo
 möglicherweise nicht mit denen von der Webseite übereinstimmen.
-Damit die Trackingstatistiken der Shopbetreiber nicht verfälscht werden, wurden nicht mehr als insgesamt 150 Angebote
-je Shop heruntergeladen.
+Damit die Trackingstatistiken der Shopbetreiber nicht stark verfälscht werden, wurden nicht mehr als insgesamt 150
+Angebote je Shop heruntergeladen.
 
 Eine Analyse der gesamten Testdaten hat ergeben, dass für jedes Angebot die Angaben zum Titel, dem Preis und der SKU
 existieren.
@@ -36,21 +38,18 @@ Testmenge und weicht um maximal 0.88\% bei der Produkteigenschaft ``Marke'' ab.
 \label{subsec:genauigkeitsmessung}
 
 Für jeden Shop wurden 21 Regelmengen basierend auf der Trainingsmenge erzeugt, welche sich aus der Kombination
-verschiedener Konfigurationen ergeben.
-Diese Konfigurationen umfasst zum einen die Anzahl der verwendeten Angebote für das Antrainieren ($SaS$) und zum
-anderen den in Kapitel~\ref{subsec:bewertungssystem} eingeführten Filterschwellwert ($F$).
+verschiedener Konfigurationen von der Größer der Anlernmenge $SaS$ und dem Filterschwellwert $F$ ergeben.
 
 In allen Statistiken wurden die Fälle ignoriert, bei denen idealo keine Produktattribute gespeichert hat.
-Für diese Fälle ist es unmöglich zu entscheiden, ob die extrahierten Angebotsinformationen korrekt sind.
+Für diese 3440 Fälle ist es unmöglich zu entscheiden, ob die extrahierten Angebotsinformationen korrekt sind.
 
 Die Bestimmung der Genauigkeit erfolgte durch die Anwendung aller Regelmengen auf die Testmenge.
 Anschließend wurde ausgewertet, wie oft der extrahierte Wert dem von idealo entspricht.
 Zudem wurde für die Bestimmung der Precision erfasst, ob der Wert leer ist.
-In der \textsc{Tabelle}~\ref{tab:accuracy-precision} sind die typischen Kennziffern Accuracy und Precision für die
+In \textsc{Tabelle}~\ref{tab:accuracy-precision} sind die typischen Kennziffern Accuracy und Precision für die
 verschiedenen Konfigurationen aufgeführt.
-Die Accuracy entspricht in diesem Fall gleichzeitig dem Recall.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{ c | c c c | c c c }
         &   \multicolumn{3}{c}{\textit{Accuracy in \%}}    &   \multicolumn{3}{c}{\textit{Precision in \%}} \\
@@ -65,14 +64,36 @@ Die Accuracy entspricht in diesem Fall gleichzeitig dem Recall.
         \textbf{1.0}     &   41.48 &   39.27 &   36.00         &   98.17 &   97.64 &   \textbf{98.90}
 
     \end{tabular}
-    \caption{Accuracy und Precision bei unterschiedlichen Konfigurationen}
+    \caption{Accuracy und Precision bei unterschiedlichen Konfigurationen unter Berücksichtigung der gesamten
+    Angebotsmenge aller Shops}
     \label{tab:accuracy-precision}
 \end{table}
 
 Ca. die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
 auf und sind somit ähnlich.
-Eine manuelle Prüfung hat ergeben, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine
+In Tabelle~\ref{tab:levenshtein-examples} sind Beispiele für solche Nichtübereinstimmungen gegeben.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ p{2.5cm} | p{5cm} | p{5cm} | p{1cm}}
+        \textbf{Produkt-eigenschaft} & \textbf{extrahierter Wert} & \textbf{erwarteter Wert} &
+        \textbf{Distanz} \\
+        \hline
+        TITLE & KENZO LELIXIR & KENZO L'ELIXIR & 1\\
+        PRICE & 22642 & 22644 & 1\\
+        DESCRIPTION & Objektivdeckel, für Canon; EF	& Objektivdeckel, für Canon, EF & 1\\
+        BRAND &	kuechenprofi & Küchenprofi & 2\\
+        BRAND & jack-wolfskin & Jack Wolfskin & 3\\
+        BRAND & allcare & All Care & 3
+    \end{tabular}
+    \caption{Beispiele für Nichtübereinstimmungen, welche eine Levenshtein-Distanz $\leq 3$ besitzen}
+    \label{tab:levenshtein-examples}
+\end{table}
+
+Der Tabelle kann man entnehmen, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine
 Übereinstimmung verhindern.
+Außerdem ist es möglich, dass sich der Preis um wenige Cent ändert und dieser von der Momentaufnahme der
+idealo-Daten abweicht.
 
 Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:testdaten}.
 
@@ -93,16 +114,13 @@ für den maschinenlernbasierten Vergleich des Matchers sein.
 
 Zu guter letzt kann man dem Diagramm entnehmen, dass der Filterschwellwert ein gutes Mittel ist, um die Accuracy und
 Precision zu beeinflussen und ein höherer SaS-Wert tendenziell besser ist.
+Je höher der SaS-Wert gewählt wird, desto höher ist die Accuracy und Precision.
+Mit zunehmenden Filter-Schwellwert $F$ sinkt die Accuracy, dafür steigt die Precision der extrahierten Attribute.
 
 \subsection{Mögliche Fehlerquellen der Messungen}
 \label{subsec:fehlerquellen}
 
-Bei einer genaueren Analyse der Testdaten musste leider festgestellt werden, dass beim Herunterladen der
-Angebotsseiten eines Shops aufgrund einer Captcha-Absicherung keine nutzbaren Webseiten geliefert wurden.
-Für diesen Shop konnten folglich keine Regeln erstellt werden, was sich nachteilig auf die Accuracy auswirkt.
-
-Des Weiteren trifft die in Kapitel~\ref{subsec:annahmen} getroffene Annahme, dass die idealo-Daten nicht von denen der
-Shops abweichen, nicht zu.
-Die Angebotsdaten werden von idealo teilweise manuell oder durch Normalisierungsprozesse manipuliert, was die
-Regelerstellung erschweren kann.
-Zudem werden möglicherweise korrekt extrahierte Produktattribute fälschlicherweise als inkorrekt markiert.
+Die getroffenen Annahme, dass die idealo-Daten nicht von denen der Shops abweichen, trifft in der realen Welt nicht zu.
+Die Angebotsdaten werden von idealo teilweise manuell oder durch Normalisierungsprozesse manipuliert.
+Dadurch können zum Beispiel korrekt extrahierte Produktattribute fälschlicherweise als inkorrekt markiert werden.
+Außerdem wird durch wird die Abweichungen die Regelgenerierung erschwert.

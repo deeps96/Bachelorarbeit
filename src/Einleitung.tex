@@ -13,9 +13,9 @@ einen Händler oder auf die lokale Verfügbarkeit beschränken.
 In den letzten Jahren hat der Onlinehandel sowohl an Bedeutung für die Unternehmen, als auch für die Kunden gewonnen.
 Laut einer Statistik von Eurostat machte im Jahr 2017 der Onlinehandel 21\% des Gesamtumsatzes deutscher Unternehmen
 aus und stellte somit einen nicht unerheblichen Anteil an der wirtschaftlichen Leistung
-dar.~\cite{statista:anteil-gesamtumsatz-europa}
+dar~\cite{statista:anteil-gesamtumsatz-europa}.
 Aus einer weiteren Untersuchung geht hervor, dass 2017 zwei Drittel der Deutschen regelmäßig online
-einkauften.~\cite{statista:anteil-online-kaeufer-europa}
+einkauften~\cite{statista:anteil-online-kaeufer-europa}.
 
 Diese Entwicklung bringt jedoch ein Problem mit sich: Mit der steigenden Auswahl an Produkten verliert ein
 potenzieller Käufer schnell die Übersicht.
@@ -24,8 +24,8 @@ Ein Käufer sollte sich sicher sein das für ihn beste Angebot zu finden.
 
 Das Angebot der Vergleichsportale wird von den Internetnutzern gut aufgenommen, wie eine Messung aus 2017 zeigt:
 Für einen besseren Vergleich nutzen rund zwei Drittel der Online-Käufer die Möglichkeit sich im Internet zum Produkt
-oder zum Preis zu informieren.~\cite{statista:internetnutzer-preisvergleich-deutschland,
-statista:anteil-online-kaeufe-deutschland}
+oder zum Preis zu informieren~\cite{statista:internetnutzer-preisvergleich-deutschland,
+statista:anteil-online-kaeufe-deutschland}.
 
 In einem vom Nachrichtensender n-tv beauftragten Test\footnotemark, hat das Deutsche Institut für Service-Qualität
 mehrere Preissuchmaschinen unter dem Aspekt des günstigsten Preises, der Aktualität des Preises und dem
@@ -70,8 +70,10 @@ diese stammen und zu welcher Preisregion die Produkte gehören.
 Durch diese Übersicht soll ein Mitarbeiter von idealo dazu befähigt werden, die Ursachen für das Fehlen der Angebote
 herauszufinden.
 
-idealo vermutet, dass ein unbeabsichtigtes Fehlen von Produkten durch einen fehlerhaften Importvorgang zu erklären ist.
-Zudem könnte es sein, dass ein Händler bewusst nicht alle Produkte bei idealo führen möchte.
+Mitarbeiter von idealo vermuten, dass ein unbeabsichtigtes Fehlen von Produkten möglicherweise durch einen fehlerhaften
+Importvorgang zu erklären sei.
+Zudem könnte es sein, dass ein Händler aufgrund spezieller Vertragsbedingungen bewusst nicht alle
+Produkte bei idealo führen möchte.
 \\
 ~\\
 Für die Entwicklung dieser Softwarelösung hatten wir als fünfköpfiges Team neun Monate Zeit.
@@ -88,21 +90,21 @@ Wir haben uns dafür entschieden, das Gesamtsystem als Microservice-Architektur 
 Die Mircoservice-Architektur ermöglicht es logisch gekapselte Komponenten zu entwickeln, welche sich sehr gut
 skalieren und erweitern lassen.
 Eine ausführlichere Begründung für diese Architekturentscheidung kann in der Bachelorarbeit von Dmitrii
-Zhamanakov nachgeschlagen werden.~\cite{thesis:dmitrii}
+Zhamanakov nachgeschlagen werden~\cite{thesis:dmitrii}.
 
 Für die Implementierung der Architektur haben wir die Programmiersprache Java gewählt und verwenden diese in
 Kombination mit dem Spring-Framework\footnotemark.
 \footnotetext{\url{https://spring.io/}}
 
-Das entwickelte Gesamtsystem \textit{Scout} besteht grob gesehen aus drei Komponenten: dem Crawler, dem Parser und dem
+Das entwickelte Gesamtsystem \textit{Scout} besteht aus drei zentralen Komponenten: dem Crawler, dem Parser und dem
 Matcher.
 
 Der \textit{Crawler} ist für das Herunterladen jeder einzelnen Seite eines Shops verantwortlich.
 Jonas Pohlmann hat sich im Projektverlauf intensiv mit verschiedenen Crawling-Frameworks auseinandergesetzt und diese
-in seiner Bachelorarbeit verglichen.~\cite{thesis:jonas}
+in seiner Bachelorarbeit verglichen~\cite{thesis:jonas}.
 
 Die Funktionsweise der maschinenlernbasierten \textit{Matcher}-Komponente wird in der Bachelorarbeit von Tom
-Schwarzburg näher beschrieben.~\cite{thesis:tom}
+Schwarzburg näher beschrieben~\cite{thesis:tom}.
 Der Matcher vergleicht die vom System gefundenen Angebote mit den Angeboten, die idealo bereits kennt.
 
 Damit diese Komponente die geladenen Angebote mit dem Katalog von idealo vergleichen kann, muss das heruntergeladene

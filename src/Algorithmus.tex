@@ -4,7 +4,7 @@
 Der Parser ist dafür verantwortlich die für den Vergleich relevanten Produktinformationen aus HTML-Dateien zu
 extrahieren und zu normalisieren.
 Dies sind wichtige Prozessschritte, da die Qualität der extrahierten Werte die Ergebnisse der Matcher-Komponente
-stark beeinflussen könnte.
+stark beeinflussen.
 
 \subsection{Die technischen Anforderungen an den Parser}
 \label{subsec:technische-anforderungen-parser}
@@ -17,8 +17,8 @@ die Produktbilder sowie weitere eindeutige Merkmale im Format von idealo zu erfa
 Diese eindeutigen Merkmale sind zum Beispiel die standardisierte EAN (Europäische Artikelnummer), HAN (Händler
 Artikelnummer) und SKU (Stock keeping unit -- eine Shop-spezifische Kennung).
 
-Da die Crawler-Komponente viel Zeit benötigt um alle Seiten zu erfassen, spielt der Zeitfaktor für den Parser
-keine große Rolle.
+Da die Crawler-Komponente viel Zeit benötigt um alle Seiten zu erfassen, spielt die Laufzeit des Parsers eine
+untergeordnete Rolle.
 Eine schnelle Verarbeitung der Seiten ist dennoch wünschenswert, um eine gute Skalierbarkeit zu gewährleisten.
 
 Es gilt sowohl eine hohe Trefferzahl als auch eine hohe Genauigkeit zu erzielen, damit die  Ergebnisse des Parsers
@@ -34,14 +34,14 @@ Informationen vorliegen.
 Es gibt grundsätzlich zwei Möglichkeiten, wie man die Informationen aus den Angeboten extrahieren kann.
 Wir haben zwischen dem Shop-unspezifischen und den Shop-spezifischen Ansatz unterschieden.
 
-Die Initiative Schema.org hat bereits 2011\footnotemark eine erste Lösung für den \textit{shop-unspezifischen} Ansatz
-entwickelt.
+Die Initiative Schema.org\footnotemark hat bereits 2011 einen Vorschlag zur Standardisierung von Produktwebseiten
+gemacht, welcher für eine \textit{shop-unspezifischen} Lösung genutzt werden kann.
 \footnotetext{\url{https://schema.org/docs/about.html}}
 Schema.org hat einen Standard entwickelt, den Webseitenbetreiber nutzen können, um bestimmte Daten zu markieren.
 Shop-Betreiber können zum Beispiel die Produktrezensionen, den Preis oder auch den Produktnamen hervorheben.
 Große Suchmaschinenanbieter wie Google, Microsoft oder Yandex können dadurch einfach relevante Informationen
 direkt in den Suchergebnissen anzeigen.
-Die Angebote der Onlinehändler werden somit besser dargestellt.
+Die Angebote der Onlinehändler werden somit einfacher gefunden.
 
 Laut einer Schätzung von idealo verwenden rund 40\% der Shops diesen Standard.
 Diese Herangehensweise bezeichnen wir als Shop-unspezifischen Ansatz, da man generische Regeln verwenden kann,
@@ -54,8 +54,8 @@ Onlineshop individuell angepasste Spezifikationen für die Extraktion erstellt w
 Die Regeln des Shop-spezifischen Ansatzes bilden eine Übermenge des Shop-unspezifischen Ansatzes.
 
 Die Umsetzung dieser Variante ist anspruchsvoller, da diese Spezifikationen zunächst erstellt werden müssten.
-Wir nehmen jedoch an, dass durch diesen Ansatz sowohl die Trefferquote als auch die Präzision des Parsers
-im Vergleich zu dem Shop-unspezifischen Ansatz erhöht werden.
+Wir nehmen jedoch an, dass durch diesen Ansatz bessere Ergebnisse im Vergleich zu dem Shop-unspezifischen Ansatz
+gefunden werden.
 
 Zu Beginn haben wir erste Versuche basierend auf dem Schema.org-Standard unternommen.
 Wir haben aber schnell feststellen müssen, dass die Schema.org-Parameter oft nicht richtig genutzt wurden.
@@ -68,9 +68,6 @@ machen.
 
 Wir haben uns deshalb gegen den Shop-unspezifischen Ansatz entschieden.
 
-\subsection{Die Annahmen für die Umsetzung der Shop-spezifischen Methode}
-\label{subsec:annahmen}
-
 Für die Umsetzung der Parser-Komponente haben wir zwei Annahmen getroffen, welche die Konzeption des Algorithmus
 beeinflusst haben.
 
@@ -82,7 +79,7 @@ Daraus resultierend gehen wir davon aus, dass sich durch die Verwendung eines CM
 Außerdem erwarten wir, dass idealo aufgrund der Vertragsvereinbarungen für die zu untersuchenden Shops bereits
 eine gewisse Menge an Angeboten besitzt und die Produktattribute nicht manipuliert wurden.
 
-\subsection{Die zwei Schritte der Datenextraktion}
+\subsection{Die Architektur des Parsers}
 \label{subsec:grundidee}
 
 Für die nachfolgenden Erklärungen werden die beiden Begriffe Regel und Selektor definiert.
@@ -106,7 +103,10 @@ Für jede gecrawlte Seite werden die extrahierten Produktattribute abgespeichert
 
 Die Logik der beiden Phasen spiegelt sich in der Architektur des Parsers wieder.
 Dieser Parser besteht aus dem Shop Rules Generator (SRG), der Parser-Komponente und dem URL-Cleaner.
-Auf die Notwendigkeit des URL-Cleaners und dessen Funktionsweise wird in Kapitel~\ref{subsec:urlcleaner} eingegangen.
+Die \emph{Parser-Komponente} ist somit lediglich ein Bestandteil des Parsers.
+Um mögliche Verwirrungen zu vermeiden, wird im nachfolgenden genau zwischen diesen beiden Formulierungen ``Parser''
+und ``Parser-Komponente'' unterschieden.
+Auf die Notwendigkeit des URL-Cleaners wird am Ende dieses Kapitels eingegangen.
 Die resultierende Architektur ist in \textsc{Abbildung}~\ref{abb:architektur-parser} abgebildet.
 
 \begin{figure}[H]
@@ -116,10 +116,7 @@ Die resultierende Architektur ist in \textsc{Abbildung}~\ref{abb:architektur-par
     \label{abb:architektur-parser}
 \end{figure}
 
-\subsection{Die Funktionsweise der Parser-Komponente}
-\label{subsec:funktionsweise-parser}
-
-Die Parser-Komponente erhält ihre Eingaben, indem sie Nachrichten aus einer Queue konsumiert.
+Die \textit{Parser-Komponente} erhält ihre Eingaben, indem sie Nachrichten aus einer Queue konsumiert.
 Eine Nachricht enthält eine vom Crawler heruntergeladene Webseite.
 Der Crawler sendet zusätzlich zu jeder Seite, die Webadresse und die Identifikationsnummer des zugehörigen Shops mit.
 Nach dem Erhalt einer Nachricht, lädt der Parser vom Shop Rules Generator (SRG) die Extraktionsregeln für den
@@ -127,18 +124,17 @@ entsprechenden Shop.
 
 Sollten die Regeln noch nicht existieren, wartet der Parser solange, bis diese Regeln vom SRG erstellt wurden.
 Sobald der Parser die Regeln empfangen hat, werden die Produktattribute aus der gecrawlten Seite extrahiert.
-Zum Schluss werden diese Regeln in einer Datenbank normalisiert abgespeichert.
+Zum Schluss werden die extrahierten Produktinformationen in einer Datenbank normalisiert abgespeichert.
 
 Der Matcher greift später auf diese Datenbank für den Vergleich zu.
-
-\subsection{Die Funktionsweise des Shop Rules Generators}
-\label{subsec:funktionsweise-srg}
-
-Der Shop Rules Generator (SRG) gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
+\\
+~\\
+Der \textit{Shop Rules Generator} gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
 Sollten diese Regeln noch nicht existieren, werden sie generiert.
 Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
 
 Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
+Die Anzahl der zu ladenden Angebote definieren wir als ``Sample Size'' und kürzen dieses mit $SaS$ ab.
 Dieser Vorgang erfolgt über einen von idealo zur Verfügung gestellten API-Endpunkt, welcher den Datenbankzugriff über
 eine REST-Schnittstelle kapselt.
 Diese Vorgehensweise hat den Vorteil, dass wir die Infrastruktur von idealo nutzen können und keine Kopie der
@@ -159,12 +155,11 @@ Dazu werden die Werte aller Produkteigenschaften in dem HTML-Dokument gesucht.
 Für jedes Vorkommnis eines Produktattributes wird ein Selektor erstellt, der den Fundort referenziert und einer Regel
 zugeordnet.
 
-Nachdem alle Regeln gesammelt wurden, wird eine finale Regelmenge bestimmt, welche in der Regeldatenbank gespeichert
-und bei zukünftigen Anfragen direkt zurückgegeben wird.
-
-\subsection{Der URL-Cleaner}
-\label{subsec:urlcleaner}
-
+Nachdem alle Regeln gesammelt wurden, werden diese bewertet.
+Alle Regeln, die einem bestimmtem Qualitätsmaß entsprechen, werden in einer finale Regelmenge zusammengefasst und in
+der Regeldatenbank für zukünftige Anfragen gespeichert.
+\\
+~\\
 Einige Onlinehändler manipulieren vor der Übermittlung ihrer Angebote an idealo die Links zu deren Angeboten.
 Sie fügen zu den regulären Webadressen Trackinginformationen hinzu.
 Mit Hilfe dieser Trackinginformationen können sie nachvollziehen, welche Kunden durch idealo auf deren Seite gelandet
@@ -174,67 +169,11 @@ Diese Statistiken sind für die Shop-Besitzer wichtig, da sie somit die CPC-Abre
 können.
 Die im Rahmen der Anlernphase getätigten Webseitenaufrufe könnten diese Tracking-Statistiken jedoch verfälschen.
 Für idealo ist es deshalb wichtig, dass die Trackinginformationen vor dem Aufruf der Website entfernt werden.
-\\
-~\\
+
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
 bereinigt zurückgibt.
-
-Wir haben zwei mögliche Verfahren entdeckt, wie die Trackinginformationen in Angebotslinks eingefügt werden können.
-Das Einfügen ist sowohl über Weiterleitungen als auch URL-Parameter möglich.
-Der URL-Cleaner wendet deshalb zwei Strategien sukzessive an, um die Trackinginformationen zu entfernen:
-\\
-~\\
-Die erste Strategie bereinigt die URL von Weiterleitungen.
-Dabei gibt es zwei mögliche Verfahren der Weiterleitungsdienste:
-
-Beim ersten Verfahren leitet der zwischengeschaltete Server den Besucher anhand der mitgesendeten URL-Parameter auf
-die korrekte Seite weiter.
-Die ursprüngliche URL ist hierbei somit bereits in der Modifizierten enthalten.
-
-Das zweite Verfahren ist etwas schwieriger, da anstatt der Ziel-Adresse lediglich ein kryptischer String mitgesendet
-wird.
-Die Weiterleitung ist erst nach der serverseitigen Zuordnung des kryptischen Strings zur tatsächlichen Adresse möglich.
-
-In der\textsc{Tabelle}~\ref{tab:redirect} sind zwei Beispiele abgebildet, wie solche Weiterleitungen aussehen könnten.
-Eine Mischform der beiden Varianten ist ebenfalls möglich.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{ l | l }
-        URL-Parameter                 &   cptrack.com/?redir=\textbf{www.shop.de/product1}\\
-        krypt.\ Identifikationsstring   &   bit.ly/\textbf{2Kqyrz2}
-    \end{tabular}
-    \caption{Beispiele der Weiterleitungsverfahren}
-    \label{tab:redirect}
-\end{table}
-\vspace{-0.25cm}
-
-Für die Bereinigung von Weiterleitungen wird die übergebene URL zunächst dekodiert.
-Anschließend wird die Root-URL des Shops in der dekodierten URL gesucht und alles davor entfernt.
-Für die Weiterleitungen, welche kryptische Identifikationsstrings verwenden, haben wir noch keine zufriedenstellende
-Lösung finden können.
-Allerdings wird dieser Fall durch das Fehlen der Root-URL des Shops in der dekodierten URL erkannt und kann somit
-gesondert behandelt werden.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{ c }
-        http://www.shop.de/product?\textbf{partner=idealo}?pid=96
-    \end{tabular}
-    \caption{URL mit parameterbasierten Trackinginformationen}
-    \label{tab:trackparameter}
-\end{table}
-\vspace{-0.25cm}
-
-Die\textsc{Tabelle}~\ref{tab:trackparameter} zeigt eine Beispiel-URL mit parameterbasierten Trackerinformationen.
-Dabei können ebenfalls Parameter enthalten sein, welche nicht für das Tracking verwendet werden.
-
-Um die parameterbasierten Trackerinformationen zu entfernen, werden alle Schlüssel-Wert-Parameterkombinationen
-gelöscht, deren Schlüssel in einer vorher angelegten Liste vorkommen.
-Diese Liste enthält alle Tracker-Schlüsselnamen, die bei einer manuellen Recherche über mehrere hundert Shops
-häufiger vorgekommen sind.
-
-Nachdem beide Strategien angewandt wurden, wird die bereinigte URL zurückgegeben.
+Auf die konkrete Funktionsweise des URL-Cleaners wird im nachfolgenden nicht weiter eingegangen, da der Fokus dieser
+Arbeit auf dem Parser liegt.
 
 \subsection{Die Erstellung von Selektoren}
 \label{subsec:erstellen-von-selektoren}
@@ -297,25 +236,23 @@ In dem \textsc{Quelltext}~\ref{code:datenselektor} ist ein solches Skript verein
     xleftmargin=.25in,
     xrightmargin=.25in
 }
-\begin{lstlisting}[label={code:datenselektor}]
-    <script>
-        var gtmGuaranteeProduct1 = {
-            "name":"Versicherung für 2 Jahre",
-        };
-        var product2400462 = {
-            "name":"Product",
-            "ean":"9332721000108"
-        };
-    </script>
-\end{lstlisting}
-\vspace{-0.25cm}
-\captionof{lstlisting}{Javascript, dass produktspezifische Informationen enthält}
-\vspace{0.25cm}
-
-Der Aufbau eines Pfades durch eine Hierarchie hat beim DOM sehr gut funktioniert.
-Wir wollen daher dasselbe Prinzip für das Auslesen des Script-Tags anwenden.
-Nachfolgend wird anhand der Bestandteile des Datenselektors erklärt, wie die Struktur des Javascripts in eine
-hierarchische Form gebracht werden kann.
+\begin{minipage}[c]{\textwidth} % avoid page break within lstlisting
+    \begin{lstlisting}[label={code:datenselektor}]
+        <script>
+            var gtmGuaranteeProduct1 = {
+                "name":"Versicherung für 2 Jahre",
+            };
+            var product2400462 = {
+                "name":"Product",
+                "ean":"9332721000108"
+            };
+        </script>
+    \end{lstlisting}
+    \vspace{-0.25cm}
+    \captionof{lstlisting}{Javascript, dass produktspezifische Informationen enthält}
+    \vspace{0.25cm}
+\end{minipage}
+Analog zum CSS-Selektor wollen wir das gleiche Prinzip auf das Javascript anwenden.
 
 Der resultierende \textit{Datenselektor} wird aus drei Teilen gebildet.
 Der erste Teil besteht, genau wie bei den anderen Selektortypen, aus einem \textit{CSS-Selektor}.
@@ -342,10 +279,6 @@ Der resultierende Datenselektor sieht wie in\textsc{Tabelle}~\ref{tab:datenselek
     \caption{Datenselektor für Beispiel~\ref{code:datenselektor}}
     \label{tab:datenselektor}
 \end{table}
-\vspace{-0.8cm}
-
-\subsection{Die Trimm-Funktion}
-\label{subsec:trimming-funktion}
 
 Häufig stehen vor und nach den gesuchten Produktattributen andere irrelevante Informationen.
 Häufig befindet sich vor der gesuchten EAN zum Beispiel der String 'EAN:\textvisiblespace', welcher entfernt
@@ -359,16 +292,14 @@ Die Werte bezeichnen wir als Left-Cut und Right-Cut.
 Sollte vor der gesuchten EAN immer derselbe String stehen, so gibt es keine Streuung in den Left-Cut-Werten.
 Wenn es sich bei dem Produktattribut um die Beschreibung handelt und diese durch manuelle Änderungen von idealo von
 denen der Webseite abweicht, so gibt es eine starke Streuung der Left- und Right-Cut-Werten.
-
-\subsection{Das Bewertungssystem für die Selektoren}
-\label{subsec:bewertungssystem}
-
+\\
+~~\\
 Durch die verschiedenen Methoden Selektoren zu erstellen und durch die zuvor beschriebene Trim-Funktion wurde die
 Flexibilität des Parser erhöht.
 Dies hat jedoch den Nachteil das ein sogenanntes \textit{Rauschen} in den extrahierten Daten entsteht.
 
-Dieses Rauschen entsteht dadurch, dass nun potenziell viele Daten extrahiert werden, bei denen nicht mehr bekannt
-ist, welche extrahierten Informationen korrekt oder falsch sind.
+Dieses Rauschen entsteht dadurch, dass für die gecrawlten HTML-Dokumente nun potenziell viele Daten extrahiert werden,
+bei denen nicht mehr bekanntist, welche extrahierten Informationen korrekt oder falsch sind.
 Damit die Anzahl der falsch extrahierten Produktattribute minimiert wird, haben wir ein Bewertungssystem für
 Selektoren eingeführt.
 
@@ -379,12 +310,12 @@ Je nachdem ob der extrahierte Wert mit dem von idealo übereinstimmt, wird der I
 
 Ein Ausnahmefall bildet der leere String: Wird dieser String als extrahierter Wert zurückgegeben, so bleibt der
 Qualitätsindex unverändert.
-Wir haben uns für diese Variante entschieden, weil man den leeren String von einem unerwünschten bzw.\
+Wir haben uns für diese Variante entschieden, da man den leeren String von einem unerwünschten bzw.\
 falschen Wert unterscheiden kann.
 
 Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese auf das Intervall $[0; 1]$
 normalisiert.
-Alle Regeln mit einem normalisierten Index unter einem bestimmten Schwellwert werden verworfen.
+Alle Regeln mit einem normalisierten Index unter einem bestimmten Filterschwellwert $F$ werden verworfen.
 
 Die Parser-Komponente verwendet den Qualitätsindex, um aus allen gefundenen Werten den Besten zu ermitteln.
 Dazu gruppiert sie nach den extrahierten Werten und summiert den normalisierten Index.
