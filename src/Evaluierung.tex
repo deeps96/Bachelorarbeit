@@ -49,7 +49,7 @@ Zudem wurde für die Bestimmung der Precision erfasst, ob der Wert leer ist.
 In \textsc{Tabelle}~\ref{tab:accuracy-precision} sind die typischen Kennziffern Accuracy und Precision für die
 verschiedenen Konfigurationen basierend auf den Angeboten aller Shops aufgeführt.
 
-\begin{table}[H]
+\begin{table}[h]
     \centering
     \begin{tabular}{ c | c c c | c c c }
         &   \multicolumn{3}{c}{\textit{Accuracy in \%}}    &   \multicolumn{3}{c}{\textit{Precision in \%}} \\
@@ -68,15 +68,17 @@ verschiedenen Konfigurationen basierend auf den Angeboten aller Shops aufgeführ
     Angebotsmenge aller Shops}
     \label{tab:accuracy-precision}
 \end{table}
-\vspace{-0.5cm}
 
-Der Tabelle kann man entnehmen, dass die beste Ergebnisse für die Parameter $SaS = 50$ und $F = 0.6$ erreicht werden.
-Ca. die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
-auf und sind somit ähnlich.
-Bei einer manuellen Kontrolle konnte ermittelt werden, dass oftmals Kodierungsfehler oder
-unterschiedliche Trennzeichen eine Übereinstimmung verhindern.
-Außerdem war es häufiger der Fall, dass sich der Preis um wenige Cent ändert und dieser von der Momentaufnahme der
-idealo-Daten abweicht.
+Wie nehmen an, dass für die Matcher-Komponente aufgrund des ähnlichkeitsbasierenden Vergleichs eine höhere Accuracy
+wichtiger ist als eine hohe Precision.
+Die für unseren Anwendungsfall besten Ergebnisse werden somit für die Parameter $SaS = 50$ und $F = 0.6$ erreicht.
+
+Um eine genauere Aussage zur Precision treffen zu können, wurden alle Nichtübereinstimmungen gesammelt und deren
+Levenshtein-Distanz zum erwarteten Wert von idealo berechnet.
+Ca. die Hälfte der Nichtübereinstimmungen besitzen eine Distanz von $\leq 3$ und sind auf Kodierungsfehler, sowie
+unterschiedliche Trennzeichen zurückzuführen.
+Außerdem war es häufiger der Fall, dass der Preis um wenige Centbeträge von der Momentaufnahme der idealo-Daten
+abwich.
 
 Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:testdaten}.
 
@@ -90,7 +92,7 @@ für den maschinenlernbasierten Vergleich des Matchers sein.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9 \textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
+    \includegraphics[width=\textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
     \caption{Accuracy (links) und Precision (rechts) pro Attribut für $SaS=50$}
     \label{abb:testdaten}
 \end{figure}
