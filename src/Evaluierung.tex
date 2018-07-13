@@ -47,7 +47,7 @@ Die Bestimmung der Genauigkeit erfolgte durch die Anwendung aller Regelmengen au
 Anschließend wurde ausgewertet, wie oft der extrahierte Wert dem von idealo entspricht.
 Zudem wurde für die Bestimmung der Precision erfasst, ob der Wert leer ist.
 In \textsc{Tabelle}~\ref{tab:accuracy-precision} sind die typischen Kennziffern Accuracy und Precision für die
-verschiedenen Konfigurationen aufgeführt.
+verschiedenen Konfigurationen basierend auf den Angeboten aller Shops aufgeführt.
 
 \begin{table}[H]
     \centering
@@ -68,31 +68,14 @@ verschiedenen Konfigurationen aufgeführt.
     Angebotsmenge aller Shops}
     \label{tab:accuracy-precision}
 \end{table}
+\vspace{-0.5cm}
 
+Der Tabelle kann man entnehmen, dass die beste Ergebnisse für die Parameter $SaS = 50$ und $F = 0.6$ erreicht werden.
 Ca. die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
 auf und sind somit ähnlich.
-In Tabelle~\ref{tab:levenshtein-examples} sind Beispiele für solche Nichtübereinstimmungen gegeben.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{ p{2.5cm} | p{5cm} | p{5cm} | p{1cm}}
-        \textbf{Produkt-eigenschaft} & \textbf{extrahierter Wert} & \textbf{erwarteter Wert} &
-        \textbf{Distanz} \\
-        \hline
-        TITLE & KENZO LELIXIR & KENZO L'ELIXIR & 1\\
-        PRICE & 22642 & 22644 & 1\\
-        DESCRIPTION & Objektivdeckel, für Canon; EF	& Objektivdeckel, für Canon, EF & 1\\
-        BRAND &	kuechenprofi & Küchenprofi & 2\\
-        BRAND & jack-wolfskin & Jack Wolfskin & 3\\
-        BRAND & allcare & All Care & 3
-    \end{tabular}
-    \caption{Beispiele für Nichtübereinstimmungen, welche eine Levenshtein-Distanz $\leq 3$ besitzen}
-    \label{tab:levenshtein-examples}
-\end{table}
-
-Der Tabelle kann man entnehmen, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine
-Übereinstimmung verhindern.
-Außerdem ist es möglich, dass sich der Preis um wenige Cent ändert und dieser von der Momentaufnahme der
+Bei einer manuellen Kontrolle konnte ermittelt werden, dass oftmals Kodierungsfehler oder
+unterschiedliche Trennzeichen eine Übereinstimmung verhindern.
+Außerdem war es häufiger der Fall, dass sich der Preis um wenige Cent ändert und dieser von der Momentaufnahme der
 idealo-Daten abweicht.
 
 Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:testdaten}.
@@ -107,7 +90,7 @@ für den maschinenlernbasierten Vergleich des Matchers sein.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
+    \includegraphics[width=0.9 \textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
     \caption{Accuracy (links) und Precision (rechts) pro Attribut für $SaS=50$}
     \label{abb:testdaten}
 \end{figure}
