@@ -111,9 +111,10 @@ Die resultierende Architektur ist in \textsc{Abbildung}~\ref{abb:architektur-par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=13cm, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
+    \includegraphics[width=\textwidth, trim=0 1.7cm 0 1.7cm, clip]{resources/Architektur-Parser.pdf}
     \caption{Architektur des Parsers}
     \label{abb:architektur-parser}
+    \vspace{-0.5cm}
 \end{figure}
 
 Die \textit{Parser-Komponente} erhält ihre Eingaben, indem sie Nachrichten aus einer Queue konsumiert.
@@ -136,9 +137,10 @@ In Abbildung~\ref{abb:datenfluss-srg} ist der Datenfluss des Vorgangs abgebildet
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, trim=0 6cm 0 5cm, clip]{resources/Datenfluss-SRG.pdf}
+    \includegraphics[width=\textwidth, trim=0 5cm 0 5cm, clip]{resources/Datenfluss-SRG.pdf}
     \caption{Datenfluss des Generierungsprozesses für einen Shop}
     \label{abb:datenfluss-srg}
+    \vspace{-0.5cm}
 \end{figure}
 
 Zuerst wird eine bestimmte Anzahl von Angeboten aus der idealo-Datenbank geladen.
@@ -180,8 +182,9 @@ Für idealo ist es deshalb wichtig, dass die Trackinginformationen vor dem Aufru
 
 Dazu haben wir die URL-Cleaner-Komponente entwickelt, welche Adressen mit Trackinginformationen als Eingabe erwartet und
 bereinigt zurückgibt.
-Der Fokus dieser Arbeit liegt jedoch auf der Funktionsweise des SRG.
-Auf die konkrete Funktionsweise des URL-Cleaners wird daher nicht weiter eingegangen.
+
+Der Fokus dieser Arbeit liegt auf der Funktionsweise des SRG.
+Daher wird auf die konkrete Funktionsweise des URL-Cleaners nicht im Detail eingegangen.
 
 \subsection{Die Erstellung der Selektoren}
 \label{subsec:erstellen-von-selektoren}
@@ -216,6 +219,7 @@ Der gesuchte Wert ist in diesem Fall die Produkteigenschaft EAN mit dem Produkta
     <head>
         <meta charset="utf-8">
         (\circled{2}) <meta itemprop='gtin13' content='9332721000108'>
+        <script>...</script>
         (\circled{3}) <script>
             function f() {
                 var gtmGuaranteeProduct1 = {
@@ -261,7 +265,7 @@ Die Selektoren für den Textknoten und den Beschreibungsknoten aus dem obigen Be
         Textknoten  &   \#product-details > span:nth-of-type(1) & - \\
         Beschreibungsknoten &   html > head > meta:nth-of-type(1)[content]  & content
     \end{tabular}
-    \caption{Selektoren für den \circled{1} Textknoten und \circled{2} Beschreibungsknoten}
+        \caption{Selektoren für den \circled{1} Textknoten und \circled{2} Beschreibungsknoten}
     \label{tab:textselektor-und-beschreibungsselektor}
     \vspace{-0.5cm}
 \end{table}
@@ -292,8 +296,8 @@ Der resultierende Datenselektor sieht wie in \textsc{Tabelle}~\ref{tab:datensele
 \begin{table}[h]
     \centering
     \begin{tabular}{ l | l }
-        CSS-Selektor &  html > head > script:nth-of-type(1)\\
-        Block-Pfad   &  -> 1\\
+        CSS-Selektor &  html > head > script:nth-of-type(2)\\
+        Block-Pfad   &  0 \rightarrow 1\\
         JsonPath     &  \$['ean']
     \end{tabular}
     \caption{Datenselektor für Beispiel~\ref{code:datenselektor}}
