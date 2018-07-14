@@ -74,14 +74,37 @@ Wie nehmen an, dass für die Matcher-Komponente aufgrund des ähnlichkeitsbasier
 wichtiger ist als eine hohe Precision.
 Die für unseren Anwendungsfall besten Ergebnisse werden somit für die Parameter $SaS = 50$ und $F = 0.6$ erreicht.
 
+\newpage
 Um eine genauere Aussage zur Precision treffen zu können, wurden alle Nichtübereinstimmungen gesammelt und deren
 Levenshtein-Distanz zum erwarteten Wert von idealo berechnet.
-Ca. die Hälfte der Nichtübereinstimmungen besitzen eine Distanz von $\leq 3$ und sind auf Kodierungsfehler, sowie
-unterschiedliche Trennzeichen zurückzuführen.
+Ca. die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
+auf und sind somit ähnlich.
+In Tabelle~\ref{tab:levenshtein-examples} sind Beispiele für solche Nichtübereinstimmungen gegeben.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ p{2.5cm} | p{5cm} | p{5cm} | p{1cm}}
+        \textbf{Produkt-eigenschaft} & \textbf{extrahierter Wert} & \textbf{erwarteter Wert} &
+        \textbf{Distanz} \\
+        \hline
+        TITLE & KENZO LELIXIR & KENZO L'ELIXIR & 1\\
+        PRICE & 22642 & 22644 & 1\\
+        DESCRIPTION & Objektiv, für Canon; EF	& Objektiv, für Canon, EF & 1\\
+        BRAND &	kuechenprofi & Küchenprofi & 2\\
+        BRAND & jack-wolfskin & Jack Wolfskin & 3\\
+        BRAND & allcare & All Care & 3
+    \end{tabular}
+    \caption{Beispiele für Nichtübereinstimmungen, welche eine Levenshtein-Distanz $\leq 3$ besitzen}
+    \label{tab:levenshtein-examples}
+    \vspace{-0.5cm}
+\end{table}
+
+Der Tabelle kann man entnehmen, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine
+Übereinstimmung verhindern.
 Außerdem war es häufiger der Fall, dass der Preis um wenige Centbeträge von der Momentaufnahme der idealo-Daten
 abwich.
-Ein konkretes Beispiel ist zum Beispiel der extrahierte Wert ``jack-wolfskin'', welcher von dem gesuchten Wert ``Jack
-Wolfskin'' um die Distanz $1$ abweicht.
+\\
+~\\
 Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:testdaten}.
 
 Wie erwartet, wird die Produktbeschreibung und die Kategorie selten extrahiert.
