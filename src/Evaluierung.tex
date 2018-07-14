@@ -26,6 +26,15 @@ Die Links wurden nicht durch die URL-Cleaner-Komponente bereinigt, da sonst die 
 möglicherweise nicht mit denen von der Webseite übereinstimmen.
 Damit die Trackingstatistiken der Shopbetreiber nicht stark verfälscht werden, wurden nicht mehr als insgesamt 150
 Angebote je Shop heruntergeladen.
+Eine nähere Analyse der Testdaten von idealo ist in der \textsc{Abbildung}~\ref{abb:testdaten} dargestellt.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth, trim=0 10cm 0 11cm, clip]{resources/Testdaten-Attributverteilung.pdf}
+    \caption{Attributabdeckung der idealo-Daten, welche für die Evaluierung genutzt wurden}
+    \label{abb:testdaten}
+    \vspace{-0.5cm}
+\end{figure}
 
 Eine Analyse der gesamten Testdaten hat ergeben, dass für jedes Angebot die Angaben zum Titel, dem Preis und der SKU
 existieren.
@@ -74,7 +83,6 @@ Wie nehmen an, dass für die Matcher-Komponente aufgrund des ähnlichkeitsbasier
 wichtiger ist als eine hohe Precision.
 Die für unseren Anwendungsfall besten Ergebnisse werden somit für die Parameter $SaS = 50$ und $F = 0.6$ erreicht.
 
-\newpage
 Um eine genauere Aussage zur Precision treffen zu können, wurden alle Nichtübereinstimmungen gesammelt und deren
 Levenshtein-Distanz zum erwarteten Wert von idealo berechnet.
 Ca. die Hälfte der Nichtübereinstimmungen weisen eine Levenshtein-Distanz $\leq 3$ zum erwarteten Wert von idealo
@@ -83,7 +91,7 @@ In Tabelle~\ref{tab:levenshtein-examples} sind Beispiele für solche Nichtübere
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{ p{2.5cm} | p{5cm} | p{5cm} | p{1cm}}
+    \begin{tabular}{ p{2.75cm} | p{4.5cm} | p{4.5cm} | p{1cm}}
         \textbf{Produkt-eigenschaft} & \textbf{extrahierter Wert} & \textbf{erwarteter Wert} &
         \textbf{Distanz} \\
         \hline
@@ -100,12 +108,11 @@ In Tabelle~\ref{tab:levenshtein-examples} sind Beispiele für solche Nichtübere
 \end{table}
 
 Der Tabelle kann man entnehmen, dass oftmals Kodierungsfehler oder unterschiedliche Trennzeichen eine
-Übereinstimmung verhindern.
+Übereinstimmung verhinderten.
 Außerdem war es häufiger der Fall, dass der Preis um wenige Centbeträge von der Momentaufnahme der idealo-Daten
 abwich.
-\\
-~\\
-Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:testdaten}.
+\newpage
+Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:accuracy-precision-chart}.
 
 Wie erwartet, wird die Produktbeschreibung und die Kategorie selten extrahiert.
 Dies hängt damit zusammen, dass diese Informationen am stärksten von idealo manipuliert werden.
@@ -119,15 +126,29 @@ für den maschinenlernbasierten Vergleich des Matchers sein.
     \centering
     \includegraphics[width=\textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
     \caption{Accuracy (links) und Precision (rechts) pro Attribut für $SaS=50$}
-    \label{abb:testdaten}
+    \label{abb:accuracy-precision-chart}
     \vspace{-0.5cm}
 \end{figure}
 
 Zu guter letzt kann man dem Diagramm entnehmen, dass der Filterschwellwert ein gutes Mittel ist, um die Accuracy und
 Precision zu beeinflussen und ein höherer SaS-Wert tendenziell besser ist.
 Je höher der SaS-Wert gewählt wird, desto höher ist die Accuracy und Precision.
-Mit zunehmenden Filter-Schwellwert $F$ sinkt die Accuracy, dafür steigt die Precision der extrahierten Attribute.
+Mit zunehmenden Filter-Schwellwert $F$ sinkt die Accuracy, jedoch steigt dafür die Precision der extrahierten Attribute.
 
+In der \textsc{Abbildung}~\ref{abb:accuracy-precision-box-plot} ist für die gewählten Parameter $SaS=50$ und $F=0.6$
+die Streuung der Accuracy und Precision abgebildet.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{resources/accuracy-and-precision-box-plots.png}
+    \caption{Accuracy (links) und Precision (rechts) pro Attribut für $SaS=50$ und $F=0.6$}
+    \label{abb:accuracy-precision-box-plot}
+    \vspace{-0.25cm}
+\end{figure}
+Den Diagrammen kann man zum einem entnehmen, dass es zwar einige Ausreißer gibt, zum anderen wird noch einmal
+deutlich, dass die Marke, der Bildlink sowie die SKU häufig und genau extrahiert werden.
+Die Shops, welche stark vom angezeigten Median abweichen, könnten ein guter Anhaltspunkt für zukünftige Verbesserungen
+der Parser-Komponente sein.
+\vspace{-0.25cm}
 \subsection{Mögliche Fehlerquellen der Messungen}
 \label{subsec:fehlerquellen}
 
