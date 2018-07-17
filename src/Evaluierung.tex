@@ -5,7 +5,7 @@ Der entwickelte Algorithmus deckt die grundlegenden Knotentypen für die Datenex
 Kapitel~\ref{subsec:erstellen-von-selektoren} eingeführt wurden, ab und ist in der Lage bis zu 70 Seiten pro Sekunde
 zu verarbeiten.
 Wie bereits eingangs erwähnt wurde, ist die Qualität der Extraktion für den Vergleich von großer Bedeutung - doch wie
-genau ist der entwickelte Algorithmus?
+exakt ist der entwickelte Algorithmus?
 Genau diese Frage wird in diesem Kapitel beantwortet, um eine grobe Aussage für das weitere Matchingverfahren zu
 treffen.
 Außerdem wird darauf eingegangen, wie die Parameter $SaS$ und $F$ gewählt werden sollten, um die bestmöglichen
@@ -16,7 +16,6 @@ Ergebnisse zu erzielen.
 Sowohl für das Antrainieren der Extraktionsregeln, als auch für die Evaluierung der Ergebnisse wurden die von idealo
 zur Verfügung gestellten Angebotsdaten verwendet.
 Für die nachfolgenden Messungen wurden 7500 Angebote von 50 Shops genutzt.
-
 Je Händler wurden max.\ 50 Angebote als Trainingsmenge für die Erstellung der Regeln und 100 Angebote als Testmenge für
 die Evaluierung verwendet.
 Die Auswahl der Shops erfolgte zufällig.
@@ -30,10 +29,10 @@ Eine nähere Analyse der Testdaten von idealo ist in der \textsc{Abbildung}~\ref
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth, trim=0 10cm 0 11cm, clip]{resources/Testdaten-Attributverteilung.pdf}
-    \caption{Attributabdeckung der idealo-Daten, welche für die Evaluierung genutzt wurden}
+    \includegraphics[width=\textwidth, trim=0 10.05cm 0 11.4cm, clip]{resources/Testdaten-Attributverteilung.pdf}
+    \caption{Attributabdeckung der Testdaten von idealo}
     \label{abb:testdaten}
-    \vspace{-0.5cm}
+    \vspace{-0.25cm}
 \end{figure}
 
 Eine Analyse der gesamten Testdaten hat ergeben, dass für jedes Angebot die Angaben zum Titel, dem Preis und der SKU
@@ -46,11 +45,13 @@ Testmenge und weicht um maximal 0.88\% bei der Produkteigenschaft ``Marke'' ab.
 \subsection{Die Messergebnisse}
 \label{subsec:genauigkeitsmessung}
 
-Für jeden Shop wurden 21 Regelmengen basierend auf der Trainingsmenge erzeugt, welche sich aus der Kombination
-verschiedener Konfigurationen von der Größer der Anlernmenge $SaS$ und dem Filterschwellwert $F$ ergeben.
+Der Algorithmus kann durch die Größer der Anlernmenge $SaS$ und den gewählten Filterschwellwert $F$ konfiguriert werden.
+Für diese Messung wurden für jeden Shop 21 verschiedene Konfigurationen getestet.
 
 In allen Statistiken wurden die Fälle ignoriert, bei denen idealo keine Produktattribute gespeichert hat.
-Für diese 3440 Fälle ist es unmöglich zu entscheiden, ob die extrahierten Angebotsinformationen korrekt sind.
+Für alle 50 Shops fehlen bei den neun untersuchten Produkteigenschaften der Testmenge 7,6\% der entsprechenden Werte
+bei idealo.
+Für diese Fälle ist es unmöglich zu entscheiden, ob die extrahierten Angebotsinformationen korrekt sind.
 
 Die Bestimmung der Genauigkeit erfolgte durch die Anwendung aller Regelmengen auf die Testmenge.
 Anschließend wurde ausgewertet, wie oft der extrahierte Wert dem von idealo entspricht.
@@ -76,12 +77,17 @@ verschiedenen Konfigurationen basierend auf den Angeboten aller Shops aufgeführ
     \caption{Accuracy und Precision bei unterschiedlichen Konfigurationen unter Berücksichtigung der gesamten
     Angebotsmenge aller Shops}
     \label{tab:accuracy-precision}
-    \vspace{-0.5cm}
+    \vspace{-0.25cm}
 \end{table}
 
-Wie nehmen an, dass für die Matcher-Komponente aufgrund des ähnlichkeitsbasierenden Vergleichs eine höhere Accuracy
-wichtiger ist als eine hohe Precision.
-Die für unseren Anwendungsfall besten Ergebnisse werden somit für die Parameter $SaS = 50$ und $F = 0.6$ erreicht.
+Die Accuracy gibt an, wie oft ein Produktattribut in Bezug auf alle Angebote der Testmenge extrahiert wurde.
+Die Precision ist etwas feingranularer und rechnet die Fälle raus, bei denen explizit nichts gefunden wurde.
+Je präziser die Ergebnisse des Parsers, desto einfacher ist der ähnlichkeitsbasierte Vergleich der Matcher-Komponente.
+Obwohl eine möglichst hohe Precision wichtig ist, muss eine gute Balance zwischen Accuracy und Precision gefunden
+werden, damit genügend Produktattribute extrahiert werden.
+Die für unseren Anwendungsfall besten Ergebnisse werden somit für die Parameter $SaS = 50$ und $F= 0.6$ erreicht.
+Bei der gewählten Konfiguration gibt der Parser zwar nur in der Hälfte der Fälle einen Wert zurück, wenn jedoch ein
+extrahiertes Produktattribut zurückgegeben wird, so ist dies fast immer richtig.
 
 Um eine genauere Aussage zur Precision treffen zu können, wurden alle Nichtübereinstimmungen gesammelt und deren
 Levenshtein-Distanz zum erwarteten Wert von idealo berechnet.
@@ -115,7 +121,7 @@ abwich.
 Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:accuracy-precision-chart}.
 
 Wie erwartet, wird die Produktbeschreibung und die Kategorie selten extrahiert.
-Dies hängt damit zusammen, dass diese Informationen am stärksten von idealo manipuliert werden.
+Dies hängt damit zusammen, dass diese Informationen am stärksten von idealo verändert werden.
 Interessanterweise wird die HAN ebenfalls selten extrahiert, was mit dem häufigen Fehlen der HAN in den
 Testdaten zusammenhängt.
 
@@ -153,6 +159,6 @@ der Parser-Komponente sein.
 \label{subsec:fehlerquellen}
 
 Die getroffenen Annahme, dass die idealo-Daten nicht von denen der Shops abweichen, trifft in der realen Welt nicht zu.
-Die Angebotsdaten werden von idealo teilweise manuell oder durch Normalisierungsprozesse manipuliert.
+Die Angebotsdaten werden von idealo teilweise manuell oder durch Normalisierungsprozesse verändert.
 Dadurch können zum Beispiel korrekt extrahierte Produktattribute fälschlicherweise als inkorrekt markiert werden.
 Außerdem wird durch wird die Abweichungen die Regelgenerierung erschwert.

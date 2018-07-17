@@ -219,7 +219,7 @@ Der gesuchte Wert ist in diesem Fall die Produkteigenschaft EAN mit dem Produkta
     <head>
         <meta charset="utf-8">
         (\circled{2}) <meta itemprop='gtin13' content='9332721000108'>
-        <script>...</script>
+        <script>(\ldots)<script>
         (\circled{3}) <script>
             function f() {
                 var gtmGuaranteeProduct1 = {
@@ -296,13 +296,12 @@ Der resultierende Datenselektor sieht wie in \textsc{Tabelle}~\ref{tab:datensele
 \begin{table}[h]
     \centering
     \begin{tabular}{ l | l }
-        CSS-Selektor &  html > head > script:nth-of-type(2)\\
-        Block-Pfad   &  0 $\rightarrow$ 1\\
-        JsonPath     &  \$['ean']
+        \textbf{CSS-Selektor} &  html > head > script:nth-of-type(2)\\
+        \textbf{Block-Pfad}   &  0 $\rightarrow$ 1\\
+        \textbf{JsonPath}     &  \$['ean']
     \end{tabular}
     \caption{Selektor für den \circled{3} Datenknoten}
     \label{tab:datenselektor}
-    \vspace{-0.5cm}
 \end{table}
 
 Häufig stehen vor und nach den gesuchten Produktattributen andere irrelevante Informationen.
