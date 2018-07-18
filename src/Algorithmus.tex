@@ -95,7 +95,7 @@ Die \emph{Parser-Komponente} ist somit lediglich ein Bestandteil des Parsers.
 Um mögliche Verwirrungen zu vermeiden, wird im nachfolgenden genau zwischen diesen beiden Formulierungen ``Parser''
 und ``Parser-Komponente'' unterschieden.
 Auf die Notwendigkeit des URL-Cleaners wird am Ende dieses Kapitels eingegangen.
-Die resultierende Architektur ist in \textsc{Abbildung}~\ref{abb:architektur-parser} abgebildet.
+Die resultierende Architektur ist in \textsc{Abbildung}~\ref{abb:architektur-parser} dargestellt.
 
 \begin{figure}[h]
     \centering
@@ -114,7 +114,7 @@ Sobald der Parser die Regeln empfangen hat, werden die Produktattribute aus der 
 Zum Schluss werden die extrahierten Produktinformationen in einer Datenbank normalisiert abgespeichert.
 Der Matcher greift später auf diese Datenbank für den Vergleich zu.
 
-Der \textit{Shop Rules Generator} gibt auf Anfrage die Regeln für einen beliebigen Shop zurück.
+Der \textit{Shop Rules Generator} übermittelt auf Anfrage die Regeln für einen beliebigen Shop.
 Sollten diese Regeln noch nicht existieren, werden sie generiert.
 Während des Generierungsprozesses durchläuft der SRG mehrere Schritte.
 In Abbildung~\ref{abb:datenfluss-srg} ist der Datenfluss des Vorgangs abgebildet.
@@ -261,7 +261,7 @@ Ein Block ist jeweils durch \textit{\{} und \textit{\}} markiert.
 Der \textit{Block-Pfad} entsteht mit Hilfe einer Tiefensuche durch die verschachtelten Blöcke und zeigt auf einen
 Block, welcher als JSON interpretiert werden kann.
 Für die Navigation durch das JSON-Objekt wird ein \textit{JSONPath} erstellt.
-Ein JSONPath ist ähnlich einem XPath aufgebaut ist somit standardisiert nutzbar.
+Der Aufbau eines JSONPath ähnelt einem XPath und ist somit standardisiert nutzbar.
 Der resultierende Datenselektor sieht wie in \textsc{Tabelle}~\ref{tab:datenselektor} dargestellt aus.
 
 \begin{table}[h]
@@ -276,7 +276,7 @@ Der resultierende Datenselektor sieht wie in \textsc{Tabelle}~\ref{tab:datensele
 \end{table}
 
 Häufig stehen vor und nach den gesuchten Produktattributen andere irrelevante Informationen.
-Häufig befindet sich vor der gesuchten EAN zum Beispiel der String 'EAN:\textvisiblespace', welcher entfernt
+Zum Beispiel befindet sich vor einer gesuchten EAN der String 'EAN:\textvisiblespace', welcher entfernt
 werden sollte, um eine Bearbeitung überhaupt zu ermöglichen.
 
 Eine generische Verbesserung, welche auf alle Selektoren angewendet werden kann, ist die Trimm-Funktion.
@@ -301,8 +301,8 @@ verglichen.
 Je nachdem ob der extrahierte Wert mit dem von idealo übereinstimmt, wird der Index erhöht oder verringert.
 Ein Ausnahmefall bildet der leere String: Wird dieser String als extrahierter Wert zurückgegeben, so bleibt der
 Qualitätsindex unverändert.
-Wir haben uns für diese Variante entschieden, da man den leeren String von einem unerwünschten bzw.\
-falschen Wert unterscheiden kann.
+Wir haben uns für diese Variante entschieden, da der leere String die Unterscheidung zwischen einem unerwünschten
+bzw.\ falschen Wert ermöglicht.
 
 Bevor die Regeln mit dem Qualitätsindex in der Datenbank abgespeichert werden, werden diese auf das Intervall $[0; 1]$
 normalisiert.

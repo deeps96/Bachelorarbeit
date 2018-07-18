@@ -4,10 +4,10 @@
 Der entwickelte Algorithmus deckt die grundlegenden Knotentypen für die Datenextraktion, welche in
 Kapitel~\ref{subsec:erstellen-von-selektoren} eingeführt wurden, ab und ist in der Lage bis zu 70 Seiten pro Sekunde
 zu verarbeiten.
-Wie bereits eingangs erwähnt wurde, ist die Qualität der Extraktion für den Vergleich von großer Bedeutung - doch wie
+Wie bereits eingangs erwähnt, ist die Qualität der Extraktion für den Vergleich von großer Bedeutung - doch wie
 exakt ist der entwickelte Algorithmus?
-Genau diese Frage wird in diesem Kapitel beantwortet, um eine grobe Aussage für das weitere Matchingverfahren zu
-treffen.
+Genau diese Frage wird in diesem Kapitel beantwortet.
+Damit kann eine grobe Aussage für das weitere Matchingverfahren getroffen werden.
 Außerdem wird darauf eingegangen, wie die Parameter $SaS$ und $F$ gewählt werden sollten, um die bestmöglichen
 Ergebnisse zu erzielen.
 
@@ -21,8 +21,8 @@ die Evaluierung verwendet.
 Die Auswahl der Shops erfolgte zufällig.
 Alle nachfolgenden Messungen basieren auf einer Momentaufnahme der Angebotsdaten inklusive der verlinkten Webseiten.
 
-Die Links wurden nicht durch die URL-Cleaner-Kom\-po\-nen\-te bereinigt, da sonst die Angebotsdaten von idealo
-möglicherweise nicht mit denen von der Webseite übereinstimmen.
+Die Links wurden nicht durch die URL-Cleaner-Kom\-po\-nen\-te bereinigt, um eine Abweichung der idealo-Angebotsdaten von
+den Webseiten zu vermeiden.
 Damit die Trackingstatistiken der Shopbetreiber nicht stark verfälscht werden, wurden nicht mehr als insgesamt 150
 Angebote je Shop heruntergeladen.
 Eine nähere Analyse der Testdaten von idealo ist in der \textsc{Abbildung}~\ref{abb:testdaten} dargestellt.
@@ -44,10 +44,10 @@ Testmenge und weicht um maximal 0.88\% bei der Produkteigenschaft ``Marke'' ab.
 \subsection{Die Messergebnisse}
 \label{subsec:genauigkeitsmessung}
 
-Der Algorithmus kann durch die Größe der Anlernmenge $SaS$ und dem gewählten Filterschwellwert $F$ konfiguriert werden.
+Der Algorithmus kann durch die Größe der Anlernmenge $SaS$ und den gewählten Filterschwellwert $F$ konfiguriert werden.
 Für diese Messung wurden für jeden Shop 21 verschiedene Konfigurationen getestet.
 In allen Statistiken wurden die Fälle ignoriert, bei denen idealo keine Produktattribute gespeichert hat.
-Für alle 50 Shops fehlen bei den neun untersuchten Produkteigenschaften der Testmenge 7,6\% der entsprechenden Werte
+Für alle 50 Shops fehlen bei den untersuchten Produkteigenschaften der Testmenge 7,6\% der entsprechenden Werte
 bei idealo.
 Für diese Fälle ist es unmöglich zu entscheiden, ob die extrahierten Angebotsinformationen korrekt sind.
 
@@ -132,7 +132,7 @@ für den maschinenlernbasierten Vergleich des Matchers sein.
     \vspace{-0.25cm}
 \end{figure}
 
-Zu guter letzt kann man dem Diagramm entnehmen, dass der Filterschwellwert ein gutes Mittel ist, um die Accuracy und
+Zu guter Letzt kann man dem Diagramm entnehmen, dass der Filterschwellwert ein gutes Mittel ist, um die Accuracy und
 Precision zu beeinflussen und ein höherer SaS-Wert tendenziell besser ist.
 Je höher der SaS-Wert gewählt wird, desto höher ist die Accuracy und Precision.
 Mit zunehmenden Filter-Schwellwert $F$ sinkt die Accuracy, jedoch steigt dafür die Precision der extrahierten Attribute.
@@ -156,7 +156,7 @@ der Parser-Komponente sein.
 \subsection{Mögliche Fehlerquellen der Messungen}
 \label{subsec:fehlerquellen}
 
-Die getroffenen Annahme, dass die idealo-Daten nicht von denen der Shops abweichen, trifft in der realen Welt nicht zu.
+Die Annahme, dass die idealo-Daten nicht von denen der Shops abweichen, trifft in der Realität nicht zu.
 Die Angebotsdaten werden von idealo teilweise manuell oder durch Normalisierungsprozesse verändert.
 Dadurch können zum Beispiel korrekt extrahierte Produktattribute fälschlicherweise als inkorrekt markiert werden.
 Außerdem wird durch wird die Abweichungen die Regelgenerierung erschwert.
