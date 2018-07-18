@@ -3,7 +3,7 @@
 
 Der Fernhandel ist bereits seit der Steinzeit ein wichtiger Bestandteil der Gesellschaft.
 Durch die rasante Entwicklung des Internets und die steigende Anzahl der Onlinehändler vergrößert sich das
-Produktangebot.\\
+Produktangebot.
 Heutzutage kann ein Käufer aus einer Vielzahl von Artikeln wählen und muss sich nicht, wie in der Steinzeit auf
 einen Händler oder auf die lokale Verfügbarkeit beschränken.
 
@@ -16,7 +16,6 @@ aus und stellte somit einen nicht unerheblichen Anteil an der wirtschaftlichen L
 dar~\cite{statista:anteil-gesamtumsatz-europa}.
 Aus einer weiteren Untersuchung geht hervor, dass 2017 zwei Drittel der Deutschen regelmäßig online
 einkauften~\cite{statista:anteil-online-kaeufer-europa}.
-
 Diese Entwicklung bringt jedoch ein Problem mit sich: Mit der steigenden Auswahl an Produkten verliert ein
 potenzieller Käufer schnell die Übersicht.
 Preisvergleichsportale versuchen deshalb die Markttransparenz wiederherzustellen.
@@ -26,7 +25,6 @@ Das Angebot der Vergleichsportale wird von den Internetnutzern gut aufgenommen, 
 Für einen besseren Vergleich nutzen rund zwei Drittel der Online-Käufer die Möglichkeit sich im Internet zum Produkt
 oder zum Preis zu informieren~\cite{statista:internetnutzer-preisvergleich-deutschland,
 statista:anteil-online-kaeufe-deutschland}.
-
 In einem vom Nachrichtensender n-tv beauftragten Test\footnotemark, hat das Deutsche Institut für Service-Qualität
 mehrere Preissuchmaschinen unter dem Aspekt des günstigsten Preises, der Aktualität des Preises und dem
 Nutzererlebnis verglichen.
@@ -43,7 +41,6 @@ Die Mission des Preisvergleichsportals idealo ist es, im Sinne der Kundenzufried
 verbessern.
 Je mehr Angebote idealo vergleicht, desto sicherer kann sich der Kunde sein, das tatsächlich günstigste Angebot zu
 finden.
-
 Dazu schließt idealo Verträge mit mehreren Onlinehändlern ab.
 Diese Händler verpflichten sich, Daten zu ihren Angeboten an idealo zu übermitteln und zu aktualisieren.
 Für jeden vermittelten Kauf zahlen die Shops an idealo eine Provision.
@@ -63,8 +60,6 @@ Es soll eine Software entworfen werden, welche eine automatisierte Bestandsanaly
 Vertragspartner durchführt.
 Mit Hilfe des resultierenden Berichtes soll es möglich sein, herauszufinden welche Angebote des Vertragspartners im
 Produktkatalog von idealo fehlen.
-\\
-~\\
 Der Ergebnisbericht soll Informationen darüber enthalten, welche Produkte nicht vorhanden sind, aus welcher Kategorie
 diese stammen und zu welcher Preisregion die Produkte gehören.
 Durch diese Übersicht soll ein Mitarbeiter von idealo dazu befähigt werden, die Ursachen für das Fehlen der Angebote
@@ -74,8 +69,7 @@ Mitarbeiter von idealo vermuten, dass ein unbeabsichtigtes Fehlen von Produkten 
 Importvorgang zu erklären sei.
 Zudem könnte es sein, dass ein Händler aufgrund spezieller Vertragsbedingungen bewusst nicht alle
 Produkte bei idealo führen möchte.
-\\
-~\\
+
 Für die Entwicklung dieser Softwarelösung hatten wir als fünfköpfiges Team neun Monate Zeit.
 Zudem wurde uns ein Betreuer von idealo zur Verfügung gestellt, welcher die funktionalen Anforderungen an die
 Software kommunizierte und als technischer Berater diente.
@@ -86,26 +80,32 @@ Systemarchitektur.
 \label{subsec:microservice-architektur}
 
 Wir haben uns dafür entschieden, das Gesamtsystem als Microservice-Architektur zu konzipieren.
-
 Die Mircoservice-Architektur ermöglicht es logisch gekapselte Komponenten zu entwickeln, welche sich sehr gut
 skalieren und erweitern lassen.
 Eine ausführlichere Begründung für diese Architekturentscheidung kann in der Bachelorarbeit von Dmitrii
 Zhamanakov nachgeschlagen werden~\cite{thesis:dmitrii}.
-
 Für die Implementierung der Architektur haben wir die Programmiersprache Java gewählt und verwenden diese in
 Kombination mit dem Spring-Framework\footnotemark.
 \footnotetext{\url{https://spring.io/}}
-
 Das entwickelte Gesamtsystem \textit{Scout} besteht aus drei zentralen Komponenten: dem Crawler, dem Parser und dem
 Matcher.
-
-Der \textit{Crawler} ist für das Herunterladen jeder einzelnen Seite eines Shops verantwortlich.
+In Abbildung~\ref{abb:datenfluss-grob} ist der Datenfluss zwischen den Komponenten dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, trim=0 5.5cm 0 5.5cm, clip]{resources/Datenfluss-Gesamt-Grob.pdf}
+    \caption{Datenfluss des Softwaresystems Scout}
+    \label{abb:datenfluss-grob}
+    \vspace{-0.25cm}
+\end{figure}
+Der \textit{Crawler} ist für das Herunterladen jeder einzelnen Seite eines durch den Nutzer spezifizierten Shops
+verantwortlich.
 Jonas Pohlmann hat sich im Projektverlauf intensiv mit verschiedenen Crawling-Frameworks auseinandergesetzt und diese
 in seiner Bachelorarbeit verglichen~\cite{thesis:jonas}.
 
 Die Funktionsweise der maschinenlernbasierten \textit{Matcher}-Komponente wird in der Bachelorarbeit von Tom
 Schwarzburg näher beschrieben~\cite{thesis:tom}.
-Der Matcher vergleicht die vom System gefundenen Angebote mit den Angeboten, die idealo bereits kennt.
+Der Matcher vergleicht die vom Parser gefundenen Angebote mit denen, die idealo bereits kennt und liefert
+einen Bericht, in dem alle fehlenden Angebote aufgelistet werden.
 
 Damit diese Komponente die geladenen Angebote mit dem Katalog von idealo vergleichen kann, muss das heruntergeladene
 HTML-Dokument in ein Format gebracht werden, welches der Computer für den Vergleich nutzen kann.
