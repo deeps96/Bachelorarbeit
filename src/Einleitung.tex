@@ -16,8 +16,9 @@ aus und stellte somit einen nicht unerheblichen Anteil an der wirtschaftlichen L
 dar~\cite{statista:anteil-gesamtumsatz-europa}.
 Aus einer weiteren Untersuchung geht hervor, dass 2017 zwei Drittel der Deutschen regelmäßig online
 einkauften~\cite{statista:anteil-online-kaeufer-europa}.
-Diese Entwicklung bringt jedoch ein Problem mit sich: Mit der steigenden Auswahl an Produkten verliert ein
-potenzieller Käufer schnell die Übersicht.
+
+Diese Entwicklung bringt jedoch ein Problem mit sich: Mit der steigenden Auswahl an Produkten und vor allem Händlern
+verliert ein potenzieller Käufer schnell die Übersicht.
 Preisvergleichsportale versuchen deshalb die Markttransparenz wiederherzustellen.
 Ein Käufer sollte sich sicher sein das für ihn beste Angebot zu finden.
 
@@ -29,7 +30,6 @@ In einem vom Nachrichtensender n-tv beauftragten Test\footnotemark, hat das Deut
 mehrere Preissuchmaschinen unter dem Aspekt des günstigsten Preises, der Aktualität des Preises und dem
 Nutzererlebnis verglichen.
 \footnotetext{https://disq.de/2014/20141004-Preissuchmaschinen.html}
-\newline
 Im Ergebnis hat idealo.de in allen Kategorien den ersten Platz eingenommen, gefolgt von billiger.de und preis.de.
 Es wurde jedoch bemängelt, dass selbst beim besten Preisvergleich nur für die Hälfte der Produkte der günstigste
 Shop angezeigt wurde.
@@ -37,7 +37,7 @@ Shop angezeigt wurde.
 \subsection{Das Preisvergleichsportal idealo}
 \label{subsec:idealo}
 
-Die Mission des Preisvergleichsportals idealo ist es, im Sinne der Kundenzufriedenheit, den Vergleich stetig zu
+Die Mission des Preisvergleichsportals idealo ist es, im Sinne der Kundenzufriedenheit den Vergleich stetig zu
 verbessern.
 Je mehr Angebote idealo vergleicht, desto sicherer kann sich der Kunde sein, das tatsächlich günstigste Angebot zu
 finden.
@@ -48,7 +48,7 @@ Diese Provision basiert auf CPC (Kosten pro Klick) oder CPO (Kosten pro tatsäch
 
 Wie bereits in Kapitel~\ref{subsec:onlinehandel-heute} erwähnt, zeigt idealo bereits für 50\% der Produkte den
 günstigsten Preis.
-Um auch zukünftig wettbewerbsfähig zu bleiben arbeitet idealo daran, auch für die letzten 50\% der Produkte
+Um auch zukünftig wettbewerbsfähig zu bleiben, arbeitet idealo daran, auch für die letzten 50\% der Produkte
 immer das beste Angebot liefern zu können.
 Dies erreicht idealo zum einen durch Vertragsabschlüsse mit weiteren Onlineshops und zum anderen durch die
 Sicherstellung, dass tatsächlich alle Angebote eines Vertragspartners gelistet werden.
@@ -56,8 +56,8 @@ Sicherstellung, dass tatsächlich alle Angebote eines Vertragspartners gelistet 
 \subsection{Das Ziel des Bachelorprojektes}
 \label{subsec:projektziel}
 
-Es soll eine Software entworfen werden, welche eine automatisierte Bestandsanalyse für einen bestimmten
-Vertragspartner durchführt.
+Das Projektziel bestand darin, eine Software zu entwerfen, welche eine automatisierte Bestandsanalyse für
+gegebene Vertragspartner durchführt.
 Mit Hilfe des resultierenden Berichtes soll es möglich sein, herauszufinden welche Angebote des Vertragspartners im
 Produktkatalog von idealo fehlen.
 Der Ergebnisbericht soll Informationen darüber enthalten, welche Produkte nicht vorhanden sind, aus welcher Kategorie
@@ -71,7 +71,7 @@ Zudem könnte es sein, dass ein Händler aufgrund spezieller Vertragsbedingungen
 Produkte bei idealo führen möchte.
 
 Für die Entwicklung dieser Softwarelösung hatten wir als fünfköpfiges Team neun Monate Zeit.
-Zudem wurde uns ein Betreuer von idealo zur Verfügung gestellt, welcher die funktionalen Anforderungen an die
+Zudem wurde uns ein Betreuer von idealo zur Seite gestellt, welcher die funktionalen Anforderungen an die
 Software kommunizierte und als technischer Berater diente.
 Er begleitete uns während des gesamten Entwicklungsprozesses und unterstützte uns bei Fragen bezüglich der
 Systemarchitektur.
@@ -109,6 +109,5 @@ einen Bericht, in dem alle fehlenden Angebote aufgelistet werden.
 
 Damit diese Komponente die geladenen Angebote mit dem Katalog von idealo vergleichen kann, muss das heruntergeladene
 HTML-Dokument in ein Format gebracht werden, welches der Computer für den Vergleich nutzen kann.
-
-Diesen Schritt erledigt der Parser, welcher zwischen Crawler und Matcher agiert.
+Diesen Schritt erledigt der \textit{Parser}, welcher zwischen Crawler und Matcher agiert.
 Der Fokus dieser Bachelorarbeit liegt in der Beschreibung der Funktionsweise und des Aufbaus des Parsers.
