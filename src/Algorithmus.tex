@@ -260,12 +260,12 @@ Die Selektoren für den Textknoten und den Beschreibungsknoten aus dem obigen Be
 \textsc{Tabelle}~\ref{tab:textselektor-und-beschreibungsselektor} aufgeführt.
 \begin{table}[h]
     \centering
-    \begin{tabular}{ l | l | l}
+    \begin{tabular}{ l l l}
         \textbf{Knotentyp}   &   \textbf{CSS-Selektor}    &   \textbf{Attribut} \\
         Textknoten  &   \#product-details > span:nth-of-type(1) & - \\
         Beschreibungsknoten &   html > head > meta:nth-of-type(1)[content]  & content
     \end{tabular}
-        \caption{Selektoren für den \circled{1} Textknoten und \circled{2} Beschreibungsknoten}
+    \caption{Selektoren für den \circled{1} Textknoten und \circled{2} Beschreibungsknoten}
     \label{tab:textselektor-und-beschreibungsselektor}
     \vspace{-0.5cm}
 \end{table}
@@ -295,7 +295,7 @@ Der resultierende Datenselektor sieht wie in \textsc{Tabelle}~\ref{tab:datensele
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{ l | l }
+    \begin{tabular}{ l l }
         \textbf{CSS-Selektor} &  html > head > script:nth-of-type(2)\\
         \textbf{Block-Pfad}   &  0 $\rightarrow$ 1\\
         \textbf{JsonPath}     &  \$['ean']
