@@ -19,8 +19,8 @@ Für die nachfolgenden Messungen wurden 7500 Angebote von 50 Shops genutzt.
 Je Händler wurden max.\ 50 Angebote als Trainingsmenge für die Erstellung der Regeln und 100 Angebote als Testmenge für
 die Evaluierung verwendet.
 Die Auswahl der Shops erfolgte zufällig.
-
 Alle nachfolgenden Messungen basieren auf einer Momentaufnahme der Angebotsdaten inklusive der verlinkten Webseiten.
+
 Die Links wurden nicht durch die URL-Cleaner-Kom\-po\-nen\-te bereinigt, da sonst die Angebotsdaten von idealo
 möglicherweise nicht mit denen von der Webseite übereinstimmen.
 Damit die Trackingstatistiken der Shopbetreiber nicht stark verfälscht werden, wurden nicht mehr als insgesamt 150
@@ -29,7 +29,7 @@ Eine nähere Analyse der Testdaten von idealo ist in der \textsc{Abbildung}~\ref
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth, trim=0 10.05cm 0 11.4cm, clip]{resources/Testdaten-Attributverteilung.pdf}
+    \includegraphics[width=0.9 \textwidth, trim=0 10.05cm 0 11.4cm, clip]{resources/Testdaten-Attributverteilung.pdf}
     \caption{Attributabdeckung der Testdaten von idealo}
     \label{abb:testdaten}
     \vspace{-0.25cm}
@@ -38,16 +38,14 @@ Eine nähere Analyse der Testdaten von idealo ist in der \textsc{Abbildung}~\ref
 Eine Analyse der gesamten Testdaten hat ergeben, dass für jedes Angebot die Angaben zum Titel, dem Preis und der SKU
 existieren.
 Am seltensten existieren hingegen die HAN (68\%) und die Produktbeschreibung (77\%) eines Angebots.
-
 Das Verhältnis der fehlenden zu den vorhandenen Produktattributen der Trainingsmenge ähnelt dem Verhältnis der
 Testmenge und weicht um maximal 0.88\% bei der Produkteigenschaft ``Marke'' ab.
 
 \subsection{Die Messergebnisse}
 \label{subsec:genauigkeitsmessung}
 
-Der Algorithmus kann durch die Größer der Anlernmenge $SaS$ und den gewählten Filterschwellwert $F$ konfiguriert werden.
+Der Algorithmus kann durch die Größe der Anlernmenge $SaS$ und dem gewählten Filterschwellwert $F$ konfiguriert werden.
 Für diese Messung wurden für jeden Shop 21 verschiedene Konfigurationen getestet.
-
 In allen Statistiken wurden die Fälle ignoriert, bei denen idealo keine Produktattribute gespeichert hat.
 Für alle 50 Shops fehlen bei den neun untersuchten Produkteigenschaften der Testmenge 7,6\% der entsprechenden Werte
 bei idealo.
@@ -117,14 +115,12 @@ Der Tabelle kann man entnehmen, dass oftmals Kodierungsfehler oder unterschiedli
 Übereinstimmung verhinderten.
 Außerdem war es häufiger der Fall, dass der Preis um wenige Centbeträge von der Momentaufnahme der idealo-Daten
 abwich.
-\newpage
-Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:accuracy-precision-chart}.
 
+Eine nähere Betrachtung der Kennziffern je Attribut liefert \textsc{Abbildung}~\ref{abb:accuracy-precision-chart}.
 Wie erwartet, wird die Produktbeschreibung und die Kategorie selten extrahiert.
 Dies hängt damit zusammen, dass diese Informationen am stärksten von idealo verändert werden.
 Interessanterweise wird die HAN ebenfalls selten extrahiert, was mit dem häufigen Fehlen der HAN in den
 Testdaten zusammenhängt.
-
 Die in der Bild-URL enthaltene ID und die Marke werden häufig gefunden und könnten somit nützliche Features
 für den maschinenlernbasierten Vergleich des Matchers sein.
 
@@ -133,7 +129,7 @@ für den maschinenlernbasierten Vergleich des Matchers sein.
     \includegraphics[width=\textwidth]{resources/accuracy-and-precision-per-attribute.PNG}
     \caption{Accuracy (links) und Precision (rechts) pro Attribut für $SaS=50$}
     \label{abb:accuracy-precision-chart}
-    \vspace{-0.5cm}
+    \vspace{-0.25cm}
 \end{figure}
 
 Zu guter letzt kann man dem Diagramm entnehmen, dass der Filterschwellwert ein gutes Mittel ist, um die Accuracy und
@@ -143,6 +139,7 @@ Mit zunehmenden Filter-Schwellwert $F$ sinkt die Accuracy, jedoch steigt dafür 
 
 In der \textsc{Abbildung}~\ref{abb:accuracy-precision-box-plot} ist für die gewählten Parameter $SaS=50$ und $F=0.6$
 die Streuung der Accuracy und Precision abgebildet.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.95\textwidth]{resources/accuracy-and-precision-box-plots.png}
@@ -150,11 +147,12 @@ die Streuung der Accuracy und Precision abgebildet.
     \label{abb:accuracy-precision-box-plot}
     \vspace{-0.25cm}
 \end{figure}
+
 Den Diagrammen kann man zum einem entnehmen, dass es zwar einige Ausreißer gibt, zum anderen wird noch einmal
 deutlich, dass die Marke, der Bildlink sowie die SKU häufig und genau extrahiert werden.
 Die Shops, welche stark vom angezeigten Median abweichen, könnten ein guter Anhaltspunkt für zukünftige Verbesserungen
 der Parser-Komponente sein.
-\vspace{-0.25cm}
+
 \subsection{Mögliche Fehlerquellen der Messungen}
 \label{subsec:fehlerquellen}
 
